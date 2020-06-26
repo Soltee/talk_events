@@ -3,6 +3,9 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use App\User;
+use App\Event;
+use App\Booking;
 
 class ExampleTest extends TestCase
 {
@@ -15,4 +18,6 @@ class ExampleTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+    
 }
