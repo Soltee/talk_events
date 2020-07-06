@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
@@ -26,7 +27,16 @@ class Event extends Model
     	return $this->hasMany(Sponser::class);
     }
 
+    public function location(){
+        return $this->hasOne(Venue::class);
+    }
+
     public function bookings(){
         return $this->hasMany(Booking::class);
+    }
+
+    public function slug()
+    {
+        return Str::slug($this->name);
     }
 }

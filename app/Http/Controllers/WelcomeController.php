@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Event;
+use App\Category;
 
 class WelcomeController extends Controller
 {
@@ -41,7 +43,29 @@ class WelcomeController extends Controller
      */
     public function events()
     {
-        return view('events');
+        $search   = request()->search;
+        $current = request()->category;
+
+        if($current)
+        {
+            $categories = Category::latest()->get();
+            $current =   Category::findOrfail($current);
+            $events =   Event::where('category_id', $current->id)->paginate(9);
+            // dd($events);
+            $count   = $events->total();
+        } else {
+            $categories = Category::latest()->get();
+            $query      = Event::latest();
+
+            if($search){
+                $query = $query->where('name', 'LIKE' , "%".$search."%");
+            }
+
+            $events   = $query->paginate(9);
+            $count      = $events->total();
+        }
+        
+        return view('events', compact('categories', 'events', 'count', 'current'));
     }
 
     /**
@@ -49,8 +73,15 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function event()
+    public function event(Event $event, $slug)
     {
-        return view('event');
+        $venue = $event->location;
+        $cat = $event->category;
+
+        $speakers = $event->speakers;
+
+        $similar = $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(4)->get();
+        // dd($product->images);
+        return view('event', compact('venue', 'cat', 'event', 'speakers', 'similar'));
     }
 }

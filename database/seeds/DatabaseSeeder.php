@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
         factory(App\Category::class, 12)->create();
         factory(App\Company::class, 30)->create();
         factory(App\Event::class, 50)->create();
-        factory(App\Venue::class, 30)->create();
-        factory(App\Speaker::class, 30)->create();
-        factory(App\Topic::class, 30)->create();
-        factory(App\Sponser::class, 30)->create();
-        factory(App\Booking::class, 80)->create();
+        factory(App\Venue::class, 50)->create();
+        factory(App\Speaker::class, 120)->create();
+        factory(App\Topic::class, 200)->create();
+        factory(App\Sponser::class, 200)->create();
+        factory(App\Booking::class, 120)->create();
     }
 }

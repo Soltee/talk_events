@@ -40,6 +40,6 @@ $factory->define(Event::class, function (Faker $faker) {
         'ticket'   => function(){
         	return Arr::random([100, 120, 140, 200, 60]);
         },
-        'description' => $faker->text($maxNbChars = 200)
+        'description' => $faker->text()
     ];
 });

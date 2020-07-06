@@ -8,9 +8,24 @@ use App\Event;
 use App\User;
 use App\Booking;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+
+    /** Shows the Booking Form page */
+    public function index(Event $event, $slug)
+    {
+        $venue = $event->location;
+        $cat = $event->category;
+
+        $speakers = $event->speakers;
+        $auth = Auth::user() ?? null;
+
+        return view('checkout', compact('venue', 'cat', 'event', 'speakers', 'auth'));
+    }
+
+
     /**
 		* Store booking record made by user or guest
     **/
