@@ -16,4 +16,8 @@ class Speaker extends Model
 	    'linkedin'   ,
 	    'full_description'   ,
 	];
+
+	public function event(){
+    	return $this->belongsTo(Event::class);
+    }
 }

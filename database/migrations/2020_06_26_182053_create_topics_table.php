@@ -18,7 +18,7 @@ class CreateTopicsTable extends Migration
             $table->UnsignedBigInteger('event_id')->nullable();
             $table->UnsignedBigInteger('speaker_id')->nullable();
             $table->string('name');
-            $table->datetime('when');
+            $table->datetime('when')->nullable();
             $table->timestamps();
         });
     }

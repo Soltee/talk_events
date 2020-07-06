@@ -17,5 +17,7 @@ $factory->define(Topic::class, function (Faker $faker) {
     		$ev = Speaker::inRandomOrder()->pluck('id')->toArray();
     		return Arr::random($ev);
     	},
+        'name' => $faker->name
+
     ];
 });

@@ -5,7 +5,6 @@
 use App\Venue;
 use App\Event;
 use Faker\Generator as Faker;
-use Faker\Generator as Faker;
 
 $factory->define(Venue::class, function (Faker $faker) {
     return [

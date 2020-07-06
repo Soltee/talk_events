@@ -17,6 +17,9 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->UnsignedBigInteger('user_id')->nullable();
             $table->UnsignedBigInteger('event_id');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
             $table->integer('price');
             $table->integer('quantity')->nullable();
             $table->string('payment_id');
