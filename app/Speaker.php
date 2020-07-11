@@ -10,14 +10,14 @@ class Speaker extends Model
 	    'event_id' ,
 	    'avatar'   ,
 	    'first_name' , 'last_name', 'email',
-	    'description'   ,
-	    'twitter'   ,
-	    'facebook'   ,
-	    'linkedin'   ,
-	    'full_description'   ,
+	    'about'   ,
 	];
 
 	public function event(){
     	return $this->belongsTo(Event::class);
+    }
+    
+    public function social(){
+        return $this->hasOne(Social::class);
     }
 }

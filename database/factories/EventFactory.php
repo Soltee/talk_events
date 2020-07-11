@@ -4,23 +4,26 @@
 
 use App\Event;
 use App\User;
-use App\Company;
 use App\Category;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
 
 $factory->define(Event::class, function (Faker $faker) {
+    $name = $faker->name;
+    $slug = Illuminate\Support\Str::slug($name);
+
     return [
     	'category_id' => function(){
     		$cat = Category::inRandomOrder()->pluck('id')->toArray();
     		return Arr::random($cat);
     	},
-        'company_id' => function(){
-            $companies = Company::inRandomOrder()->pluck('id')->toArray();
-            return Arr::random($companies);
+        'user_id' => function(){
+            $users = User::inRandomOrder()->pluck('id')->toArray();
+            return Arr::random($users);
         },
         'cover' => $faker->imageUrl($width = 640, $height = 480),
-        'name' => $faker->firstName,
+        'title' => $name,
+        'slug'  => $slug,
         'price' => function() { 
         	$p = [50, 60, 70, 100];
         	return Arr::random($p);

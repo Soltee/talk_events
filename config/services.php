@@ -29,5 +29,16 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'stripe' => [
+        'modal' => App\Customer::class,
+        'key' => env('STRIPE_PUBLIC_KEY'),
+        'secret' => env('STRIPE_SECRET_KEY')
+    ],
+    'braintree' => [
+        'environment' => env('BT_ENVIRONMENT', 'sandbox'),
+        'merchantId' => env('BT_MERCHANT_ID'),
+        'publicKey' => env('BT_PUBLIC_KEY'),
+        'privateKey' => env('BT_PRIVATE_KEY'),
+    ],
 
 ];

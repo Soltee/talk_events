@@ -9,7 +9,9 @@ Route::get('/events', 'WelcomeController@events')->name('events.all');
 
 /** Booking */
 Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')->name('booking.checkout');
-Route::post('/events/{event_id}/book', "User\BookingController@store")->name('event.book');
+Route::post('/events/{event_id}/book', "User\BookingController@checkout")->name('event.book');
+Route::get('/events/book/thankyou/{booking}', 'User\BookingController@show')->name('booking.thankyou');
+
 
 /** Login & Register */
 Route::get('/login', 'WelcomeController@login')->name('login');

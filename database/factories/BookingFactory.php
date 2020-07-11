@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
+//
 use App\Booking;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
@@ -12,10 +12,10 @@ $factory->define(Booking::class, function (Faker $faker) {
 	$taxes = (15/100) * $subTotal;
 	$grand = $subTotal + $taxes;
     return [
-      //   'user_id'       =>  function(){
-      //   	$users = App\User::inRandomOrder()->pluck('id')->toArray();
-    		// return  Arr::random($users);
-      //   }  , 
+        'user_id'       =>  function(){
+        	$users = App\User::inRandomOrder()->pluck('id')->toArray();
+    		return  Arr::random($users);
+        }  , 
         'event_id'      =>  function(){
         	$events = App\Event::inRandomOrder()->pluck('id')->toArray();
     		return  Arr::random($events);
@@ -24,7 +24,6 @@ $factory->define(Booking::class, function (Faker $faker) {
         'last_name'         =>  $faker->lastName  , 
         'email'         =>  $faker->email  , 
         'price'         =>  $price  , 
-        'quantity'      =>  $qty , 
         'payment_type'  =>  function(){
         	$methods = ['stripe', 'braintree', 'paypal'];
     		return Arr::random($methods);

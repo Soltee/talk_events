@@ -7,10 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Sponser extends Model
 {
     protected $fillable = [
-       'event_id', 'name', 'link'
+       'event_id', 'user_id', 'avatar', 'full_name', 'email', 'gender', 'about', 'company_name', 'company_link' 
     ];
 
     public function event(){
     	return $this->belongsTo(Event::class);
+    }
+
+    public function user(){
+    	return $this->belongsTo(User::class);
+    }
+
+    public function social(){
+        return $this->hasOne(Social::class);
     }
 }

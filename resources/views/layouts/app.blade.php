@@ -10,11 +10,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    @yield('styles')
+    @yield('head')
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
     <div >

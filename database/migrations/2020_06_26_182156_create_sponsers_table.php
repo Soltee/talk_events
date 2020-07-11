@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSponsersTable extends Migration
 {
+    //
     /**
      * Run the migrations.
      *
@@ -15,9 +16,16 @@ class CreateSponsersTable extends Migration
     {
         Schema::create('sponsers', function (Blueprint $table) {
             $table->id();
-            $table->UnsignedBigInteger('event_id')->nullable();
-            $table->string('name');
-            $table->string('link')->nullable();
+            $table->UnsignedBigInteger('user_id')->nullable();
+            $table->UnsignedBigInteger('event_id');
+            $table->string('avatar')->nullable();
+            $table->string('full_name');
+            $table->string('email')->unique();
+            $table->string('gender')->nullable();
+            $table->rememberToken();
+            $table->string('about')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_link')->nullable();
             $table->timestamps();
         });
     }

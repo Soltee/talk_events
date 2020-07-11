@@ -21,9 +21,8 @@ class CreateBookingsTable extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->integer('price');
-            $table->integer('quantity')->nullable();
-            $table->string('payment_id');
             $table->string('payment_type');
+            $table->string('payment_id');
             $table->integer('sub_total');
             $table->integer('taxes');
             $table->integer('grand_total');

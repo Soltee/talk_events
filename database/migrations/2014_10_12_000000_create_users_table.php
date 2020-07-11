@@ -23,8 +23,15 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('gender')->nullable();
             $table->rememberToken();
+            $table->string('about')->nullable();
+            $table->string('country_id')->nullable();
+            $table->string('city_id')->nullable();
+            $table->string('state_id')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('street_address')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_type')->nullable();
             $table->timestamps();
-            // 'description', 'twitter', 'facebook', 'linkedin', 'full_description'
         });
     }
 

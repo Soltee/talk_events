@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'avatar', 'first_name', 'last_name', 'email', 'password', 'gender', 
+        'avatar', 'first_name', 'last_name', 'email', 'password', 'gender', 'about', 'country', 'city', 'state', 'zip_code', 'street_address', 'company_name', 'company_type', 
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -41,4 +41,23 @@ class User extends Authenticatable
     public function bookings(){
         return $this->hasMany(Booking::class);
     }
+
+    public function photos(){
+        return $this->hasMany(Photo::class);
+    }
+
+    public function social(){
+        return $this->hasOne(Social::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function event(){
+        return $this->belongsTo(Event::class)->withTimestamps();
+    }
+
+  
 }

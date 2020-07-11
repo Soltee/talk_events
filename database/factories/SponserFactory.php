@@ -13,6 +13,8 @@ $factory->define(Sponser::class, function (Faker $faker) {
     		$ev = Event::inRandomOrder()->pluck('id')->toArray();
     		return Arr::random($ev);
     	},
-        'name' => $faker->company
+        'full_name' => $faker->firstName,
+        'email' => $faker->unique()->safeEmail,
+        'company_name' => $faker->company
     ];
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpeakersTable extends Migration
+class CreateEventMember extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateSpeakersTable extends Migration
      */
     public function up()
     {
-        Schema::create('speakers', function (Blueprint $table) {
+        Schema::create('event_member', function (Blueprint $table) {
             $table->id();
             $table->UnsignedBigInteger('event_id');
-            $table->string('avatar')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email');
-            $table->text('about')->nullable();
+            $table->UnsignedBigInteger('user_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateSpeakersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('speakers');
+        Schema::dropIfExists('event_member');
     }
 }

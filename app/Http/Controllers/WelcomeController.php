@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Event;
 use App\Category;
+use App\Venue;
 
 class WelcomeController extends Controller
 {
@@ -48,13 +49,11 @@ class WelcomeController extends Controller
 
         if($current)
         {
-            $categories = Category::latest()->get();
             $current =   Category::findOrfail($current);
             $events =   Event::where('category_id', $current->id)->paginate(9);
             // dd($events);
             $count   = $events->total();
         } else {
-            $categories = Category::latest()->get();
             $query      = Event::latest();
 
             if($search){
@@ -64,8 +63,11 @@ class WelcomeController extends Controller
             $events   = $query->paginate(9);
             $count      = $events->total();
         }
+            $categories = Category::latest()->paginate(10);
+            $venues = Venue::latest()->paginate(10);
+
         
-        return view('events', compact('categories', 'events', 'count', 'current'));
+        return view('events', compact('categories', 'events', 'venues', 'count', 'current'));
     }
 
     /**
