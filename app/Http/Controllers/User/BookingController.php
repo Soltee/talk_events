@@ -10,6 +10,7 @@ use App\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Omnipay\Omnipay;
+use Illuminate\Support\Facades\Http;
 
 class BookingController extends Controller
 {
@@ -25,9 +26,12 @@ class BookingController extends Controller
 
         $speakers = $event->speakers;
         $auth     = Auth::user() ?? null;
+        $price    = $event->price;
+        $tax      = (12/100) * $price;
+        $total    = ($price + $tax) * 100;
 
 
-        return view('booking', compact( 'venue', 'cat', 'event', 'speakers', 'auth'));
+        return view('booking', compact( 'venue', 'cat', 'event', 'speakers', 'auth', 'total'));
     }
 
 
@@ -54,7 +58,7 @@ class BookingController extends Controller
 
         $event  = Event::findOrfail($data['eventId']);
 
-        if($paymentType === 'braintree' || $paymentType === 'paypal'){
+        if($paymentType === 'braintree'){
 
             $gateway = new \Braintree\Gateway([
                 'environment' => config('services.braintree.environment'),
@@ -127,39 +131,37 @@ class BookingController extends Controller
 
         }  elseif($paymentType === 'khalti') {
 
+            $filtered = filter_var($total, FILTER_VALIDATE_INT);
             $args = http_build_query(array(
                 'token' => request()->khalti_token,
-                'amount'  => $total * 100
+                'amount'  => $filtered
             ));
 
-            $url = "https://khalti.com/api/v2/payment/verify/";
-
+            $url =  "https://khalti.com/api/v2/payment/verify/";
             # Make the call using API.
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
 
             $headers = ['Authorization: Key '. env('KHALTI_SECRET_KEY') . ''];
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-            // Response
-            $response = json_decode(curl_exec($ch));
-
+            // // Response
+            $response = curl_exec($ch);
             $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 
-            dd($response);
-            if ($status_code === 200) {
+
+            if($status_code == 200){
                 $transaction = Str::random(10);
-
                 $booking = $this->store($event->id, $data['first_name'], $data['last_name'], $data['email'], $data['payment_type'], $transaction, $price, $tax, $total);
-
-                    return redirect()->route('booking.thankyou', ['id' => $booking->id])->with('success', 'Bravo! Your payment is successful.');
             } else {
-                return back()->with('error', 'An error occurred Please try again. ');
+                return back()->with('error', $response['error']);
             }
+                    // return redirect()->route('booking.thankyou', ['id' => $booking->id])->with('success', 'Bravo! Your payment is successful.');
         }
         
     }

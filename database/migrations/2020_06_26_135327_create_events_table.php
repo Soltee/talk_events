@@ -16,7 +16,7 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->UnsignedBigInteger('category_id');
-            $table->UnsignedBigInteger('user_id');
+            $table->UnsignedBigInteger('user_id')->nullable();
             $table->string('cover')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('title');
@@ -28,6 +28,10 @@ class CreateEventsTable extends Migration
             $table->string('book_before');
             $table->integer('ticket');
             $table->text('description');
+            $table->string('venue_name');
+            $table->string('venue_full_address');
+            $table->string('venue_latitude');
+            $table->string('venue_longitude');
             $table->timestamps();;
         });
     }

@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
+use Carbon\Carbon;
 class Event extends Model
 {
     protected $fillable = [
-        'category_id', 'user_id', 'cover', 'thumbnail', 'title', 'slug', 'sub_title', 'price', 'start_time', 'end_time', 'book_before', 'ticket', 'description' ,
+        'category_id', 'user_id', 'cover', 'thumbnail', 'title', 'slug', 'sub_title', 'price', 'start_time', 'end_time', 'book_before', 'ticket', 'description' , 'venue_name', 'venue_full_address', 'venue_latitude', 'venue_longitude'
     ];
 
     public function category(){
@@ -39,8 +39,11 @@ class Event extends Model
         return $this->hasMany(User::class);
     }
 
-    public function slug()
+    public function Daysdiff()
     {
-        return Str::slug($this->name);
+        $to = Carbon::createFromFormat('Y-m-d H:s:i', $this->start_time);
+        return $to->diffInDays(Carbon::createFromFormat('Y-m-d H:s:i', $this->end_time));
     }
+
+
 }

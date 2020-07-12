@@ -8,16 +8,11 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'image_url', 'thumbnail'
+        'user_id', 'name', 'slug', 'image_url', 'thumbnail'
     ];
 
     public function events(){
     	return $this->hasMany(Event::class);
     }
 
-    
-    public function slug()
-    {
-        return Str::slug($this->name);
-    }
 }

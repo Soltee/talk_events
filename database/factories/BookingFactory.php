@@ -13,7 +13,7 @@ $factory->define(Booking::class, function (Faker $faker) {
 	$grand = $subTotal + $taxes;
     return [
         'user_id'       =>  function(){
-        	$users = App\User::inRandomOrder()->pluck('id')->toArray();
+        	$users = App\User::role('user')->inRandomOrder()->pluck('id')->toArray();
     		return  Arr::random($users);
         }  , 
         'event_id'      =>  function(){

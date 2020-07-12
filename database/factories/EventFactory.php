@@ -18,7 +18,7 @@ $factory->define(Event::class, function (Faker $faker) {
     		return Arr::random($cat);
     	},
         'user_id' => function(){
-            $users = User::inRandomOrder()->pluck('id')->toArray();
+            $users = User::role('event-manager')->inRandomOrder()->pluck('id')->toArray();
             return Arr::random($users);
         },
         'cover' => $faker->imageUrl($width = 640, $height = 480),
@@ -43,6 +43,10 @@ $factory->define(Event::class, function (Faker $faker) {
         'ticket'   => function(){
         	return Arr::random([100, 120, 140, 200, 60]);
         },
-        'description' => $faker->text()
+        'description' => $faker->text(),
+        'venue_name' => $faker->streetName,
+        'venue_full_address' => $faker->streetAddress,
+        'venue_latitude' => $faker->latitude(),
+        'venue_longitude' => $faker->longitude()
     ];
 });

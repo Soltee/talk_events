@@ -16,9 +16,6 @@ class CreateSocialsTable extends Migration
         Schema::create('socials', function (Blueprint $table) {
             $table->id();
             $table->UnsignedBigInteger('user_id')->nullable();
-            $table->UnsignedBigInteger('speaker_id')->nullable();
-            $table->UnsignedBigInteger('sponser_id')->nullable();
-            $table->UnsignedBigInteger('member_id')->nullable();
             $table->string('twitter_link');
             $table->string('linkedin_link')->nullable();
             $table->string('facebook_link')->nullable();

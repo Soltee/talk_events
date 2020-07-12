@@ -4,11 +4,16 @@
 
 use App\Sponser;
 use App\Event;
+use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
 
 $factory->define(Sponser::class, function (Faker $faker) {
     return [
+    	'user_id' => function(){
+    		$us = User::role('manager')->inRandomOrder()->pluck('id')->toArray();
+    		return Arr::random($us);
+    	},
     	'event_id' => function(){
     		$ev = Event::inRandomOrder()->pluck('id')->toArray();
     		return Arr::random($ev);

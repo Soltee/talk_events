@@ -10,8 +10,9 @@ class Speaker extends Model
 	    'event_id' ,
 	    'avatar'   ,
 	    'first_name' , 'last_name', 'email',
-	    'about'   ,
+	    'about'   , 'linkedin_link', 'twitter_link'
 	];
+
 
 	public function event(){
     	return $this->belongsTo(Event::class);

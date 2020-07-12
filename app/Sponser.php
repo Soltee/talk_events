@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sponser extends Model
 {
     protected $fillable = [
-       'event_id', 'user_id', 'avatar', 'full_name', 'email', 'gender', 'about', 'company_name', 'company_link' 
+       'event_id', 'user_id', 'avatar', 'full_name', 'email', 'about', 'company_name', 'company_link' ,
     ];
 
     public function event(){
@@ -18,7 +18,4 @@ class Sponser extends Model
     	return $this->belongsTo(User::class);
     }
 
-    public function social(){
-        return $this->hasOne(Social::class);
-    }
 }

@@ -31,9 +31,9 @@ class WelcomeController extends Controller
     public function login()
     {
     	// Inertia::setRootView(');
-        return Inertia::render('Login', [
+        // return Inertia::render('Login', [
 				            
-        ]);
+        // ]);
     }
 
 

@@ -42,9 +42,6 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class);
     }
 
-    public function photos(){
-        return $this->hasMany(Photo::class);
-    }
 
     public function social(){
         return $this->hasOne(Social::class);
@@ -54,10 +51,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class);
     }
-
-    public function event(){
-        return $this->belongsTo(Event::class)->withTimestamps();
-    }
-
   
 }

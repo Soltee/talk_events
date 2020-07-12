@@ -21,7 +21,6 @@ class CreateSponsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('full_name');
             $table->string('email')->unique();
-            $table->string('gender')->nullable();
             $table->rememberToken();
             $table->string('about')->nullable();
             $table->string('company_name')->nullable();

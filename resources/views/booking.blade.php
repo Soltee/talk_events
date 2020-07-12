@@ -3,8 +3,7 @@
 @section('head')
 
 	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>    
-	<script src="https://khalti.com/static/khalti-checkout.js"></script>
-
+    <script src="https://unpkg.com/khalti-checkout-web@latest/dist/khalti-checkout.iffe.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <style type="text/css">
             /**
@@ -47,18 +46,7 @@
     <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  my-8">
     	<p class="text-red-600 my-4">{{ session('error') }}</p>
     	<div class="flex-1 flex flex-col">
-			<div class="flex items-center mb-4 ">
-
-				<a href="/" class="mr-3" class="flex items-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="transform rotate-180 w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-					<span class="ml-3 text-md">Back</span>
-				</a>
-				
-	        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	        		<h4 class="text-md font-light text-c-pink opacity-75">{</h4>
-	    		
-		    </div>
-
+		
 		    <form
 		    	id="bookForm"
 		    	method="POST" action="/events/{{$event->id}}/book">   
@@ -72,12 +60,12 @@
 		    			</h3>
 
 		    			<div class="mt-5 mb-3">
-			    			<div class="flex flex-col lg:flex-row items-center mb-4">
-				    			<div class="lg:w-1/2 lg:mr-2 flex flex-col mb-4">
+			    			<div class="flex flex-col md:flex-row items-center mb-4">
+				    			<div class="md:w-1/2 md:mr-2 flex flex-col mb-4">
 				    				<label for="first_name" class="mb-2 text-c-lighter-black text-sm">First name</label>
-				    				<input type="text" name="first_name" value="{{ $auth ? $auth->first_name : '' }}" class="px-6 py-3 rounded-lg border-2 border-gray-300" placeholder="Shraddha">
+				    				<input type="text" name="first_name" value="{{ $auth ? $auth->first_name : '' }}" class="px-6 py-3 rounded-md border-2 border-gray-300" placeholder="Shraddha">
 				    			</div>
-				    			<div class="lg:w-1/2  lg:ml-2 flex flex-col">
+				    			<div class="md:w-1/2  md:ml-2 flex flex-col">
 				    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Last name</label>
 				    				<input type="text" name="last_name" value="{{ $auth ? $auth->last_name : '' }}" class="px-6 py-3 rounded-lg border-2 border-gray-300" placeholder="Shrestha">
 				    			</div>
@@ -180,30 +168,24 @@
         const khaltiTab = document.getElementById('khaltiTab');
         const bookForm         = document.getElementById('bookForm');
 
-
         var config = {
-	        // replace the publicKey with yours
-	        "publicKey": "<?php echo env('KHALTI_PUBLIC_KEY'); ?>",
-	        "productIdentity": "{{ $event->id }}",
-	        "productName": "{{ $event->title }}",
-	        "productUrl": "{{ $event->cover }}",
-	        "eventHandler": {
-	            onSuccess (payload) {
-	            	// request options
-	            	// let input = document.createElement('input');
-	            	// input.value = payload.token;
-					const options = {
-					    method: 'POST',
-					    body: JSON.stringify(payload),
-					    headers: {
-					        'Content-Type': 'application/json',
-					        "Accept": "application/json",
-	        				"X-Requested-With": "XMLHttpRequest",
-	        				"X-CSRF-Token": document.head.querySelector('meta[name="csrf-token"]').content
-					    }
-					}
-
-					//Payment Typed
+            // replace the publicKey with yours
+            "publicKey": "<?php echo env('KHALTI_PUBLIC_KEY'); ?>",
+            "productIdentity": "{{ $event->id }}",
+            "productName": "{{ $event->title }}",
+            "productUrl": "{{ $event->cover }}",
+            "paymentPreference": [
+                // "MOBILE_BANKING",
+                "KHALTI",
+                // "EBANKING",
+                // "CONNECT_IPS",
+                // "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                    //Payment Typed
 	                // hit merchant api for initiating verfication
 	                var hiddenInput = document.createElement('input');
 		            hiddenInput.setAttribute('type', 'hidden');
@@ -221,36 +203,34 @@
 
 		            // submit form
 		            bookForm.submit();
-	       //          fetch('/checkout', options)
-				    // .then(res => res.json())
-				    // .then(res => {
-				    // 	console.log(res);
-				    // 	if(res.status == 200){
-				    // 		console.log('Payment Successful.');
-				    // 	}
-				    // })
-				    // .catch((error) => {
-				    // 	console.log('Error!');
-				    // });
-	                // console.log(payload);
-	            },
-	            onError (error) {
-	                console.log(error);
-	            },
-	            onClose () {
-	                console.log('widget is closing');
-	            }
-	        }
-	    };
+                },
+                onError (error) {
+                    console.log(error);
+                    var hiddenInput = document.createElement('p');
+		            hiddenInput.setAttribute('class', 'text-red-600 text-lg');
+		            if(error.detail){
+		            	hiddenInput.setAttribute('value', error.payload.detail);		     
+		            }
+		            if(error.payload.detail){
+		            	hiddenInput.setAttribute('value', error.payload.detail);		     
+		            }
+		            bookForm.appendChild(hiddenInput);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
 
-	    var checkout = new KhaltiCheckout(config);
-	    // console.log(total);
-	    const $total = "{{ $event->price }}" * 100;
+        var checkout = new KhaltiCheckout(config);
+
+        const total         = "{{ $total }}";
+
 	    khaltiTab.onclick = function () {
-	        checkout.show({amount: $total});
+	        checkout.show({amount: total});
 	    }
 
-
+	    //Stripe Confrimation 
        	stripeTab.addEventListener('click', () => {
        		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
             var stripe = Stripe(`${key}`);
