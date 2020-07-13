@@ -185,79 +185,97 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        dd($request->all());
-        abort_if(!auth()->user()->can('add events'), 403);
+        // dd($request->all());
+        abort_if(!auth()->user()->can('update events'), 403);
 
         $data = $request->validate([
             'title'               => 'required|string|min:2',
-            'category'         => 'required|numeric', 
-            'cover'               => 'required|file', 
+            'category'            => 'required|numeric', 
+            'cover'               => 'nullable|file', 
             'sub_title'           => 'required|string', 
             'price'               => 'required|numeric', 
-            'start'          => 'required|date', 
-            'time'          => 'required|time', 
-            'end'            => 'required|date', 
-            'book_before'         => 'required', 
+            'start'               => 'nullable|date', 
+            'time'                => 'nullable', 
+            'end'                 => 'nullable|date', 
+            'book_before'         => 'nullable', 
             'ticket'              => 'required|numeric', 
             'description'         => 'required', 
             'venue_name'          => 'required|string', 
             'venue_full_address'  => 'required|string', 
-            'venue_latitude'      => 'nullable', 
-            'venue_longitude'     => 'nullable',   
         ]);
-    
-        
-        if($request->hasFile('cover')){
 
+
+        if(request()->start){
+            $start_date = ['start' => request()->start];
+        } 
+        if(request()->time){
+            $start_time = ['time' => request()->time];
+        } 
+        if(request()->end){
+            $end_date = ['end' => request()->end];
+        } 
+        if(request()->book_before){
+            $book_before = ['book_before' =>request()->book_before];
+        } 
+
+        // dd($request->all());
+        $file      = $request->file('cover'); 
+
+        if($file){
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
-            $files      = $request->file('cover'); 
-            foreach($files as $file){
-                $filename = $file->getClientOriginalName();
+            // // foreach($files as $file){
+            $filename  = $file->getClientOriginalName();
 
-                $extension = $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
 
-                $check = in_array($extension,$allowedfileExtension);
-                abort_if(!$check, 422);
-            }
-
-            if(! is_dir(public_path('/events'))){
-                mkdir(public_path('/events'), 0777);
-            }
+            $check     = in_array($extension, $allowedfileExtension);
+            abort_if(!$check, 422);
 
 
-
-            // echo "Run";
+            // dd($file);
+            //Real Image;
             $basename  = Str::random();
             $original  = 'ev-' . $basename . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('/events'), $original);
-            $path = 'events/' . $original;  
+            $path = '/events/' . $original;     
 
+            $coverArr = ['cover' => $path];
+            $thumbArr = ['thumbnail' => $path];
             //Delete Prev File
-            File::delete([
-                public_path($event->cover)
-            ]);          
+            if($event->cover){
+                File::delete([
+                    public_path($event->cover)
+                ]); 
+            }
+
+            if($event->thumbnail){
+                File::delete([
+                    public_path($event->thumbnail)
+                ]); 
+            }
+
         }
 
         // dd($request->all());
-        $event = $event->update([
+        $event = $event->update(array_merge([
+            'user_id'         => auth()->user()->id,
+            'category_id'         => $data['category'],
             'title'               => $data['title'],
             'slug'                => Str::slug($data['title']),
-            'category_id'         => $data['category'],
-            'cover'               => $path, 
-            'thumbnail'               => $path, 
             'sub_title'           => $data['sub_title'], 
             'price'               => $data['price'],
-            'start'          => $data['start'],
-            'time'          => $data['time'],
-            'end'            => $data['end'],
-            'book_before'         => $data['book_before'],
             'ticket'              => $data['ticket'], 
             'description'         => $data['description'],
             'venue_name'          => $data['venue_name'],
-            'venue_full_address'  => $data['venue_full_address'], 
-            'venue_latitude'      => $data['venue_latitude'],
-            'venue_longitude'     => $data['venue_longitude']        
-        ]);
+            'venue_full_address'  => $data['venue_full_address']
+        ], 
+            $coverArr ?? [],
+            $thumbArr ?? [],
+            $start_date ?? [],
+            $start_time ?? [],
+            $end_date ?? [],
+            $book_before ?? []
+        ));
 
         return redirect()->back()->with('success', 'Event updated.');
     }

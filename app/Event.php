@@ -45,6 +45,12 @@ class Event extends Model
         // return $date->translatedFormat('g:i a l jS F Y'); 
     }
 
+
+     public function format_time($time){
+        $time = Carbon::parse($time);
+        return $time->translatedFormat('g:i a'); 
+    }
+
     public function Daysdiff()
     {
         $to = Carbon::createFromFormat('Y-m-d', $this->start);

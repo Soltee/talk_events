@@ -65,7 +65,7 @@
 							<td class="border px-4 py-4">{{ $event->venue_full_address }}</td>
 							<td class="border px-4 py-4">{{ $event->created_at->diffForHumans() }}</td>
 							<td class="border px-4 py-4">
-								<a class="text-blue-600" href="{{ route('event.update', $event->id) }}">
+								<a class="text-blue-600" href="{{ route('event.edit', $event->id) }}">
 									Edit
 								</a>								
 							</td>

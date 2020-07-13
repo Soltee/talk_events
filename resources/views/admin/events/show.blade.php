@@ -10,7 +10,7 @@
         <p class="my-2 text-red-600">{{ session('success') }}</p>
         <p class="my-2 text-red-600">{{ session('error') }}</p>
  		@can('update events')
-    		<a href="{{ route('event.update', $event->id) }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">Edit</a>
+    		<a href="{{ route('event.edit', $event->id) }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">Edit</a>
     	@endcan
  		<div class="flex justify-between items-center  mb-6">
        		<div class="flex items-center">

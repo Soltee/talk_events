@@ -21,14 +21,15 @@
 		@endif
         <form method="POST" action="{{ route('event.update', $event->id) }}" enctype="multipart/form-data">
         	@csrf
+        	@method('PATCH')
 	       	<div class="flex justify-between items-center  mb-6">
 	       		<div class="flex items-center">
 	       			<a href="{{ route('events') }}" class=" text-md font-md text-gray-900   mr-5  hover:opacity-75">Back</a>
-	       			<h3 class="text-gray-900 text-lg ">Add Event</h3>
+	       			<h3 class="text-gray-900 text-lg ">Edit {{ $event->title }}</h3>
 	       		</div>
 
 				<button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
-	    			Publish
+	    			Save
 	    		</button>	
 
 	    	
@@ -44,7 +45,7 @@
 	                            {{ __('Title') }}
 	                        </label>
 
-	                        <input id="title" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('title') border-red-500 @enderror " name="title" value="{{ old('title') }}"  autofocus placeholder="">
+	                        <input id="title" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('title') border-red-500 @enderror " name="title" value="{{ old('title') ?? $event->title }}"  autofocus placeholder="">
 
 	                        @error('title')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -57,7 +58,7 @@
 	                            {{ __('Sub Title') }}
 	                        </label>
 
-	                        <input id="subtitle" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('sub_title') border-red-500 @enderror " name="sub_title" value="{{ old('sub_title') }}"  autofocus placeholder="">
+	                        <input id="subtitle" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('sub_title') border-red-500 @enderror " name="sub_title" value="{{ old('sub_title') ?? $event->sub_title }}"  autofocus placeholder="">
 
 	                        @error('sub_title')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -71,7 +72,7 @@
 	                            {{ __('Price') }}
 	                        </label>
 
-	                        <input id="price" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('price') border-red-500 @enderror " name="price" value="{{ old('price') }}"  autofocus placeholder="">
+	                        <input id="price" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('price') border-red-500 @enderror " name="price" value="{{ old('price') ?? $event->price }}"  autofocus placeholder="">
 
 	                        @error('price')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -87,7 +88,7 @@
 		                            {{ __('Start') }}
 		                        </label>
 
-		                        <input id="start" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('start') border-red-500 @enderror " name="start" value="{{ old('start') }}"  autofocus placeholder="">
+		                        <input id="start" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('start') border-red-500 @enderror " name="start" value="{{ old('start') ?? date('d/m/Y', strtotime($event->start)) }}"  autofocus placeholder="">
 
 		                        @error('start')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -100,7 +101,7 @@
 		                            {{ __('Time') }}
 		                        </label>
 
-		                        <input id="time" type="time"  class="datetime-field shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('time') border-red-500 @enderror " name="time" value="{{ old('time') }}"  autofocus placeholder="">
+		                        <input id="time" type="time"  class="datetime-field shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('time') border-red-500 @enderror " name="time" value="{{ old('time') ?? $event->time }}"  autofocus placeholder="">
 
 		                        @error('time')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -112,8 +113,7 @@
 		                        <label for="end" class="block text-gray-700 text-sm font-bold mb-2">
 		                            {{ __('Finish') }}
 		                        </label>
-
-		                        <input id="end" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('end') border-red-500 @enderror " name="end" value="{{ old('end') }}"  autofocus placeholder="">
+		                        <input id="end" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('end') border-red-500 @enderror " name="end" value="{{ old('end') ?? date('d/m/Y', strtotime($event->end)) }}"  autofocus placeholder="">
 
 		                        @error('end')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -129,7 +129,7 @@
 		                            {{ __('Book Before') }}
 		                        </label>
 
-		                        <input id="book_before" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('book_before') border-red-500 @enderror " name="book_before" value="{{ old('book_before') }}"  autofocus placeholder="">
+		                        <input id="book_before" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('book_before') border-red-500 @enderror " name="book_before" value="{{ old('book_before') ?? $event->book_before }}"  autofocus placeholder="">
 
 		                        @error('book_before')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -142,7 +142,7 @@
 		                            {{ __('Ticket') }}
 		                        </label>
 
-		                        <input id="ticket" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('ticket') border-red-500 @enderror " name="ticket" value="{{ old('ticket') }}"  autofocus placeholder="">
+		                        <input id="ticket" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('ticket') border-red-500 @enderror " name="ticket" value="{{ old('ticket') ?? $event->ticket }}"  autofocus placeholder="">
 
 		                        @error('ticket')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -158,8 +158,8 @@
 
 	                        <textarea id="description" type="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('description') border-red-500 -40 @enderror " name="description" value=""  rows="10">
 	                        	
-	                        		{{ old('description') }}
-	                        	</textarea>
+	                        		{{ old('description') ?? $event->description }}
+	                        </textarea>
 
 	                        @error('description')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -174,7 +174,7 @@
 	                            {{ __('Venue') }}
 	                        </label>
 
-	                        <input id="venue_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_name') border-red-500 @enderror " name="venue_name" value="{{ old('venue_name') }}"  autofocus placeholder="">
+	                        <input id="venue_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_name') border-red-500 @enderror " name="venue_name" value="{{ old('venue_name') ?? $event->venue_name }}"  autofocus placeholder="">
 
 	                        @error('venue_name')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -188,7 +188,7 @@
 	                            {{ __('Venue Address') }}
 	                        </label>
 
-	                        <input id="venue_full_address" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_full_address') border-red-500 @enderror " name="venue_full_address" value="{{ old('venue_full_address') }}"  autofocus placeholder="">
+	                        <input id="venue_full_address" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_full_address') border-red-500 @enderror " name="venue_full_address" value="{{ old('venue_full_address') ?? $event->venue_full_address }}"  autofocus placeholder="">
 
 	                        @error('venue_full_address')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -214,7 +214,8 @@
 	                            </p>
 	                        @enderror
 	                    </div>
-	                    <img id="coverImage" class="mb-6 rounded object-cover object-center">
+
+	                    <img id="coverImage" src="{{ asset($event->cover) }}" class="mb-6 rounded object-cover object-center">
 	                    
 	                    <div class="flex flex-wrap mb-6">
 	                        
@@ -223,6 +224,7 @@
 	                        </label>
 	                        <div class="inline-block relative w-full">
 							  <select name="category" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+							  	<option value="{{ $cat->id }}" selected="">{{ $cat->name }}</option>
 							  	@forelse($categories as $category)
 							    	<option value="{{ $category->id }}">{{ $category->name }}</option>
 							    @empty
@@ -256,16 +258,17 @@
 
         document.addEventListener("DOMContentLoaded", function(){
 
-        	document.querySelector("#time").addEventListener("input", function(e) {
-			  const reTime = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
-			  const time = this.value;
-			  if (reTime.exec(time)) {
-			    const minute = Number(time.substring(3,5));
-			    const hour = Number(time.substring(0,2)) % 12 + (minute / 60);
-			    // this.style.backgroundImage = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='20' cy='20' r='18.5' fill='none' stroke='%23222' stroke-width='3' /><path d='M20,4 20,8 M4,20 8,20 M36,20 32,20 M20,36 20,32' stroke='%23bbb' stroke-width='1' /><circle cx='20' cy='20' r='2' fill='%23222' stroke='%23222' stroke-width='2' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,4 20.5,4 21.5,24.5 Z' fill='%23222' style='transform:rotate(${360 * minute / 60}deg); transform-origin: 50% 50%;' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,8.5 20.5,8.5 21.5,24.5 Z' style='transform:rotate(${360 * hour / 12}deg); transform-origin: 50% 50%;' /></svg>")`;
-			  }
-			});
-            
+        	document.querySelector("#time").value = "{{ $event->time }}";
+
+        	function outPut(date){
+        		const reTime = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
+			    const time = this.date;
+			    if (reTime.exec(time)) {
+			        const minute = Number(time.substring(3,5));
+			        const hour = Number(time.substring(0,2)) % 12 + (minute / 60);
+			   } 
+        	};
+
 			let readImage = document.getElementById('coverImage');
 
 			var file = document.querySelector('input[type=file]');
