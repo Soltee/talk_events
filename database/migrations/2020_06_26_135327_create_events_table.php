@@ -23,15 +23,16 @@ class CreateEventsTable extends Migration
             $table->string('slug')->unique();
             $table->string('sub_title')->nullable();
             $table->decimal('price');
-            $table->datetime('start_time');
-            $table->datetime('end_time');
+            $table->date('start');
+            $table->time('time');
+            $table->date('end');
             $table->string('book_before');
             $table->integer('ticket');
             $table->text('description');
             $table->string('venue_name');
             $table->string('venue_full_address');
-            $table->string('venue_latitude');
-            $table->string('venue_longitude');
+            $table->string('venue_latitude')->nullable();
+            $table->string('venue_longitude')->nullable();
             $table->timestamps();;
         });
     }

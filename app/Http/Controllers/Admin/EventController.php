@@ -9,7 +9,8 @@ use App\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
+use Image;
 class EventController extends Controller
 {
     /**
@@ -38,8 +39,8 @@ class EventController extends Controller
             $query = $query->where('title', 'LIKE', '%'.$search.'%')
                             ->orWhere('price', 'LIKE', '%'.$search.'%')
                             ->orWhere('venue_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('ticket', 'LIKE', '%'.$search.'%');
-                            ->whereDate('end_time', '=', Carbon::today()->toDateString()); 
+                            ->orWhere('ticket', 'LIKE', '%'.$search.'%')
+                            ->whereDate('end', '=', Carbon::today()->toDateString()); 
         }
 
         $paginate = $query->paginate(9);
@@ -52,70 +53,96 @@ class EventController extends Controller
         return view('admin.events.index', compact('events', 'total', 'first', 'last', 'previous', 'next'));
     }
 
+    /** Create Page */
+    public function create(Request $request)
+    {
+        abort_if(!auth()->user()->can('add events'), 403);
+
+        $categories = Category::latest()->get();
+        return view('admin.events.create', compact('categories'));
+    }
 
     /** Store */
     public function store(Request $request)
     {
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        // dd($request->all());
+        abort_if(!auth()->user()->can('add events'), 403);
 
         $data = $request->validate([
             'title'               => 'required|string|min:2',
-            'category_id'         => 'required|int', 
-            'cover'               => 'required|image', 
+            'category'         => 'required|numeric', 
+            'cover'               => 'required|file', 
             'sub_title'           => 'required|string', 
-            'price'               => 'required|int', 
-            'start_time'          => 'required|', 
-            'end_time'            => 'required|', 
-            'book_before'         => 'required|', 
-            'ticket'              => 'required|int', 
+            'price'               => 'required|numeric', 
+            'start'               => 'required|date', 
+            'time'                => 'required', 
+            'end'                 => 'required|date', 
+            'book_before'         => 'required', 
+            'ticket'              => 'required|numeric', 
             'description'         => 'required', 
             'venue_name'          => 'required|string', 
             'venue_full_address'  => 'required|string', 
-            'venue_latitude'      => 'required', 
-            'venue_longitude'     => 'required',   
         ]);
 
+        // dd($data);
         // dd($request->file('cover'));
-        if($request->hasFile('cover')){
+           
 
-            $allowedfileExtension = ['jpeg','jpg','png','gif'];
-            $images      = $request->file('cover'); 
-            foreach($images as $file){
-                $filename = $file->getClientOriginalName();
+        //Thumbnail
+        // $photo      = $request->file('cover'); 
 
-                $extension = $file->getClientOriginalExtension();
+        // $basename  = Str::random();
+        // $thumbnail = 'event-thumbnail' . $basename . '.' . $photo->getClientOriginalExtension();
 
-                $check = in_array($extension,$allowedfileExtension);
-                abort_if(!$check, 422);
-            }
+        // $img = Image::make($photo->getRealPath());
+        // $img->fit(600, 600, function ($constraint) {
+        //     $constraint->upsize();                 
+        // });
 
-            if(! is_dir(public_path('/events'))){
-                mkdir(public_path('/events'), 0777);
-            }
+        // $img->stream(); // <-- Key point
+        // $photo->move(public_path('/events'), $thumbnail);
 
 
-            // echo "Run";
-            $basename  = Str::random();
-            $original  = 'ev-' . $basename . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('/events'), $original);
-            $path = 'events/' . $original;            
+        $allowedfileExtension = ['jpeg','jpg','png','gif'];
+        $file      = $request->file('cover'); 
+        // // foreach($files as $file){
+        $filename  = $file->getClientOriginalName();
+
+        $extension = $file->getClientOriginalExtension();
+
+        $check     = in_array($extension, $allowedfileExtension);
+        abort_if(!$check, 422);
+
+        if(!is_dir(public_path('/events'))){
+            mkdir(public_path('/events'), 0777);
         }
 
-        $event = auth()->user()->events->create([
+        // dd($file);
+        //Real Image;
+        $basename  = Str::random();
+        $original  = 'ev-' . $basename . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('/events'), $original);
+        $path = '/events/' . $original;     
+
+        // echo $original . ' ' . $thumbnail;
+
+        $event = Event::create([
+            'user_id'            => auth()->user()->id,
+            'category_id'         => $data['category'],
             'title'               => $data['title'],
-            'category_id'         => $data['category_id'],
+            'slug'               => Str::slug($data['title']),
             'cover'               => $path, 
+            'thumbnail'               => $path, 
             'sub_title'           => $data['sub_title'], 
             'price'               => $data['price'],
-            'start_time'          => $data['start_time'],
-            'end_time'            => $data['end_time'],
+            'start'          => $data['start'],
+            'time'            => $data['time'],
+            'end'            => $data['end'],
             'book_before'         => $data['book_before'],
             'ticket'              => $data['ticket'], 
             'description'         => $data['description'],
             'venue_name'          => $data['venue_name'],
-            'venue_full_address'  => $data['venue_full_address'], 
-            'venue_latitude'      => $data['venue_latitude'],
-            'venue_longitude'     => $data['venue_longitude']        
+            'venue_full_address'  => $data['venue_full_address']       
         ]);
 
         return back()->with('success', 'Event created.');
@@ -125,25 +152,25 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  numeric  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Event $event)
     {
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        abort_if(!auth()->user()->can('view events'), 403);
         $cat    = $event->category;
-        return view('admin.events.view', compact('event', 'cat'));
+        return view('admin.events.show', compact('event', 'cat'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  numeric  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Event $event)
     {
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        abort_if(!auth()->user()->can('update events'), 403);
         $categories = Category::latest()->get();
         $cat        = $event->category;
         return view('admin.events.edit', compact('event', 'categories', 'cat'));
@@ -153,37 +180,38 @@ class EventController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  numeric  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Event $event)
     {
-        // dd($request->all());
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        dd($request->all());
+        abort_if(!auth()->user()->can('add events'), 403);
 
         $data = $request->validate([
             'title'               => 'required|string|min:2',
-            'category_id'         => 'required|int', 
-            'cover'               => 'required|image', 
+            'category'         => 'required|numeric', 
+            'cover'               => 'required|file', 
             'sub_title'           => 'required|string', 
-            'price'               => 'required|int', 
-            'start_time'          => 'required|', 
-            'end_time'            => 'required|', 
-            'book_before'         => 'required|', 
-            'ticket'              => 'required|int', 
+            'price'               => 'required|numeric', 
+            'start'          => 'required|date', 
+            'time'          => 'required|time', 
+            'end'            => 'required|date', 
+            'book_before'         => 'required', 
+            'ticket'              => 'required|numeric', 
             'description'         => 'required', 
             'venue_name'          => 'required|string', 
             'venue_full_address'  => 'required|string', 
-            'venue_latitude'      => 'required', 
-            'venue_longitude'     => 'required',   
+            'venue_latitude'      => 'nullable', 
+            'venue_longitude'     => 'nullable',   
         ]);
     
         
         if($request->hasFile('cover')){
 
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
-            $images      = $request->file('cover'); 
-            foreach($images as $file){
+            $files      = $request->file('cover'); 
+            foreach($files as $file){
                 $filename = $file->getClientOriginalName();
 
                 $extension = $file->getClientOriginalExtension();
@@ -200,8 +228,8 @@ class EventController extends Controller
 
             // echo "Run";
             $basename  = Str::random();
-            $original  = 'ev-' . $basename . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('/events'), $original);
+            $original  = 'ev-' . $basename . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('/events'), $original);
             $path = 'events/' . $original;  
 
             //Delete Prev File
@@ -213,13 +241,15 @@ class EventController extends Controller
         // dd($request->all());
         $event = $event->update([
             'title'               => $data['title'],
-            'slug'                => Str::slug($data['title'],
-            'category_id'         => $data['category_id'],
+            'slug'                => Str::slug($data['title']),
+            'category_id'         => $data['category'],
             'cover'               => $path, 
+            'thumbnail'               => $path, 
             'sub_title'           => $data['sub_title'], 
             'price'               => $data['price'],
-            'start_time'          => $data['start_time'],
-            'end_time'            => $data['end_time'],
+            'start'          => $data['start'],
+            'time'          => $data['time'],
+            'end'            => $data['end'],
             'book_before'         => $data['book_before'],
             'ticket'              => $data['ticket'], 
             'description'         => $data['description'],
@@ -236,18 +266,26 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  numeric  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Event $event)
     {
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        abort_if(!auth()->user()->can('delete events'), 403);
 
-        File::delete([
-            public_path($event->cover)
-        ]);
+        if($event->cover){
+            File::delete([
+                public_path($event->cover)
+            ]);
+        };
+
+        if($event->thumbnail){
+            File::delete([
+                public_path($event->thumbnail)
+            ]);
+        }
 
         $event->delete();
-        return redirect()->back()->with('success', 'Event deleted.');
+        return redirect()->route('events')->with('success', 'Event deleted.');
     }
 }

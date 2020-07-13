@@ -49,6 +49,8 @@ Route::prefix('admin')->group(function () {
 	//Events
 	Route::group(['middleware' => ['permission:add events']], function () {
 		Route::get('events', 'Admin\EventController@index')->name('events');
+		Route::get('events/create', 'Admin\EventController@create')->name('event.create');
+		Route::get('events/{event}', 'Admin\EventController@show')->name('event.show');
 		Route::post('events', 'Admin\EventController@store')->name('event.store');
 		Route::patch('events/{event}', 'Admin\EventController@update')->name('event.update');
 		Route::delete('events/{event}', 'Admin\EventController@destroy')->name('event.destroy');

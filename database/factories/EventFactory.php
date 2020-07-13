@@ -28,11 +28,15 @@ $factory->define(Event::class, function (Faker $faker) {
         	$p = [50, 60, 70, 100];
         	return Arr::random($p);
         }, 
-        'start_time' => function() { 
-        	$start = [50, 60, 70, 90, 100];
-        	return now()->addDays(Arr::random($start));
+        'start' => function() { 
+            $start = [50, 60, 70, 90, 100];
+            return now()->addDays(Arr::random($start));
+        },
+        'time' => function() { 
+            $time = [50, 60, 70, 90, 100];
+            return now()->addMinutes(Arr::random($time));
         }, 
-        'end_time' => function() { 
+        'end' => function() { 
         	$end = [100, 102, 104, 106, 108, 110];
         	return now()->addDays(Arr::random($end));
         }, 
