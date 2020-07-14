@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class, 30)->create();
+        $users = factory(App\User::class, 15)->create();
         //Roles & Permisssons
         $user_role = Role::create(['name' => 'user']);
         $user_role = Role::findByName('user');
@@ -98,6 +98,11 @@ class DatabaseSeeder extends Seeder
         $event_manager->assignRole($manager_role);
 
         //super admin
+        Permission::create(['name' => 'add users']);
+        Permission::create(['name' => 'update users']);
+        Permission::create(['name' => 'view users']);
+        Permission::create(['name' => 'delete users']);
+
         $super_admin_role = Role::create(['name' => 'super-admin']);
         $super_admin_role->givePermissionTo('add categories');
         $super_admin_role->givePermissionTo('update categories');
@@ -115,6 +120,10 @@ class DatabaseSeeder extends Seeder
         $super_admin_role->givePermissionTo('update sponsers');
         $super_admin_role->givePermissionTo('view sponsers');
         $super_admin_role->givePermissionTo('delete sponsers');
+        $super_admin_role->givePermissionTo('add users');
+        $super_admin_role->givePermissionTo('update users');
+        $super_admin_role->givePermissionTo('view users');
+        $super_admin_role->givePermissionTo('delete users');
 
         $super_admin = factory(App\User::class)->create([
             'first_name'        => 'super-admin',
@@ -128,11 +137,11 @@ class DatabaseSeeder extends Seeder
         $super_admin->assignRole($super_admin_role);
 
 
-        factory(App\Category::class, 12)->create();
-        factory(App\Event::class, 50)->create();
-        factory(App\Speaker::class, 120)->create();
-        factory(App\Sponser::class, 200)->create();
-        factory(App\Booking::class, 120)->create();
-        factory(App\Social::class, 120)->create();
+        factory(App\Category::class, 2)->create();
+        factory(App\Event::class, 30)->create();
+        factory(App\Speaker::class, 30)->create();
+        factory(App\Sponser::class, 16)->create();
+        factory(App\Booking::class, 10)->create();
+        factory(App\Social::class, 60)->create();
     }
 }

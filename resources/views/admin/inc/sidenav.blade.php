@@ -42,5 +42,15 @@
     		</a>
     	</li>
     	@endcan
+        @can('add users')
+        <li class="list-none mb-4">
+            <a 
+                class="flex items-center-"
+                href="{{ route('users') }}">
+
+                <span class="text-lg">Users</span>
+            </a>
+        </li>
+        @endcan
     </ul>
 </div>
