@@ -22,9 +22,11 @@
         "league/omnipay": "^3.0",
         "omnipay/stripe": "^3.1",
         "spatie/laravel-permission": "^3.13",
+        "spatie/laravel-query-builder": "^2.8",
         "srmklive/paypal": "~1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.3",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "laravel-frontend-presets/tailwindcss": "^4.1",

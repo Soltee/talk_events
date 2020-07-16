@@ -24,7 +24,7 @@ class SpeakerController extends Controller
     {
         $search = request()->keyw;
 
-        $query = Event::latest();
+        $query = Speaker::latest();
 
         if($search){
             $query = $query->where('first_name', 'LIKE', '%'.$search.'%')

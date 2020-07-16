@@ -12,12 +12,17 @@
            	
        	<div class="flex justify-between items-center  mb-6">
 
-       		<h3 class="text-gray-900 text-lg ">Events</h3>
+       		<h3 class="text-gray-900 text-lg ">
+       			<a href="{{ route('events') }}">Events</a>
+       		</h3>
     		<form action="{{ route('events') }}" method="get" accept-charset="utf-8">
     			@csrf
     			<div class="flex items-center justify-between">
 
-    				<input type="text" name="keyw" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Search Order by title, location, price">
+    				<input type="text" name="filter[title]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['title'] }}" placeholder="Title">
+    				<input type="text" name="filter[venue_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['venue_name'] }}" placeholder="Venue">
+    				<input type="date" name="filter[starts_at]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['starts_at'] }}" placeholder="Start Date">
+    			
 			
 					<button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
 		    			Search
@@ -37,10 +42,10 @@
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Image</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Title</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Price</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Date</th>
+
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Ticket</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Venue</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Created At</th>
+						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Start</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600"></th>
 					</tr>
 				</thead>
@@ -59,15 +64,24 @@
 								</a>
 							</td>
 							<td class="border px-4 py-4">$ {{ $event->price }}</td>
-							{{-- <td class="border px-4 py-4"> {{ $event->start .'-'. $event->end }}</td> --}}
-							<td class="border px-4 py-4">{{ $event->format_date($event->date) }}</td>
+					
+
+							
+
 							<td class="border px-4 py-4">{{ $event->ticket }}</td>
 							<td class="border px-4 py-4">{{ $event->venue_full_address }}</td>
-							<td class="border px-4 py-4">{{ $event->created_at->diffForHumans() }}</td>
+							<td class="border px-4 py-4">{{ $event->format_date($event->start) }}</td>
 							<td class="border px-4 py-4">
-								<a class="text-blue-600" href="{{ route('event.edit', $event->id) }}">
-									Edit
-								</a>								
+								<div class="flex items-center">
+									<a class="text-blue-600 mr-5" href="{{ route('event.edit', $event->id) }}">
+										Edit
+									</a>	
+									<form method="POST" action="{{ route('event.destroy', $event->id) }}">
+										@csrf
+										@method('DELETE')
+										<button type="submit" class="px-6 py-3 bg-red-600 hover:opacity-75 text-white rounded">Drop</button>
+									</form>						
+								</div>	
 							</td>
 						</a>
 						
@@ -84,25 +98,30 @@
 			</table>
 			
 			<div class="my-6 flex justify-between items-center">
-				@if($previous)
-				<a  class="px-4 py-3 rounded-lg text-indigo-500 text-lg" href="{{ $previous }}">
-					Prev
-				</a>
-				@else
-				<span  class="px-4 py-3 rounded-lg text-transparent text-lg">
-					Prev
-				</span>
-				@endif
+				<div class="flex items-center">
+					Showing {{ $first }} - {{ $last }} of {{ $total }}
+				</div>
+				<div class="flex justify-between items-center">
+					@if($previous)
+					<a  class="px-4 py-3 rounded-lg text-indigo-500 text-lg" href="{{ $previous }}">
+						Prev
+					</a>
+					@else
+					<span  class="px-4 py-3 rounded-lg text-transparent text-lg">
+						Prev
+					</span>
+					@endif
 
-				@if($next)
-				<a  class="px-4 py-3 rounded-lg text-indigo-500 text-lg" href="{{ $next }}">
-					Next
-				</a>
-				@else
-				<span  class="px-4 py-3 rounded-lg text-transparent text-lg">
-					Next
-				</span>
-				@endif
+					@if($next)
+					<a  class="px-4 py-3 rounded-lg text-indigo-500 text-lg" href="{{ $next }}">
+						Next
+					</a>
+					@else
+					<span  class="px-4 py-3 rounded-lg text-transparent text-lg">
+						Next
+					</span>
+					@endif
+				</div>
 			</div>
 		</div>
     </div>

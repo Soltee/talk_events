@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Image;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+// use Barryvdh\Debugbar\Debugbar;
+
 class EventController extends Controller
 {
     /**
@@ -31,25 +35,43 @@ class EventController extends Controller
     public function index()
     {
 
-        $search = request()->keyw;
+        $query = QueryBuilder::for(Event::class)
+                ->allowedFilters(
+                    [
+                        'title',
+                        'venue_name', 
+                        // AllowedFilter::exact('title'),  
+                        AllowedFilter::scope('starts_at')
+                    ])
+                ->allowedFields(['id', 'cover', 'title', 'price', 'start', 'venue_name'])
+                ->allowedSorts(['title', 'created_at'])
+                ->paginate(10)
+                ->appends(request()->query());
+        // dd(request()->filter['title']);
+        // return $query->items();
 
-        $query = Event::latest();
+        // $search = request()->keyw;
 
-        if($search){
-            $query = $query->where('title', 'LIKE', '%'.$search.'%')
-                            ->orWhere('price', 'LIKE', '%'.$search.'%')
-                            ->orWhere('venue_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('ticket', 'LIKE', '%'.$search.'%')
-                            ->whereDate('end', '=', Carbon::today()->toDateString()); 
-        }
+        // $query = Event::latest();
 
-        $paginate = $query->paginate(9);
-        $events   = $paginate->items();
-        $total    = $paginate->total();
-        $first    = $paginate->firstItem();
-        $last     = $paginate->lastItem();
-        $previous     = $paginate->appends(request()->input())->previousPageUrl();
-        $next     = $paginate->appends(request()->input())->nextPageUrl();
+        // if($search){
+        //     $query = $query->where('title', 'LIKE', '%'.$search.'%')
+        //                     ->orWhere('price', 'LIKE', '%'.$search.'%')
+        //                     ->orWhere('venue_name', 'LIKE', '%'.$search.'%')
+        //                     ->orWhere('ticket', 'LIKE', '%'.$search.'%')
+        //                     ->whereDate('end', '=', Carbon::today()->toDateString()); 
+        // }
+
+        // $paginate = $query->paginate(4);
+        \Debugbar::info($query);
+        $events   = $query->items();
+        $total    = $query->total();
+        $first    = $query->firstItem();
+        $last     = $query->lastItem();
+        $previous     = $query->previousPageUrl();
+        $next     = $query->nextPageUrl();
+        // $previous     = $paginate->appends(request()->input())->previousPageUrl();
+        // $next     = $paginate->appends(request()->input())->nextPageUrl();
         return view('admin.events.index', compact('events', 'total', 'first', 'last', 'previous', 'next'));
     }
 

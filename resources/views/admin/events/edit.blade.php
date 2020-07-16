@@ -19,6 +19,12 @@
 		        </ul>
 		    </div>
 		@endif
+
+		<form class="mb-4" method="POST" action="{{ route('event.destroy', $event->id) }}">
+			@csrf
+			@method('DELETE')
+			<button type="submit" class="px-6 py-3 bg-red-600 hover:opacity-75 text-white rounded">DROP {{$event->title }}</button>
+		</form>
         <form method="POST" action="{{ route('event.update', $event->id) }}" enctype="multipart/form-data">
         	@csrf
         	@method('PATCH')
@@ -88,7 +94,7 @@
 		                            {{ __('Start') }}
 		                        </label>
 
-		                        <input id="start" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('start') border-red-500 @enderror " name="start" value="{{ old('start') ?? date('d/m/Y', strtotime($event->start)) }}"  autofocus placeholder="">
+		                        <input id="start" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('start') border-red-500 @enderror " name="start" value="{{  $event->actual_date($event->start) }}"  autofocus placeholder="">
 
 		                        @error('start')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -113,7 +119,7 @@
 		                        <label for="end" class="block text-gray-700 text-sm font-bold mb-2">
 		                            {{ __('Finish') }}
 		                        </label>
-		                        <input id="end" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('end') border-red-500 @enderror " name="end" value="{{ old('end') ?? date('d/m/Y', strtotime($event->end)) }}"  autofocus placeholder="">
+		                        <input id="end" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('end') border-red-500 @enderror " name="end" value="{{ old('end') ?? $event->actual_date($event->end) }}"  autofocus placeholder="">
 
 		                        @error('end')
 		                            <p class="text-red-500 text-xs italic mt-4">

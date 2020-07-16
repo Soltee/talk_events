@@ -9,6 +9,10 @@ use App\Sponser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\allowedIncludes;
+use Spatie\QueryBuilder\AllowedInclude;
 
 class SponserController extends Controller
 {
@@ -22,30 +26,36 @@ class SponserController extends Controller
     */
     public function index()
     {
-        $search = request()->keyw;
 
-        $query = Sponser::latest();
+        $query = QueryBuilder::for(Sponser::class)
+                ->allowedFilters(
+                    [
+                        'full_name',
+                        'email',
+                        'company_name'
+                    ])
+                ->allowedIncludes([
+                    'event', 
+                    AllowedInclude::count('eventCount'), // only allows include the number of `friends()` related models
+                ])
+                ->allowedSorts(['full_name', 'email', 'company_name', 'created_at'])
+                ->paginate(8)
+                ->appends(request()->query());
 
-        if($search){
-            $query = $query->where('full_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('company_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('email', 'LIKE', '%'.$search.'%');
-        }
-
-        $paginate = $query->paginate(9);
-        $sponsers   = $paginate->items();
-        $total    = $paginate->total();
-        $first    = $paginate->firstItem();
-        $last     = $paginate->lastItem();
-        $previous     = $paginate->appends(request()->input())->previousPageUrl();
-        $next     = $paginate->appends(request()->input())->nextPageUrl();
+        \Debugbar::info($query);
+        $sponsers   = $query->items();
+        $total      = $query->total();
+        $first      = $query->firstItem();
+        $last       = $query->lastItem();
+        $previous     = $query->previousPageUrl();
+        $next       = $query->nextPageUrl();
         return view('admin.sponsers.index', compact('sponsers', 'total', 'first', 'last', 'previous', 'next'));
     }
 
      /** Store */
     public function store(Request $request)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('add sponsers'), 403);
 
         $data = $request->validate([
             'avatar'              => 'required|image', 
@@ -106,7 +116,7 @@ class SponserController extends Controller
      */
     public function show(Sponser $sponser)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('view sponsers'), 403);
         $events        = $sponser->event;
         return view('admin.events.view', compact('sponser', 'events'));
     }
@@ -119,7 +129,7 @@ class SponserController extends Controller
      */
     public function edit(Sponser $sponser)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('update sponsers'), 403);
 
         $events        = $sponser->event;
         return view('admin.events.edit', compact('sponser', 'events'));
@@ -135,7 +145,7 @@ class SponserController extends Controller
     public function update(Request $request, Event $event)
     {
         // dd($request->all());
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('update sponsers'), 403);
 
         $data = $request->validate([
             'avatar'              => 'required|image', 
@@ -175,9 +185,11 @@ class SponserController extends Controller
             $path = 'sponsers/' . $original;  
 
             //Delete Prev File
-            File::delete([
-                public_path($sponser->avatar)
-            ]);          
+            if($sponser->avatar){
+                File::delete([
+                    public_path($sponser->avatar)
+                ]);  
+            }        
         }
 
         // dd($request->all());
@@ -203,11 +215,13 @@ class SponserController extends Controller
      */
     public function destroy(sponser $sponser)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('delete sponsers'), 403);
 
-        File::delete([
-            public_path($sponser->avatar)
-        ]);
+        if($sponser->avatar){
+            File::delete([
+                public_path($sponser->avatar)
+            ]);
+        }
 
         $sponser->delete();
         return redirect()->back()->with('success', 'Sponser deleted.');
