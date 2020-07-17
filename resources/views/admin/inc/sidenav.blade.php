@@ -4,7 +4,7 @@
     </a>
 
     <ul class="m-0 flex flex-col">
-    	<li class="list-none mb-4">
+    	<li class="list-none py-3 border border-gray-200">
     		<a 
     			class="flex items-center-"
     			href="{{ route('admin.dashboard') }}">
@@ -13,7 +13,7 @@
     		</a>
     	</li>
     	@can('add events')
-    	<li class="list-none mb-4">
+    	<li class="list-none py-3 border border-gray-200">
     		<a 
     			class="flex items-center-"
     			href="{{ route('events') }}">
@@ -23,7 +23,7 @@
     	</li>
     	@endcan
     	@can('add speakers')
-    	<li class="list-none mb-4">
+    	<li class="list-none py-3 border border-gray-200">
     		<a 
     			class="flex items-center-"
     			href="{{ route('speakers') }}">
@@ -33,7 +33,7 @@
     	</li>
     	@endcan
     	@can('add sponsers')
-    	<li class="list-none mb-4">
+    	<li class="list-none py-3 border border-gray-200">
     		<a 
     			class="flex items-center-"
     			href="{{ route('sponsers') }}">
@@ -43,7 +43,7 @@
     	</li>
     	@endcan
         @can('add users')
-        <li class="list-none mb-4">
+        <li class="list-none py-3 border border-gray-200">
             <a 
                 class="flex items-center-"
                 href="{{ route('users') }}">

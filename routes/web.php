@@ -55,11 +55,16 @@ Route::prefix('admin')->group(function () {
 		Route::get('events/{event}/edit', 'Admin\EventController@edit')->name('event.edit');
 		Route::patch('events/{event}', 'Admin\EventController@update')->name('event.update');
 		Route::delete('events/{event}', 'Admin\EventController@destroy')->name('event.destroy');
+
+
+		//Api
+		Route::get('api/events', 'Admin\Api\EventController@index');
 	});
 
 	//Speakers
 	Route::group(['middleware' => ['permission:add speakers']], function () {
 		Route::get('speakers', 'Admin\SpeakerController@index')->name('speakers');
+		Route::get('speakers/create', 'Admin\SpeakerController@create')->name('speaker.create');
 		Route::post('speakers', 'Admin\SpeakerController@store')->name('speaker.store');
 		Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')->name('speaker.update');
 		Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')->name('speaker.destroy');

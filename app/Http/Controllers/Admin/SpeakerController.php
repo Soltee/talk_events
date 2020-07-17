@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Event;
 use App\Speaker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Image;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class SpeakerController extends Controller
 {
@@ -22,40 +27,64 @@ class SpeakerController extends Controller
     */
     public function index()
     {
-        $search = request()->keyw;
+        // $search = request()->keyw;
 
-        $query = Speaker::latest();
+        // $query = Speaker::latest();
 
-        if($search){
-            $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('email', 'LIKE', '%'.$search.'%');
-        }
+        // if($search){
+        //     $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
+        //                     ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+        //                     ->orWhere('email', 'LIKE', '%'.$search.'%');
+        // }
 
-        $paginate = $query->paginate(9);
-        $speakers   = $paginate->items();
-        $total    = $paginate->total();
-        $first    = $paginate->firstItem();
-        $last     = $paginate->lastItem();
-        $previous     = $paginate->appends(request()->input())->previousPageUrl();
-        $next     = $paginate->appends(request()->input())->nextPageUrl();
+        // $paginate = $query->paginate(9);
+
+        $query = QueryBuilder::for(Speaker::class)
+                ->allowedFilters(
+                    [
+                        'first_name',
+                        'last_name', 
+                        'email', 
+                        // AllowedFilter::exact('title'),  
+                        // AllowedFilter::scope('starts_at')
+                    ])
+                ->allowedSorts(['first_name', 'email', 'created_at'])
+                ->paginate(10)
+                ->appends(request()->query());
+        // dd(request()->filter);
+        $speakers     = $query->items();
+        $total        = $query->total();
+        $first        = $query->firstItem();
+        $last         = $query->lastItem();
+        $previous     = $query->previousPageUrl();
+        $next         = $query->nextPageUrl();
         return view('admin.speakers.index', compact('speakers', 'total', 'first', 'last', 'previous', 'next'));
+    }
+
+
+    /*
+        * Create Speaker view
+    */
+    public function create()
+    {
+        $events = Event::latest()->get();
+        return view('admin.speakers.create', compact('events'));
     }
 
      /** Store */
     public function store(Request $request)
     {
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        abort_if(!auth()->user()->can('add speakers'), 403);
 
         $data = $request->validate([
             'first_name'          => 'required|string|min:2',
             'last_name'           => 'required|string', 
             'event_id'            =>  'required|int', 
             'email'               =>  'required|email', 
-            'avatar'              => 'required|image', 
-            'about'               => 'nullable|string', 
+            'avatar'              => 'nullable|image', 
+            'about'               => 'nullable', 
             'twitter_link'        => 'nullable|string', 
-            'about'               => 'nullable|string',  
+            'linkedin_link'       => 'nullable|string',  
         ]);
 
 
@@ -85,15 +114,17 @@ class SpeakerController extends Controller
             $path = 'speakers/' . $original;            
         }
 
-        $speaker = auth()->user()->speaker->create([
+        $speaker = Speaker::create(array_merge([
             'event_id'          => $data['event_id'],
             'first_name'        => $data['first_name'],
             'last_name'         => $data['last_name'],
             'email'             => $data['email'], 
-            'avatar'             => $data['avatar'], 
+            'avatar'             => $path, 
             'about'             => $data['about'], 
             'twitter_link'      => $data['twitter_link'], 
-        ]);
+        ]),
+            $linkedin_link ?? []
+        );
 
         return back()->with('success', 'Speaker created.');
 
@@ -107,7 +138,7 @@ class SpeakerController extends Controller
      */
     public function show(Speaker $speaker)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('view speakers'), 403);
         $events        = $speaker->event;
         return view('admin.events.view', compact('speaker', 'events'));
     }
@@ -120,7 +151,7 @@ class SpeakerController extends Controller
      */
     public function edit(Speaker $speaker)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('update speakers'), 403);
 
         $events        = $speaker->event;
         return view('admin.events.edit', compact('speaker', 'events'));
@@ -136,7 +167,7 @@ class SpeakerController extends Controller
     public function update(Request $request, Event $event)
     {
         // dd($request->all());
-        abort_if(!auth()->user()->hasRole('event-manager'), 403);
+        abort_if(!auth()->user()->can('update speakers'), 403);
 
         $data = $request->validate([
             'first_name'          => 'required|string|min:2',
@@ -204,11 +235,13 @@ class SpeakerController extends Controller
      */
     public function destroy(Speaker $speaker)
     {
-        abort_if(!auth()->user()->hasRole('manager'), 403);
+        abort_if(!auth()->user()->can('delete speakers'), 403);
 
-        File::delete([
-            public_path($speaker->avatar)
-        ]);
+        if($speaker->avatar){
+            File::delete([
+                public_path($speaker->avatar)
+            ]);
+        }
 
         $speaker->delete();
         return redirect()->back()->with('success', 'Speaker deleted.');

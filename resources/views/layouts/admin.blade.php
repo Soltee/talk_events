@@ -55,7 +55,7 @@
     </div>
     @yield('login-content')
 
-    @yield('scripts')
+    @stack('scripts')
 
 </body>
 </html>

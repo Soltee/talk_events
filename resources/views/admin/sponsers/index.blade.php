@@ -29,10 +29,10 @@
     	
     	</div>
 
-        <div id='sponsers' class="">
+        <div id='sponsers' class="w-full">
 		 
 			
-			<table id="example" class="stripe hover">
+			<table id="example" class="stripe hover w-full">
 				<thead>
 					<tr>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Avatar</th>

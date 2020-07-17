@@ -19,9 +19,9 @@
     			@csrf
     			<div class="flex items-center justify-between">
 
-    				<input type="text" name="filter[title]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['title'] }}" placeholder="Title">
-    				<input type="text" name="filter[venue_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['venue_name'] }}" placeholder="Venue">
-    				<input type="date" name="filter[starts_at]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['starts_at'] }}" placeholder="Start Date">
+    				<input type="text" name="filter[title]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['title'] ?? '' }}" placeholder="Title">
+    				<input type="text" name="filter[venue_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['venue_name'] ?? '' }}" placeholder="Venue">
+    				<input type="date" name="filter[starts_at]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['starts_at'] ?? '' }}" placeholder="Start Date">
     			
 			
 					<button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
@@ -33,10 +33,10 @@
     	
     	</div>
 
-        <div id='events' class="">
+        <div id='events' class="w-full">
 		 
 			
-			<table id="example" class="stripe hover">
+			<table id="example" class="stripe hover w-full">
 				<thead>
 					<tr>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Image</th>

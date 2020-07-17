@@ -252,7 +252,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/js/tail.datetime.min.js"></script>
 	<script>
@@ -290,4 +290,4 @@
 		
 	</script>
 
-@endsection
+@endpush
