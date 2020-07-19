@@ -125,7 +125,11 @@ class SpeakerController extends Controller
         $events = $speaker->events()->attach($data['events']);
 
         // dd($events);
-        // Notification::send($speaker, new SpeakerAdded($events));
+        // $new  = Speaker::findOrfail($speaker->id);
+        // dd($speaker->events);
+         (new SpeakerAdded($speaker->events))
+                ->toMail($speaker->email);
+        // Notification::send($speaker, new SpeakerAdded($speaker->events));
 
         return back()->with('success', 'Speaker created.');
 
@@ -157,7 +161,8 @@ class SpeakerController extends Controller
         abort_if(!auth()->user()->can('update speakers'), 403);
 
         $events        = $speaker->events;
-        return view('admin.events.edit', compact('speaker', 'events'));
+        $new_events    = Event::latest()->get();
+        return view('admin.speakers.edit', compact('speaker', 'events', 'new_events'));
     }
 
     /**
@@ -167,64 +172,78 @@ class SpeakerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Speaker $speaker)
     {
         // dd($request->all());
         abort_if(!auth()->user()->can('update speakers'), 403);
 
         $data = $request->validate([
+            'events'              => 'nullable|array',
             'first_name'          => 'required|string|min:2',
             'last_name'           => 'required|string', 
-            'event_id'            =>  'required|int', 
             'email'               =>  'required|email', 
-            'avatar'              => 'required|image', 
-            'about'               => 'nullable|string', 
+            'avatar'              => 'nullable|image', 
+            'about'               => 'nullable', 
             'twitter_link'        => 'nullable|string', 
-            'about'               => 'nullable|string',  
+            'linkedin_link'       => 'nullable|string',  
         ]);
-    
-        
+
+
+        // dd(request()->all());
         if($request->hasFile('avatar')){
 
-            $allowedfileExtension = ['jpeg','jpg','png','gif'];
-            $images      = $request->file('avatar'); 
-            foreach($images as $file){
-                $filename = $file->getClientOriginalName();
-
-                $extension = $file->getClientOriginalExtension();
-
-                $check = in_array($extension,$allowedfileExtension);
-                abort_if(!$check, 422);
+            // dd($file);
+            //Real Image;
+            if($speaker->avatar){
+                File::delete([
+                    public_path($speaker->avatar)
+                ]); 
             }
+            $allowedfileExtension = ['jpeg','jpg','png','gif'];
+            $file      = $request->file('avatar'); 
+            // // foreach($files as $file){
+            $filename  = $file->getClientOriginalName();
 
-            if(! is_dir(public_path('/speakers'))){
+            $extension = $file->getClientOriginalExtension();
+
+            $check     = in_array($extension, $allowedfileExtension);
+            abort_if(!$check, 422);
+
+            if(!is_dir(public_path('/speakers'))){
                 mkdir(public_path('/speakers'), 0777);
             }
 
-
-
-            // echo "Run";
+            // dd($file);
+            //Real Image;
             $basename  = Str::random();
-            $original  = 'sp-' . $basename . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('/speakers'), $original);
-            $path = 'speakers/' . $original;  
+            $original  = 'speaker-' . $basename . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('/speakers'), $original);
+            $path = '/speakers/' . $original;  
 
-            //Delete Prev File
-            File::delete([
-                public_path($speaker->avatar)
-            ]);          
+            $avatarArr = ['avatar' => $path];
+
+            
         }
 
-        // dd($request->all());
-        $speaker = $speaker->update([
-            'event_id'          => $data['event_id'],
+        if($data['linkedin_link']){
+            $linkedin_link = ['linkedin_link' => $data['linkedin_link']];
+        }
+
+        // dd($avatarArr);
+        $speaker->update(array_merge([
             'first_name'        => $data['first_name'],
             'last_name'         => $data['last_name'],
             'email'             => $data['email'], 
-            'avatar'             => $data['avatar'], 
             'about'             => $data['about'], 
             'twitter_link'      => $data['twitter_link'],      
-        ]);
+        ], 
+            $avatarArr ?? [],
+            $linkedin_link ?? []
+        ));
+        
+        if($data['events']){
+            $speaker->events()->sync($data['events']);
+        }
 
         return redirect()->back()->with('success', 'Speaker updated.');
     }

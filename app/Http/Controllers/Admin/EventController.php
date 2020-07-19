@@ -254,15 +254,6 @@ class EventController extends Controller
             abort_if(!$check, 422);
 
 
-            // dd($file);
-            //Real Image;
-            $basename  = Str::random();
-            $original  = 'ev-' . $basename . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('/events'), $original);
-            $path = '/events/' . $original;     
-
-            $coverArr = ['cover' => $path];
-            $thumbArr = ['thumbnail' => $path];
             //Delete Prev File
             if($event->cover){
                 File::delete([
@@ -275,6 +266,16 @@ class EventController extends Controller
                     public_path($event->thumbnail)
                 ]); 
             }
+            // dd($file);
+            //Real Image;
+            $basename  = Str::random();
+            $original  = 'ev-' . $basename . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('/events'), $original);
+            $path = '/events/' . $original;     
+
+            $coverArr = ['cover' => $path];
+            $thumbArr = ['thumbnail' => $path];
+            
 
         }
 
