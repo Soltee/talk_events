@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Faker\Generator as Faker;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
@@ -139,8 +142,20 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Category::class, 2)->create();
         factory(App\Event::class, 30)->create();
-        factory(App\Speaker::class, 30)->create();
+        factory(App\Speaker::class, 60)->create();
+
+        foreach(App\Event::all() as $event){
+            $speakers_ids = App\Speaker::latest()->inRandomOrder()->take(rand(1,3))->pluck('id');
+            $event->speakers()->attach($speakers_ids);
+        }
+
         factory(App\Sponser::class, 16)->create();
+
+        foreach(App\Event::all() as $event){
+            $sponsers_ids = App\Sponser::latest()->inRandomOrder()->take(rand(1,3))->pluck('id');
+            $event->speakers()->attach($sponsers_ids);
+        }
+
         factory(App\Booking::class, 10)->create();
         factory(App\Social::class, 60)->create();
     }

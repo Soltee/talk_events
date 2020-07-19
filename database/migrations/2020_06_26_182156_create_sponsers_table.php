@@ -17,7 +17,6 @@ class CreateSponsersTable extends Migration
         Schema::create('sponsers', function (Blueprint $table) {
             $table->id();
             $table->UnsignedBigInteger('user_id')->nullable();
-            $table->UnsignedBigInteger('event_id');
             $table->string('avatar')->nullable();
             $table->string('full_name');
             $table->string('email')->unique();

@@ -52,13 +52,14 @@
 						
 							<td class="border px-4 py-4">
 								{{-- <a href="{{ route('speaker.show', $speaker->id) }}">
+									<img class="h-24 rounded object-center object-cover" src="{{ $speaker->avatar }}" >
 								</a> --}}
 								{{-- <img class="h-24 rounded object-center object-cover" src="{{ $speaker->avatar }}" > --}}
 							</td>
 							<td class="border px-4 py-4">
-								{{-- <a class="text-blue-600" href="{{ route('speaker.show', $speaker->id) }}"> --}}
+								<a class="text-blue-600" href="{{ route('speaker.show', $speaker->id) }}">
 									{{ $speaker->first_name }} {{ $speaker->laast_name }}
-								{{-- </a> --}}
+								</a>
 							</td>
 							<td class="border px-4 py-4">{{ $speaker->email }}</td>
 					
@@ -71,11 +72,11 @@
 									{{-- <a class="text-blue-600 mr-5" href="{{ route('speaker.edit', $speaker->id) }}"> --}}
 										Edit
 									{{-- </a>	 --}}
-									{{-- <form method="POST" action="{{ route('speaker.destroy', $speaker->id) }}">
+									<form method="POST" action="{{ route('speaker.destroy', $speaker->id) }}">
 										@csrf
 										@method('DELETE')
-										<button type="submit" class="px-6 py-3 bg-red-600 hover:opacity-75 text-white rounded">Drop</button>
-									</form>	 --}}					
+										<button type="submit" class="ml-3 px-6 py-3 bg-red-600 hover:opacity-75 text-white rounded">Drop</button>
+									</form>						
 								</div>	
 							</td>
 						</a>

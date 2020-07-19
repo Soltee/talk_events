@@ -65,6 +65,8 @@ Route::prefix('admin')->group(function () {
 	Route::group(['middleware' => ['permission:add speakers']], function () {
 		Route::get('speakers', 'Admin\SpeakerController@index')->name('speakers');
 		Route::get('speakers/create', 'Admin\SpeakerController@create')->name('speaker.create');
+		Route::get('speakers/{speaker}', 'Admin\SpeakerController@show')->name('speaker.show');
+		Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')->name('speaker.edit');
 		Route::post('speakers', 'Admin\SpeakerController@store')->name('speaker.store');
 		Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')->name('speaker.update');
 		Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')->name('speaker.destroy');

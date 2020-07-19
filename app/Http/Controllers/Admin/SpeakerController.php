@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Image;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\SpeakerAdded;
 
 class SpeakerController extends Controller
 {
@@ -27,19 +29,9 @@ class SpeakerController extends Controller
     */
     public function index()
     {
-        // $search = request()->keyw;
-
-        // $query = Speaker::latest();
-
-        // if($search){
-        //     $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
-        //                     ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-        //                     ->orWhere('email', 'LIKE', '%'.$search.'%');
-        // }
-
-        // $paginate = $query->paginate(9);
 
         $query = QueryBuilder::for(Speaker::class)
+                ->latest()
                 ->allowedFilters(
                     [
                         'first_name',
@@ -51,7 +43,7 @@ class SpeakerController extends Controller
                 ->allowedSorts(['first_name', 'email', 'created_at'])
                 ->paginate(10)
                 ->appends(request()->query());
-        // dd(request()->filter);
+
         $speakers     = $query->items();
         $total        = $query->total();
         $first        = $query->firstItem();
@@ -75,12 +67,13 @@ class SpeakerController extends Controller
     public function store(Request $request)
     {
         abort_if(!auth()->user()->can('add speakers'), 403);
+        // dd(request()->all());
 
         $data = $request->validate([
+            'events'              => 'required|array',
             'first_name'          => 'required|string|min:2',
             'last_name'           => 'required|string', 
-            'event_id'            =>  'required|int', 
-            'email'               =>  'required|email', 
+            'email'               =>  'required|email|unique:speakers', 
             'avatar'              => 'nullable|image', 
             'about'               => 'nullable', 
             'twitter_link'        => 'nullable|string', 
@@ -88,34 +81,37 @@ class SpeakerController extends Controller
         ]);
 
 
-        // dd($request->file('avatar'));
+        // dd(request()->all());
         if($request->hasFile('avatar')){
 
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
-            $images      = $request->file('avatar'); 
-            foreach($images as $file){
-                $filename = $file->getClientOriginalName();
+            $file      = $request->file('avatar'); 
+            // // foreach($files as $file){
+            $filename  = $file->getClientOriginalName();
 
-                $extension = $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
 
-                $check = in_array($extension,$allowedfileExtension);
-                abort_if(!$check, 422);
-            }
+            $check     = in_array($extension, $allowedfileExtension);
+            abort_if(!$check, 422);
 
-            if(! is_dir(public_path('/speakers'))){
+            if(!is_dir(public_path('/speakers'))){
                 mkdir(public_path('/speakers'), 0777);
             }
 
-
-            // echo "Run";
+            // dd($file);
+            //Real Image;
             $basename  = Str::random();
-            $original  = 'sp-' . $basename . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('/speakers'), $original);
-            $path = 'speakers/' . $original;            
+            $original  = 'speaker-' . $basename . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('/speakers'), $original);
+            $path = '/speakers/' . $original;  
+
+        }
+
+        if($data['linkedin_link']){
+            $linkedin_link = ['linkedin_link' => $data['linkedin_link']];
         }
 
         $speaker = Speaker::create(array_merge([
-            'event_id'          => $data['event_id'],
             'first_name'        => $data['first_name'],
             'last_name'         => $data['last_name'],
             'email'             => $data['email'], 
@@ -125,6 +121,11 @@ class SpeakerController extends Controller
         ]),
             $linkedin_link ?? []
         );
+
+        $events = $speaker->events()->attach($data['events']);
+
+        // dd($events);
+        // Notification::send($speaker, new SpeakerAdded($events));
 
         return back()->with('success', 'Speaker created.');
 
@@ -139,8 +140,10 @@ class SpeakerController extends Controller
     public function show(Speaker $speaker)
     {
         abort_if(!auth()->user()->can('view speakers'), 403);
-        $events        = $speaker->event;
-        return view('admin.events.view', compact('speaker', 'events'));
+        $events        = $speaker->events;
+        $count_events  = $events->count();
+        // dd($events);
+        return view('admin.speakers.show', compact('speaker', 'events', 'count_events'));
     }
 
     /**
@@ -153,7 +156,7 @@ class SpeakerController extends Controller
     {
         abort_if(!auth()->user()->can('update speakers'), 403);
 
-        $events        = $speaker->event;
+        $events        = $speaker->events;
         return view('admin.events.edit', compact('speaker', 'events'));
     }
 
@@ -242,6 +245,7 @@ class SpeakerController extends Controller
                 public_path($speaker->avatar)
             ]);
         }
+        $speaker->events()->detach();
 
         $speaker->delete();
         return redirect()->back()->with('success', 'Speaker deleted.');

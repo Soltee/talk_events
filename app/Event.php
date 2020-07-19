@@ -26,25 +26,18 @@ class Event extends Model
     	return $this->belongsTo(User::class);
     }
 
-    public function location(){
-        return $this->hasOne(Venue::class);
-    }
-
     public function bookings(){
         return $this->hasMany(Booking::class);
     }
 
     public function speakers(){
-        return $this->hasMany(Speaker::class);
+        return $this->belongsToMany(Speaker::class, 'event_speaker');
     }
 
     public function sponsers(){
-        return $this->hasMany(Sponser::class);
+        return $this->belongsToMany(Sponser::class, 'event_sponser');
     }
 
-     public function members(){
-        return $this->hasMany(User::class);
-    }
 
     public function format_date($date){
         $date = Carbon::parse($date);

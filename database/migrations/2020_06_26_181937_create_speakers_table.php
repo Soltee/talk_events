@@ -15,7 +15,6 @@ class CreateSpeakersTable extends Migration
     {
         Schema::create('speakers', function (Blueprint $table) {
             $table->id();
-            $table->UnsignedBigInteger('event_id');
             $table->UnsignedBigInteger('user_id')->nullable();
             $table->string('avatar')->nullable();
             $table->string('first_name');

@@ -1,5 +1,13 @@
 @extends('layouts.admin')
 
+@section('head')
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/select7.min.css') }}">
+    <script type="text/javascript" src="{{ asset('js/select7.min.js') }}"></script>
+ --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
+@endsection
+
 @section('content')
     <div class="px-3 md:px-6 pb-6">
 
@@ -81,7 +89,7 @@
                             {{ __('About') }}
                         </label>
 
-                         <textarea id="about" type="about" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('about') border-red-500 -40 @enderror " name="about" value=""  rows="10">
+                         <textarea id="about" type="about" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('about') border-red-500 -40 @enderror " name="about" value="{{ old('about') }}"  rows="10">
                         	
                         	{{ old('about') }}
                         </textarea>
@@ -138,28 +146,31 @@
                     
     				<h4 class="text-md mb-3 ">3. Event </h4>
                     <div class="flex flex-wrap mb-6">
-                        <div class="inline-block relative w-full">
-							<select name="category" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-							  	@forelse($events as $event)
-							    	<option value="{{ $event->id }}">{{ $event->title }}</option>
-							    @empty
-							    @endforelse
-
-						    </select>
-						    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-						    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-						    </div>
-						</div>
-
-                        <div id="allEvents" class="inline-block relative w-full">
-						  	
-						</div>
-
-                        @error('event')
-                            <p class="text-red-500 text-xs italic mt-4">
+                        <div class="events_name" class="mb-3"></div>
+                        @error('events')
+                            <p class="text-red-500 text-xs italic my-4">
                                 {{ $message }}
                             </p>
                         @enderror
+                      
+                        <div class="inline-block relative w-full">
+                            <select 
+                                id="slim-select" 
+                                multiple 
+                                name="events[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                                >
+                                    <option data-placeholder="true"></option>
+                                    @forelse($events as $event)
+                                        <option value="{{ $event->id }}">{{ $event->title }}</option>
+                                    @empty
+                                    @endforelse
+
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            </div>
+                        </div>
+
                     </div>
 		    	</div>
 		    </div>
@@ -175,37 +186,12 @@
 
         document.addEventListener("DOMContentLoaded", function(){
         	let allEvents = document.getElementById('allEvents');
+            var select =  new SlimSelect({
+              select: '#slim-select',
+                placeholder: 'Select Events'
+            });
 
-        	let events = await axios.get(`/admin/api/events`)
-        		.then((res) => { 
-                    if(res.status === 200){
-                        let e     = res.events;
-                        let prev  = res.prev;
-                        let next  = res.next;
-
-                        e.forEach((event) => {
-                        	allEvents.append(`
-                        		<div class="flex items-center">
-	                    			<input id="event" type="radio" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('event') border-red-500 @enderror " name="event" value="${event.id}"  autofocus placeholder="">
-	                    			<span class="mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold">
-	                    				${event.title}
-	                    			</span>
-	                    		</div>
-	                    	`);
-                        });
-                    	
-                       
-                    } else {
-                        swal("There was some server problem. Try again later.");
-                    } 
-
-                })
-                .catch((error) => {
-
-                    // swal("Server Error!");
-                    
-                });
-
+            console.log(select.selected());
 
         	//Avatar Show On Choose
             

@@ -14,10 +14,7 @@ $factory->define(Sponser::class, function (Faker $faker) {
     		$us = User::role('manager')->inRandomOrder()->pluck('id')->toArray();
     		return Arr::random($us);
     	},
-    	'event_id' => function(){
-    		$ev = Event::inRandomOrder()->pluck('id')->toArray();
-    		return Arr::random($ev);
-    	},
+        'avatar' => $faker->imageUrl($width = 400, $height = 400),
         'full_name' => $faker->firstName,
         'email' => $faker->unique()->safeEmail,
         'company_name' => $faker->company

@@ -51,5 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class);
     }
+
+    public function speakers()
+    {
+        return $this->hasMany(Speaker::class);
+    }
   
 }
