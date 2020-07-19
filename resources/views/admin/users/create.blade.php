@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('styles')
+@section('head')
 <style>
     .custom_checkbox input:checked + .checkbox_btn{
 		font-size: bold;
@@ -202,7 +202,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
@@ -463,4 +463,4 @@
 		
 	</script>
 
-@endsection
+@endpush

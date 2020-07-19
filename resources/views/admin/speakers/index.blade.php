@@ -42,6 +42,7 @@
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Avatar</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Fullname</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Email</th>
+						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Events</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Link</th>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600"></th>
 					</tr>
@@ -59,13 +60,11 @@
 							</td>
 							<td class="border px-4 py-4">
 								<a class="text-blue-600" href="{{ route('speaker.show', $speaker->id) }}">
-									{{ $speaker->first_name }} {{ $speaker->laast_name }}
+									{{ $speaker->first_name }} {{ $speaker->last_name }}
 								</a>
 							</td>
 							<td class="border px-4 py-4">{{ $speaker->email }}</td>
-					
-
-							
+							<td class="border px-4 py-4">{{ $speaker->events_count }}</td>
 
 							<td class="border px-4 py-4">{{ $speaker->twitter_link }}</td>
 							<td class="border px-4 py-4">
@@ -80,7 +79,6 @@
 									</form>						
 								</div>	
 							</td>
-						</a>
 						
 					</tr>
 					@empty

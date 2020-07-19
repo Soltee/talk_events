@@ -75,6 +75,9 @@ Route::prefix('admin')->group(function () {
 	//Sponsers
 	Route::group(['middleware' => ['permission:add sponsers']], function () {
 		Route::get('sponsers', 'Admin\SponserController@index')->name('sponsers');
+		Route::get('sponsers/create', 'Admin\SponserController@create')->name('sponser.create');
+		Route::get('sponsers/{sponser}', 'Admin\SponserController@show')->name('sponser.show');
+		Route::get('sponsers/{sponser}/edit', 'Admin\SponserController@edit')->name('sponser.edit');
 		Route::post('sponsers', 'Admin\SponserController@store')->name('sponser.store');
 		Route::patch('sponsers/{sponser}', 'Admin\SponserController@update')->name('sponser.update');
 		Route::delete('sponsers/{sponser}', 'Admin\SponserController@destroy')->name('sponser.destroy');

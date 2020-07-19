@@ -6,6 +6,10 @@
         <p class="my-2 text-red-600">{{ session('success') }}</p>
         <p class="my-2 text-red-600">{{ session('error') }}</p>
            
+        @can('add sponsers')
+    		<a href="{{ route('sponser.create') }}" class="fixed right-0 bottom-0 mr-3 md:mr-16 mb-6 md:mb-16 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
+    	@endcan
+
         <div class="flex justify-between items-center  mb-6">
 
        		<h3 class="text-gray-900 text-lg ">
@@ -15,9 +19,9 @@
     			@csrf
     			<div class="flex items-center justify-between">
 
-    				<input type="text" name="filter[full_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter }}" placeholder="Name">
-    				<input type="text" name="filter[company_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter }}" placeholder="Company">
-    				<input type="text" name="filter[email]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter }}" placeholder="Email">
+    				<input type="text" name="filter[full_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['full_name'] ?? '' }}" placeholder="Name">
+    				<input type="text" name="filter[company_name]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['email'] ?? '' }}" placeholder="Company">
+    				<input type="text" name="filter[email]" class="mr-4 px-3 py-3  rounded-lg border " value="{{ request()->filter['company_name'] ?? '' }}" placeholder="Email">
     			
 			
 					<button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
@@ -55,9 +59,9 @@
 								</a> --}}
 							</td>
 							<td class="border px-4 py-4">
-								{{-- <a class="text-blue-600" href="{{ route('sponser.show', $sponser->id) }}"> --}}
+								<a class="text-blue-600" href="{{ route('sponser.show', $sponser->id) }}">
 									{{ $sponser->full_name }}
-								{{-- </a> --}}
+								</a>
 							</td>
 							<td class="border px-4 py-4">{{ $sponser->email }}</td>
 					
@@ -66,17 +70,17 @@
 
 							<td class="border px-4 py-4">{{ $sponser->company_name }}</td>
 							<td class="border px-4 py-4">{{ $sponser->company_link }}</td>
-							<td class="border px-4 py-4">{{ $sponser->event->count() }}</td>
+							<td class="border px-4 py-4">{{ $sponser->events_count }}</td>
 							<td class="border px-4 py-4">
 								<div class="flex items-center">
-									{{-- <a class="text-blue-600 mr-5" href="{{ route('sponser.edit', $sponser->id) }}"> --}}
+									<a class="text-blue-600 mr-5" href="{{ route('sponser.edit', $sponser->id) }}">
 										Edit
-									{{-- </a>	 --}}
-									{{-- <form method="POST" action="{{ route('sponser.destroy', $sponser->id) }}">
+									</a>	
+									<form method="POST" action="{{ route('sponser.destroy', $sponser->id) }}">
 										@csrf
 										@method('DELETE')
 										<button type="submit" class="px-6 py-3 bg-red-600 hover:opacity-75 text-white rounded">Drop</button>
-									</form>	 --}}					
+									</form>						
 								</div>	
 							</td>
 						</a>

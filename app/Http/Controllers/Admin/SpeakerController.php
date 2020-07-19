@@ -16,6 +16,8 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\SpeakerAdded;
+use Spatie\QueryBuilder\allowedIncludes;
+use Spatie\QueryBuilder\AllowedInclude;
 
 class SpeakerController extends Controller
 {
@@ -29,16 +31,15 @@ class SpeakerController extends Controller
     */
     public function index()
     {
+        $query = Speaker::withCount('events');
 
-        $query = QueryBuilder::for(Speaker::class)
+        $query = QueryBuilder::for($query)
                 ->latest()
                 ->allowedFilters(
                     [
                         'first_name',
                         'last_name', 
-                        'email', 
-                        // AllowedFilter::exact('title'),  
-                        // AllowedFilter::scope('starts_at')
+                        'email'
                     ])
                 ->allowedSorts(['first_name', 'email', 'created_at'])
                 ->paginate(10)
@@ -112,6 +113,7 @@ class SpeakerController extends Controller
         }
 
         $speaker = Speaker::create(array_merge([
+            'user_id'           => auth()->user()->id,
             'first_name'        => $data['first_name'],
             'last_name'         => $data['last_name'],
             'email'             => $data['email'], 
@@ -231,6 +233,7 @@ class SpeakerController extends Controller
 
         // dd($avatarArr);
         $speaker->update(array_merge([
+            'user_id'           => auth()->user()->id,
             'first_name'        => $data['first_name'],
             'last_name'         => $data['last_name'],
             'email'             => $data['email'], 
@@ -264,7 +267,7 @@ class SpeakerController extends Controller
                 public_path($speaker->avatar)
             ]);
         }
-        $speaker->events()->detach();
+        // $speaker->events()->detach();
 
         $speaker->delete();
         return redirect()->back()->with('success', 'Speaker deleted.');
