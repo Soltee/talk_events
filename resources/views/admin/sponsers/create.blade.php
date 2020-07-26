@@ -136,7 +136,6 @@
                     
     				<h4 class="text-md mb-3 ">4. Event </h4>
                     <div class="flex flex-wrap mb-6">
-                        <div class="events_name" class="mb-3"></div>
                         @error('events')
                             <p class="text-red-500 text-xs italic my-4">
                                 {{ $message }}

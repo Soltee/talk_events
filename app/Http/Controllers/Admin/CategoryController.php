@@ -20,6 +20,7 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+         abort_if(auth()->user()->hasRole('user'), 403);
     }
 
     /**

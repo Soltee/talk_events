@@ -63,9 +63,7 @@
 		    		<label for="" class=" border rounded px-4 py-3 w-32">Description</label>
 		    		<h4 class="border rounded px-4 py-3 ">{{ $event->description }}</h4>
 		    	</div>
-		    </div>
 
-		    <div class="w-1/2">
 		    	<h5 class="mb-4 text-md text-gray-800 px-2">Time</h5>
 		    	<div class="flex items-center mb-6">
 		    		<label for="" class=" border rounded px-4 py-3 w-32">Start</label>
@@ -89,6 +87,34 @@
 		    		<label for="" class=" border rounded px-4 py-3 w-32">Venue Name</label>
 		    		<h4 class="border rounded px-4 py-3 ">{{ $event->venue_full_address }}</h4>
 		    	</div>
+		    </div>
+
+		    <div class="w-1/2">
+		    	
+
+		    	<h5 class="mb-4 text-md text-gray-800 px-2">Speakers <span class=" text-lg  ont-bold ml-4 text-blue-600">{{ $speakers_count }}</span></h5>
+		    	@forelse($speakers as $speaker)
+			    <div class="flex flex-col md:flex-row items-center mb-6">
+			    	<div class="flex items-center">
+			    		<img class="h-16 w-16 rounded-full object-cover object-center" src="{{ asset($speaker->avatar) }}" alt="">
+			    		<h4 class="border rounded px-4 py-3 ">{{ $speaker->first_name }} {{$speaker->lastname }}</h4>
+			    	</div>
+		    	</div>
+		    	@empty
+		    		<p class="border rounded px-4 py-3 "> No speakers yet.</p>
+		    	@endforelse
+
+		    	<h5 class="mb-4 text-md text-gray-800 px-2">Sponsers <span class=" text-lg  ont-bold ml-4 text-blue-600">{{ $sponsers_count }}</span></h5>
+		    	@forelse($sponsers as $sponser)
+			    <div class="flex flex-col md:flex-row items-center mb-6">
+			    	<div class="flex items-center">
+			    		<img class="h-16 w-16 rounded-full object-cover object-center" src="{{ asset($sponser->avatar) }}" alt="">
+			    		<h4 class="border rounded px-4 py-3 ">{{ $sponser->full_name }}</h4>
+			    	</div>
+		    	</div>
+		    	@empty
+		    		<p class="border rounded px-4 py-3 "> No sponsers yet.</p>
+		    	@endforelse
 		    </div>
     	</div>
     </div>

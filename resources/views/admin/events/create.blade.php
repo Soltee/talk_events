@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
-@section('styles')
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/css/tail.datetime-default.css">
+@section('head')
+{{-- 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/css/tail.datetime-default.css">
+ --}}	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
 @endsection
 
 @section('content')
@@ -11,7 +13,13 @@
     		<a href="{{ route('events') }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
     	@endcan
  --}}
-        <p class="my-2 text-red-600">{{ session('success') }}</p>
+ 		@if(session('success'))
+        	<p class="my-2 text-red-600">
+        		<a href="{{ route('events.show', $id) }}">        			
+        			{{ $title?? '' }} {{ session('success') }}
+        		</a>
+        	</p>
+        @endif
         <p class="my-2 text-red-600">{{ session('error') }}</p>
         @if ($errors->any())
 		    <div class="alert alert-danger">
@@ -39,7 +47,7 @@
 
 		 
 		 	<div class="flex justify-between flex-col md:flex-row">
-	    			<div class="flex flex-col md:mr-4 w-full md:w-2/3">
+	    			<div class="flex flex-col md:mr-4 w-full md:w-1/2">
 
 	    				<h4 class="text-md mb-3 ">1. General Info</h4>
 	    				<div class="flex flex-wrap mb-6">
@@ -202,11 +210,11 @@
 
 						
 	    			</div>
-	    			<div class="flex flex-col md:pl-2  w-full md:w-1/3">
+	    			<div class="flex flex-col md:pl-2  w-full md:w-1/2">
 	    			
 	                    <div class="flex flex-wrap mb-6">
 	                        <label for="cover" class="block text-gray-700 text-sm font-bold mb-2">
-	                            {{ __('Event Cover') }}
+	                            {{ __('4. Event Cover') }}
 	                        </label>
 
 	                        <input id="cover" type="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('cover') border-red-500 @enderror " name="cover" value="{{ old('cover') }}"  autofocus placeholder="">
@@ -243,7 +251,61 @@
 	                        @enderror
 	                    </div>
 
+	                    <h4 class="text-md mb-3 ">5. Speakers </h4>
+	                    <div class="flex flex-wrap mb-6">
+	                        @error('speakers')
+	                            <p class="text-red-500 text-xs italic my-4">
+	                                {{ $message }}
+	                            </p>
+	                        @enderror
+	                      
+	                        <div class="inline-block relative w-full">
+	                            <select 
+	                                id="slim-speakers" 
+	                                multiple 
+	                                name="speakers[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+	                                >
+	                                    <option data-placeholder="true"></option>
+	                                    @forelse($speakers as $speaker)
+	                                        <option value="{{ $speaker->id }}">{{ $speaker->first_name }} {{ $speaker->last_name }}</option>
+	                                    @empty
+	                                    @endforelse
 
+	                            </select>
+	                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+	                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+	                            </div>
+	                        </div>
+
+	                    </div>
+
+	                    <h4 class="text-md mb-3 ">6. Sponser </h4>
+	                    <div class="flex flex-wrap mb-6">
+	                        @error('sponsers')
+	                            <p class="text-red-500 text-xs italic my-4">
+	                                {{ $message }}
+	                            </p>
+	                        @enderror
+	                      
+	                        <div class="inline-block relative w-full">
+	                            <select 
+	                                id="slim-sponsers" 
+	                                multiple 
+	                                name="sponsers[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+	                                >
+	                                    <option data-placeholder="true"></option>
+	                                    @forelse($sponsers as $sponser)
+	                                        <option value="{{ $sponser->id }}">{{ $sponser->full_name }} </option>
+	                                    @empty
+	                                    @endforelse
+
+	                            </select>
+	                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+	                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+	                            </div>
+	                        </div>
+
+	                    </div>
 
 	    			</div>
 	    	</div>
@@ -259,7 +321,19 @@
 
         document.addEventListener("DOMContentLoaded", function(){
 
+        	var speakers =  new SlimSelect({
+              select: '#slim-speakers',
+                placeholder: 'Select Speakers'
+            });
+
+            var sponsers =  new SlimSelect({
+              select: '#slim-sponsers',
+                placeholder: 'Select Sponsers'
+            });
+
         	document.querySelector("#time").addEventListener("input", function(e) {
+
+
 			  const reTime = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
 			  const time = this.value;
 			  if (reTime.exec(time)) {

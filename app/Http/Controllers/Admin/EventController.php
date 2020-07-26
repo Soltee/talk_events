@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Category;
+use App\Speaker;
+use App\Sponser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -25,6 +27,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        abort_if(auth()->user()->hasRole('user'), 403);
     }
 
     /**
@@ -36,6 +39,7 @@ class EventController extends Controller
     {
 
         $query = QueryBuilder::for(Event::class)
+                ->latest()
                 ->allowedFilters(
                     [
                         'title',
@@ -47,22 +51,7 @@ class EventController extends Controller
                 ->allowedSorts(['title', 'created_at'])
                 ->paginate(10)
                 ->appends(request()->query());
-        // dd(request()->filter['title']);
-        // return $query->items();
-
-        // $search = request()->keyw;
-
-        // $query = Event::latest();
-
-        // if($search){
-        //     $query = $query->where('title', 'LIKE', '%'.$search.'%')
-        //                     ->orWhere('price', 'LIKE', '%'.$search.'%')
-        //                     ->orWhere('venue_name', 'LIKE', '%'.$search.'%')
-        //                     ->orWhere('ticket', 'LIKE', '%'.$search.'%')
-        //                     ->whereDate('end', '=', Carbon::today()->toDateString()); 
-        // }
-
-        // $paginate = $query->paginate(4);
+     
         \Debugbar::info($query);
         $events   = $query->items();
         $total    = $query->total();
@@ -80,8 +69,10 @@ class EventController extends Controller
     {
         abort_if(!auth()->user()->can('add events'), 403);
 
-        $categories = Category::latest()->get();
-        return view('admin.events.create', compact('categories'));
+        $categories     = Category::latest()->get();
+        $speakers       = Speaker::latest()->get();
+        $sponsers       = Sponser::latest()->get();
+        return view('admin.events.create', compact('categories', 'speakers', 'sponsers'));
     }
 
     /** Store */
@@ -91,8 +82,10 @@ class EventController extends Controller
         abort_if(!auth()->user()->can('add events'), 403);
 
         $data = $request->validate([
+            'speakers'            => 'required|array',
+            'sponsers'            => 'required|array',
             'title'               => 'required|string|min:2',
-            'category'         => 'required|numeric', 
+            'category'            => 'required|numeric', 
             'cover'               => 'required|file', 
             'sub_title'           => 'required|string', 
             'price'               => 'required|numeric', 
@@ -109,20 +102,6 @@ class EventController extends Controller
         // dd($data);
         // dd($request->file('cover'));
            
-
-        //Thumbnail
-        // $photo      = $request->file('cover'); 
-
-        // $basename  = Str::random();
-        // $thumbnail = 'event-thumbnail' . $basename . '.' . $photo->getClientOriginalExtension();
-
-        // $img = Image::make($photo->getRealPath());
-        // $img->fit(600, 600, function ($constraint) {
-        //     $constraint->upsize();                 
-        // });
-
-        // $img->stream(); // <-- Key point
-        // $photo->move(public_path('/events'), $thumbnail);
 
 
         $allowedfileExtension = ['jpeg','jpg','png','gif'];
@@ -149,17 +128,17 @@ class EventController extends Controller
         // echo $original . ' ' . $thumbnail;
 
         $event = Event::create([
-            'user_id'            => auth()->user()->id,
+            'user_id'             => auth()->user()->id,
             'category_id'         => $data['category'],
             'title'               => $data['title'],
-            'slug'               => Str::slug($data['title']),
+            'slug'                => Str::slug($data['title']),
             'cover'               => $path, 
-            'thumbnail'               => $path, 
+            'thumbnail'           => $path, 
             'sub_title'           => $data['sub_title'], 
             'price'               => $data['price'],
-            'start'          => $data['start'],
-            'time'            => $data['time'],
-            'end'            => $data['end'],
+            'start'               => $data['start'],
+            'time'                => $data['time'],
+            'end'                 => $data['end'],
             'book_before'         => $data['book_before'],
             'ticket'              => $data['ticket'], 
             'description'         => $data['description'],
@@ -167,7 +146,15 @@ class EventController extends Controller
             'venue_full_address'  => $data['venue_full_address']       
         ]);
 
-        return back()->with('success', 'Event created.');
+        if($data['speakers']){
+            $event->speakers()->attach($data['speakers']);
+        }
+
+        if($data['sponsers']){
+            $event->sponsers()->attach($data['sponsers']);
+        }
+
+        return back()->with(['success', ' created.', 'id' => $event->id, 'title' => $event->title]);
 
     }
 
@@ -180,8 +167,12 @@ class EventController extends Controller
     public function show(Event $event)
     {
         abort_if(!auth()->user()->can('view events'), 403);
-        $cat    = $event->category;
-        return view('admin.events.show', compact('event', 'cat'));
+        $cat                = $event->category;
+        $speakers           = $event->speakers;
+        $speakers_count     = count($speakers);
+        $sponsers           = $event->sponsers;
+        $sponsers_count     = count($sponsers);
+        return view('admin.events.show', compact('event', 'cat', 'speakers', 'speakers_count', 'sponsers', 'sponsers_count'));
     }
 
     /**
@@ -193,9 +184,14 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         abort_if(!auth()->user()->can('update events'), 403);
-        $categories = Category::latest()->get();
-        $cat        = $event->category;
-        return view('admin.events.edit', compact('event', 'categories', 'cat'));
+        $categories         = Category::latest()->get();
+        $new_speakers       = Speaker::latest()->get();
+        $new_sponsers       = Sponser::latest()->get();
+
+        $speakers           = $event->speakers;
+        $sponsers           = $event->sponsers;
+        $cat                = $event->category;
+        return view('admin.events.edit', compact('event', 'categories', 'cat', 'speakers', 'sponsers', 'new_speakers', 'new_sponsers'));
     }
 
     /**
@@ -211,6 +207,8 @@ class EventController extends Controller
         abort_if(!auth()->user()->can('update events'), 403);
 
         $data = $request->validate([
+            'speakers'            => 'required|array',
+            'sponsers'            => 'required|array',
             'title'               => 'required|string|min:2',
             'category'            => 'required|numeric', 
             'cover'               => 'nullable|file', 
@@ -300,6 +298,15 @@ class EventController extends Controller
             $book_before ?? []
         ));
 
+
+        if($data['speakers']){
+            $event->speakers()->sync($data['speakers']);
+        }
+
+        if($data['sponsers']){
+            $event->sponsers()->sync($data['sponsers']);
+        }
+       
         return redirect()->back()->with('success', 'Event updated.');
     }
 

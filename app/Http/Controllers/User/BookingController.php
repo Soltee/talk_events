@@ -134,7 +134,7 @@ class BookingController extends Controller
             $filtered = filter_var($total, FILTER_VALIDATE_INT);
             $args = http_build_query(array(
                 'token' => request()->khalti_token,
-                'amount'  => $filtered
+                'amount'  => request()->khalti_amount
             ));
 
             $url =  "https://khalti.com/api/v2/payment/verify/";
@@ -157,7 +157,7 @@ class BookingController extends Controller
 
             if($status_code == 200){
                 $transaction = Str::random(10);
-                $booking = $this->store($event->id, $data['first_name'], $data['last_name'], $data['email'], $data['payment_type'], $transaction, $price, $tax, $total);
+                $booking = $this->store($event->id, $data['first_name'], $data['last_name'], $data['email'], $data['payment_type'], $transaction, $price, $tax, $equest()->khalti_amount);
             } else {
                 return back()->with('error', $response['error']);
             }

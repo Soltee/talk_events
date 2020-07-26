@@ -14,10 +14,6 @@
        
     <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  my-8">
 
-    	<div class="">
-    		<div id="map" class="max-w-6xl h-64 mb-3"></div>
-    	</div>
-
     	<div class="flex justify-between items-center">
 			<div class="flex items-center mb-4 ">
 				<a href="/"><h4 class="text-md font-light text-gray-800 mr-2">Home</h4></a>
@@ -67,10 +63,9 @@
 
 @endsection
 
-<script>
+{{-- <script>
     window.addEventListener('DOMContentLoaded', function(){
         
-        {{-- if("{{ $venue->latitude }}" && "{{ $venue->longitude }}"){ --}}
 
 	        var map = L.map('map').setView(["{{ $venue->latitude }}" , "{{ $venue->longitude }}"], 13);
 
@@ -81,6 +76,5 @@
 			L.marker(["{{ $venue->latitude }}" , "{{ $venue->longitude }}"]).addTo(map)
 			    .bindPopup("{{ $venue->name }}")
 			    .openPopup();
-		// }
     });
-</script>
+</script> --}}

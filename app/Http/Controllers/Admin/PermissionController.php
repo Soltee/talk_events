@@ -16,6 +16,7 @@ class PermissionController extends Controller
      */
     public function __construct()
     {
+        abort_if(auth()->user()->hasRole('user'), 403);
         $this->middleware('auth');
     }
 

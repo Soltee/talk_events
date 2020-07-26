@@ -61,12 +61,12 @@
 
 		    			<div class="mt-5 mb-3">
 			    			<div class="flex flex-col md:flex-row items-center mb-4">
-				    			<div class="md:w-1/2 md:mr-2 flex flex-col mb-4">
+				    			<div class="md:w-1/2 md:mr-2 flex flex-col">
 				    				<label for="first_name" class="mb-2 text-c-lighter-black text-sm">First name</label>
 				    				<input type="text" name="first_name" value="{{ $auth ? $auth->first_name : '' }}" class="px-6 py-3 rounded-md border-2 border-gray-300" placeholder="Shraddha">
 				    			</div>
 				    			<div class="md:w-1/2  md:ml-2 flex flex-col">
-				    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Last name</label>
+				    				<label for="last_name" class="text-c-lighter-black text-sm">Last name</label>
 				    				<input type="text" name="last_name" value="{{ $auth ? $auth->last_name : '' }}" class="px-6 py-3 rounded-lg border-2 border-gray-300" placeholder="Shrestha">
 				    			</div>
 			    			</div>
@@ -99,31 +99,14 @@
 				    				
 					    		</div>
 
-					    		<div x-show.transition.50ms="stripe">
-				                    <div class="">
-				                        <input type="hidden" name="payment_type" value="stripe">
-				                        <div class="flex flex-col">
-				                            <label for="card-element" class="mb-4 py-2 px-2 font-bold text-lg">
-				                              Credit details
-				                            </label>
-				                            <div id="card-element" class="mb-3">
-				                              <!-- A Stripe Element will be inserted here. -->
-				                            </div>
-
-				                            <!-- Used to display form errors. -->
-				                            <div id="card-errors" role="alert"></div>
-				                        </div>
-
-
-				                    </div>
-				                </div>
+					    		
 					    		
 
 					    	</div>
 
 					    	<div
 			    				
-			    				 class="flex flex-col">
+			    				class="flex flex-col">
 					    		<div
 					    			id="khaltiTab" 
 					    			class="flex flex-col mb-4 mr-3">
@@ -134,11 +117,24 @@
 				    				
 					    		</div>
 
-					    		
-
 					    	</div>
 				    		
 		    			</div>
+
+              <div x-show.transition.50ms="stripe">
+                <input type="hidden" name="payment_type" value="stripe">
+                <div class="flex flex-col">
+                    <label for="card-element" class="mb-4 py-2 px-2 font-bold text-lg">
+                      Credit details
+                    </label>
+                    <div id="card-element" class="mb-3">
+                      <!-- A Stripe Element will be inserted here. -->
+                    </div>
+
+                    <!-- Used to display form errors. -->
+                    <div id="card-errors" role="alert"></div>
+                </div>
+              </div>
 
 		    		</div>
 
@@ -199,6 +195,13 @@
 		            hiddenInput.setAttribute('name', 'khalti_token');
 		            hiddenInput.setAttribute('value', payload.token);
 		            bookForm.appendChild(hiddenInput);
+
+                //Khalti Amount
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'khalti_amount');
+                hiddenInput.setAttribute('value', payload.amount);
+                bookForm.appendChild(hiddenInput);
 
 
 		            // submit form

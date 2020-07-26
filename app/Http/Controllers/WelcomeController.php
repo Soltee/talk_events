@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Event;
 use App\Category;
-use App\Venue;
 
 class WelcomeController extends Controller
 {
@@ -64,10 +63,9 @@ class WelcomeController extends Controller
             $count      = $events->total();
         }
             $categories = Category::latest()->paginate(10);
-            $venues = Venue::latest()->paginate(10);
 
         
-        return view('events', compact('categories', 'events', 'venues', 'count', 'current'));
+        return view('events', compact('categories', 'events', 'count', 'current'));
     }
 
     /**
