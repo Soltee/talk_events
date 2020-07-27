@@ -16,6 +16,6 @@ $factory->define(Category::class, function (Faker $faker) {
         },
         'name'      => $name,
         'slug'      => $slug,
-        'thumbnail' => $faker->imageUrl($width = 640, $height = 480)
+        'thumbnail' => $faker->imageUrl($width = 200, $height = 200)
     ];
 });

@@ -197,6 +197,9 @@ class BookingController extends Controller
         * Thank you page aftr Booiking
     */
     public function show(Booking $booking){
+        if( !session('success')){
+            return redirect('/events-all');
+        }
         return view('thankyou', compact('booking'));
     }
 

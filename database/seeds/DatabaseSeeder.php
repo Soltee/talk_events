@@ -140,23 +140,23 @@ class DatabaseSeeder extends Seeder
         $super_admin->assignRole($super_admin_role);
 
 
-        factory(App\Category::class, 2)->create();
-        factory(App\Event::class, 30)->create();
-        factory(App\Speaker::class, 60)->create();
+        factory(App\Category::class, 10)->create();
+        factory(App\Event::class, 100)->create();
+        factory(App\Speaker::class, 200)->create();
 
         foreach(App\Event::all() as $event){
             $speakers_ids = App\Speaker::latest()->inRandomOrder()->take(rand(1,3))->pluck('id');
             $event->speakers()->attach($speakers_ids);
         }
 
-        factory(App\Sponser::class, 16)->create();
+        factory(App\Sponser::class, 100)->create();
 
         foreach(App\Event::all() as $event){
             $sponsers_ids = App\Sponser::latest()->inRandomOrder()->take(rand(1,3))->pluck('id');
-            $event->speakers()->attach($sponsers_ids);
+            $event->sponsers()->attach($sponsers_ids);
         }
 
-        factory(App\Booking::class, 10)->create();
-        factory(App\Social::class, 60)->create();
+        factory(App\Booking::class, 80)->create();
+        factory(App\Social::class, 100)->create();
     }
 }

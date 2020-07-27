@@ -19,7 +19,18 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $query_category   = Category::latest()->take(10)->get();
+        $query_events     = Event::latest();
+        $trending         = $query_events
+                                // ->with(['bookings' => function($query){
+                                //     $query->count('')
+                                // }])
+                                ->take(6)->get();
+        $featured         = Event::inRandomOrder()->where('is_featured', true)->first();
+        $today_events     = $query_events->where('start', '>', now())->take(8)->get();
+        $this_weekend     = $query_events->where('start', '>', now()->addDays(14))->take(8)->get();
+        //popular, online, free, paid, today, tomorrow, this_weekend, online_classes, more categoies, trending
+        return view('welcome', compact('trending', 'today_events', 'featured', 'this_weekend', 'query_category'));
     }
 
     /**
@@ -44,28 +55,21 @@ class WelcomeController extends Controller
     public function events()
     {
         $search   = request()->search;
-        $current = request()->category;
+        $category = request()->category;
 
-        if($current)
-        {
-            $current =   Category::findOrfail($current);
-            $events =   Event::where('category_id', $current->id)->paginate(9);
-            // dd($events);
-            $count   = $events->total();
-        } else {
-            $query      = Event::latest();
+        $query    = Event::latest();
 
-            if($search){
-                $query = $query->where('name', 'LIKE' , "%".$search."%");
-            }
-
-            $events   = $query->paginate(9);
-            $count      = $events->total();
+        if($category){
+            $category = Category::findOrfail($category);
+            $query    = $query->where('category_id', $category->id);
         }
-            $categories = Category::latest()->paginate(10);
+
+        $categories   =   Category::latest()->get();
+        $events       =   $query->paginate(9);
+        $count        =   $events->total();
 
         
-        return view('events', compact('categories', 'events', 'count', 'current'));
+        return view('events', compact('categories', 'events', 'count', 'category'));
     }
 
     /**
@@ -75,13 +79,14 @@ class WelcomeController extends Controller
      */
     public function event(Event $event, $slug)
     {
-        $venue = $event->location;
-        $cat = $event->category;
+        $venue    = $event->location;
+        $cat      = $event->category;
 
         $speakers = $event->speakers;
+        $sponsers = $event->sponsers;
 
-        $similar = $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(4)->get();
-        // dd($product->images);
-        return view('event', compact('venue', 'cat', 'event', 'speakers', 'similar'));
+        $similar  = $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(6)->get();
+        // dd(count($sponsers));
+        return view('event', compact('venue', 'cat', 'event', 'speakers', 'sponsers', 'similar'));
     }
 }

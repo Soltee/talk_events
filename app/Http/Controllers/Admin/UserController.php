@@ -15,6 +15,7 @@ use App\Notifications\UserAdded;
 use App\Notifications\UserDeleted;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -26,7 +27,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        abort_if(auth()->user()->hasRole('user'), 403);
     }
 
     /**
@@ -36,6 +36,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        abort_if(auth()->user()->hasRole('user'), 403);
 
         $search = request()->keyw;
 

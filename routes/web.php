@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/events/{event}-{slug}', 'WelcomeController@event')->name('event');
-Route::get('/events_all', 'WelcomeController@events')->name('events.all');
+Route::get('/event', 'WelcomeController@events')->name('events.all');
 
 /** Booking */
 Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')->name('booking.checkout');

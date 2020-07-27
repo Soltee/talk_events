@@ -21,7 +21,7 @@ $factory->define(Event::class, function (Faker $faker) {
             $users = User::role('event-manager')->inRandomOrder()->pluck('id')->toArray();
             return Arr::random($users);
         },
-        'cover' => $faker->imageUrl($width = 640, $height = 480),
+        'cover' => $faker->imageUrl($width = 400, $height = 300),
         'title' => $name,
         'slug'  => $slug,
         'price' => function() { 
@@ -46,6 +46,9 @@ $factory->define(Event::class, function (Faker $faker) {
         },
         'ticket'   => function(){
         	return Arr::random([100, 120, 140, 200, 60]);
+        },
+        'is_paid'   => function(){
+            return Arr::random([true, false]);
         },
         'description' => $faker->text(),
         'venue_name' => $faker->streetName,

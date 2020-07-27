@@ -28,17 +28,17 @@
                     </div>
                     <div class="flex-1 text-right">
                         @guest
-                            <a class="no-underline hover:underline text-gray-300 text-sm p-3 mr-3" href="{{ route('events.all') }}">{{ __('Events') }}</a>
                             <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                             
                         @else
+                            <a class="no-underline  text-gray-300 text-sm px-4 py-3 bg-indigo-600 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
                             <span class="text-gray-300 text-sm pr-4">{{ Auth::user()->name }}</span>
 
-                            <a href="{{ route('logout') }}"
+                            <a href="{{ route('user.logout') }}"
                                class="no-underline hover:underline text-gray-300 text-sm p-3"
                                onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                            <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="hidden">
                                 {{ csrf_field() }}
                             </form>
                         @endguest
@@ -50,7 +50,13 @@
         @yield('content')
     </div>
 
-    @yield('scripts')
+    <footer>
+        <div class="">
+
+
+        </div>
+    </footer>
+    @stack('scripts')
 
 </body>
 </html>

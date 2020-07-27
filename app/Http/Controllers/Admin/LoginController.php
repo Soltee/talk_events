@@ -21,6 +21,10 @@ class LoginController extends Controller
      */
     public function index()
     {
+        if(auth()->user()){
+            return redirect()->route('admin.dashboard');
+        }
+
         $admin = [
             'email'    => 'admin@example.com',
             'password' => 'password'
@@ -115,5 +119,10 @@ class LoginController extends Controller
         return $request->wantsJson()
             ? new Response('', 204)
             : redirect('/admin/login')->with('success', 'Logged out!');
+    }
+
+    protected function guard()
+    {
+        return Auth::guard();
     }
 }

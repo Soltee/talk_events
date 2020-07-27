@@ -14,7 +14,7 @@ $factory->define(Speaker::class, function (Faker $faker) {
     		$us = User::role('manager')->inRandomOrder()->pluck('id')->toArray();
     		return Arr::random($us);
     	},
-        'avatar' => $faker->imageUrl($width = 400, $height = 400),
+        'avatar' => $faker->imageUrl($width = 200, $height = 200),
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,

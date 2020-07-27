@@ -20,11 +20,11 @@
                 </div>
             </div>
             @endif
-            @forelse($permissions as $permission)
-                {{-- <p class="py-3 text-lg">{{ $permission->name }}</p> --}}
+            {{-- @forelse($permissions as $permission)
+                <p class="py-3 text-lg">{{ $permission->name }}</p>
             @empty
 
-            @endforelse
+            @endforelse --}}
         </div>
     </div>
 @endsection

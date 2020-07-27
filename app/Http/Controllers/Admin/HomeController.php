@@ -19,7 +19,6 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        abort_if(auth()->user()->hasRole('user'), 403);
     }
 
     /**
@@ -29,14 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $paginate = Event::latest()->paginate(10);
-        $permissions = Permission::latest()->get();
-        // auth()->user()->
-        return view('admin.dashboard', compact('permissions'));
-        // return Inertia::render('Company/Dashboard', [
-        //     'events' => $paginate->items(),
-        //     'prev'   => $paginate->previousPageUrl(),
-        //     'next'   => $paginate->nextPageUrl(),
-        // ]);
+        abort_if(auth()->user()->hasRole('user'), 403);
+        return view('admin.dashboard');
+
     }
 }

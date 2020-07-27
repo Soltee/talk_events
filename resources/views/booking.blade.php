@@ -156,7 +156,7 @@
     </div>
 
 @endsection
-
+@push('scripts')
 <script>
     window.addEventListener('DOMContentLoaded', function(){
         //Get the Tabs
@@ -307,3 +307,4 @@
 
     });
 </script>
+@endpush

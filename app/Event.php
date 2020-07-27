@@ -10,7 +10,7 @@ use Spatie\QueryBuilder\QueryBuilder as Builder;
 class Event extends Model
 {
     protected $fillable = [
-        'category_id', 'user_id', 'cover', 'thumbnail', 'title', 'slug', 'sub_title', 'price', 'start', 'time', 'end', 'book_before', 'ticket', 'description' , 'venue_name', 'venue_full_address', 'venue_latitude', 'venue_longitude'
+        'category_id', 'user_id', 'cover', 'thumbnail', 'title', 'slug', 'sub_title', 'price', 'is_paid', 'is_featured', 'top_rated', 'start', 'time', 'end', 'book_before', 'ticket', 'description' , 'venue_name', 'venue_full_address', 'venue_latitude', 'venue_longitude'
     ];
 
     public function scopeStartsAt(Builder $query, $date): Builder

@@ -29,6 +29,9 @@ class CreateEventsTable extends Migration
             $table->string('book_before');
             $table->integer('ticket');
             $table->text('description');
+            $table->boolean('is_paid')->default(true);
+            $table->boolean('is_featured')->default(false);
+            $table->boolean('top_rated')->default(false);
             $table->string('venue_name');
             $table->string('venue_full_address');
             $table->string('venue_latitude')->nullable();
