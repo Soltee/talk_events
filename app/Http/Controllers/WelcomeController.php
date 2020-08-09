@@ -27,25 +27,11 @@ class WelcomeController extends Controller
                                 // }])
                                 ->take(6)->get();
         $featured         = Event::inRandomOrder()->where('is_featured', true)->first();
-        $today_events     = $query_events->where('start', '>', now())->take(8)->get();
-        $this_weekend     = $query_events->where('start', '>', now()->addDays(14))->take(8)->get();
+        $today_events     = $query_events->where('start', '>', now())->take(30)->get();
+        $this_weekend     = $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
         //popular, online, free, paid, today, tomorrow, this_weekend, online_classes, more categoies, trending
         return view('welcome', compact('trending', 'today_events', 'featured', 'this_weekend', 'query_category'));
     }
-
-    /**
-     * Show the user and compnay login page
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function login()
-    {
-    	// Inertia::setRootView(');
-        // return Inertia::render('Login', [
-				            
-        // ]);
-    }
-
 
     /**
      * Show the Events Page
@@ -56,17 +42,33 @@ class WelcomeController extends Controller
     {
         $search   = request()->search;
         $category = request()->category;
+        $type = request()->type;
 
+        // dd(request()->all());
         $query    = Event::latest();
+                    // ->where('is_paid', '0');
+
+        if($search){
+            $query    = $query->where('title', 'LIKE', '%'. $search .'%'); 
+        }
 
         if($category){
             $category = Category::findOrfail($category);
             $query    = $query->where('category_id', $category->id);
         }
+        if($type){
+            if($type == 'free'){
+                $query    = $query->where('is_paid', 0); 
+            } else {
+
+                $query    = $query->where('is_paid', $type); 
+            }
+        }
 
         $categories   =   Category::latest()->get();
-        $events       =   $query->paginate(9);
+        $events       =   $query->paginate(10);
         $count        =   $events->total();
+        // abort_if($events->isEmpty(), 204);
 
         
         return view('events', compact('categories', 'events', 'count', 'category'));

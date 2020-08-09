@@ -69,7 +69,6 @@ class MemberController extends Controller
 
         $this->guard()->user()->assignRole($request->role);
 
-        $this->guard()->user
         return $request->wantsJson()
                     ? new Response('', 201)
                     : redirect($this->redirectPath());

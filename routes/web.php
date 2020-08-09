@@ -14,8 +14,8 @@ Route::get('/events/book/thankyou/{booking}', 'User\BookingController@show')->na
 
 
 /** Login & Register */
-Route::get('/login', 'WelcomeController@login')->name('login');
-Route::post('login', 'User\LoginController@login')->name('user.login');
+Route::get('/login', 'AuthController@login')->name('login');
+Route::get('/register', 'AuthController@register')->name('register');
 
 /** User */
 Auth::routes();

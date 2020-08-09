@@ -1,84 +1,60 @@
 @extends('layouts.app')
 
-@section('content')
-    <div class="container mx-auto mt-6">
-        <div class="flex flex-wrap justify-center">
-            <div class="w-full max-w-sm">
-                <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
+@section('head')
+	<style>
+		.spinner {
+		  margin: 100px auto;
+		  width: 40px;
+		  height: 40px;
+		  position: relative;
+		  text-align: center;
+		  
+		  -webkit-animation: sk-rotate 2.0s infinite linear;
+		  animation: sk-rotate 2.0s infinite linear;
+		}
 
-                    <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
-                        {{ __('Register') }}
-                    </div>
+		.dot1, .dot2 {
+		  width: 60%;
+		  height: 60%;
+		  display: inline-block;
+		  position: absolute;
+		  top: 0;
+		  background-color: #333;
+		  border-radius: 100%;
+		  
+		  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+		  animation: sk-bounce 2.0s infinite ease-in-out;
+		}
 
-                    <form class="w-full p-6" method="POST" action="{{ route('register') }}">
-                        @csrf
+		.dot2 {
+		  top: auto;
+		  bottom: 0;
+		  -webkit-animation-delay: -1.0s;
+		  animation-delay: -1.0s;
+		}
 
-                        <div class="flex flex-wrap mb-6">
-                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">
-                                {{ __('Name') }}:
-                            </label>
+		@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+		@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
 
-                            <input id="name" type="text" class="form-input w-full @error('name')  border-red-500 @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+		@-webkit-keyframes sk-bounce {
+		  0%, 100% { -webkit-transform: scale(0.0) }
+		  50% { -webkit-transform: scale(1.0) }
+		}
 
-                            @error('name')
-                                <p class="text-red-500 text-xs italic mt-4">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
+		@keyframes sk-bounce {
+		  0%, 100% { 
+		    transform: scale(0.0);
+		    -webkit-transform: scale(0.0);
+		  } 50% { 
+		    transform: scale(1.0);
+		    -webkit-transform: scale(1.0);
+		  }
+		}
+	</style>
+@endsection
 
-                        <div class="flex flex-wrap mb-6">
-                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
-                                {{ __('E-Mail Address') }}:
-                            </label>
-
-                            <input id="email" type="email" class="form-input w-full @error('email') border-red-500 @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                            @error('email')
-                                <p class="text-red-500 text-xs italic mt-4">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="flex flex-wrap mb-6">
-                            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">
-                                {{ __('Password') }}:
-                            </label>
-
-                            <input id="password" type="password" class="form-input w-full @error('password') border-red-500 @enderror" name="password" required autocomplete="new-password">
-
-                            @error('password')
-                                <p class="text-red-500 text-xs italic mt-4">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="flex flex-wrap mb-6">
-                            <label for="password-confirm" class="block text-gray-700 text-sm font-bold mb-2">
-                                {{ __('Confirm Password') }}:
-                            </label>
-
-                            <input id="password-confirm" type="password" class="form-input w-full" name="password_confirmation" required autocomplete="new-password">
-                        </div>
-
-                        <div class="flex flex-wrap">
-                            <button type="submit" class="inline-block align-middle text-center select-none border font-bold whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700">
-                                {{ __('Register') }}
-                            </button>
-
-                            <p class="w-full text-xs text-center text-gray-700 mt-8 -mb-4">
-                                {{ __('Already have an account?') }}
-                                <a class="text-blue-500 hover:text-blue-700 no-underline" href="{{ route('login') }}">
-                                    {{ __('Login') }}
-                                </a>
-                            </p>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
+@section('authentication')
+    <div class="min-h-screen w-full overflow-hidden flex justify-center items-center">
+        <livewire:user.register />
     </div>
 @endsection
