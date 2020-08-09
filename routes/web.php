@@ -21,7 +21,7 @@ Route::get('/register', 'AuthController@register')->name('register');
 Auth::routes();
 Route::group(['middleware' => ['role:user']], function () {
     Route::get('/home', 'User\HomeController@index')->name('home');
-	Route::post('logout', 'User\LoginController@logout')->name('user.logout');
+	Route::post('logout', 'User\HomeController@logout')->name('user.logout');
 });
 
 

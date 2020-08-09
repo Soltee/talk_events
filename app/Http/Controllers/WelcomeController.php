@@ -48,14 +48,18 @@ class WelcomeController extends Controller
         $query    = Event::latest();
                     // ->where('is_paid', '0');
 
-        if($search){
-            $query    = $query->where('title', 'LIKE', '%'. $search .'%'); 
-        }
-
+        
         if($category){
             $category = Category::findOrfail($category);
             $query    = $query->where('category_id', $category->id);
         }
+
+        if($search){
+            $query    = $query->where('title', 'LIKE', '%'. $search .'%')
+                            ->orWhere('venue_name', 'LIKE', '%'. $search .'%')
+                            ->orWhere('price', 'LIKE', '%'. $search .'%'); 
+        }
+
         if($type){
             if($type == 'free'){
                 $query    = $query->where('is_paid', 0); 

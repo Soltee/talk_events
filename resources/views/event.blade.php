@@ -38,13 +38,13 @@
 		  height: auto;
 		}
 
-		.swiper-button-next, .swiper-button-prev{color:black;}
+		.swiper-button-next, .swiper-button-prev{color:blue;}
 	</style>
 @endsection
 
 @section('content')
        
-    <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  my-8">
+    <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  mt-8 mb-12">
 
     	<div class="flex justify-between items-center">
 			<div class="flex items-center mb-4 ">
@@ -71,91 +71,21 @@
 		    <div class="mb-6">
 		    	<img src="{{ $event->cover }}" class="w-full h-56 rounded-lg object-cover object-center" alt="">
 		    </div>
-		    <div 
-				x-data="{ tab: 'details' }"				
-				>
 
-				<div class="flex items-center mb-4">
-		    			<button :class="{ 'bg-blue-500 text-white font-bold': tab === 'details' }" class="py-4 px-6 md:px-5 rounded-l border border-l" x-on:click="tab = 'details'">Details</button>
-		    			<button :class="{ 'bg-blue-500 text-white font-bold': tab === 'speakers' }" class="py-4 px-6 md:px-5 border border-t border-b" x-on:click="tab = 'speakers'">Speakers</button>
-						<button :class="{ 'bg-blue-500 text-white font-bold': tab === 'sponsers' }" class="py-4 px-6 md:px-5 rounded-r border border-r" x-on:click="tab = 'sponsers'">Sponsers</button>
-		    		</div>
+		    <div class="flex flex-col md:flex-row">
+		    	<div class="flex-1">
+		    		<h3  class="py-4 px-6 md:px-5 rounded-l border border-l w-40">Details</h3>
+					<p class="mt-6">{{ $event->description }}</p>
+		    	</div>
+		    	<div class="w-full md:w-64">
 
-				<div 
-				x-show.transition.100ms="tab === 'details'"
-				class="flex flex-col flex-row">
-
-					<p class="mt-6 text-lg text-gray-900 text-justify leading-5">{{ $event->description }}
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam ut venenatis tellus in metus vulputate. Semper auctor neque .
-
-						<span class="text-xl font-bold">Tellus elementum sagittis vitae et leo.</span> 
-						Parturient montes nascetur ridiculus mus mauris vitae. Sit amet est placerat in egestas erat imperdiet sed euismod. Neque aliquam vestibulum morbi blandit. Et ligula ullamcorper malesuada proin libero. Semper risus in hendrerit gravida. Sapien nec sagittis aliquam malesuada bibendum. Lacus vel facilisis volutpat est velit egestas dui. Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor. Tempor orci eu lobortis elementum. Vestibulum sed arcu non odio euismod lacinia at. Posuere ac ut consequat semper viverra nam libero justo laoreet. Eu facilisis sed odio morbi quis commodo odio. In cursus turpis massa tincidunt dui ut ornare lectus. Fermentum leo vel orci porta non pulvinar neque. Ut porttitor leo a diam sollicitudin tempor id. Faucibus nisl tincidunt eget nullam non nisi est. Ultricies mi quis hendrerit dolor magna eget est lorem.
-
-						A cras semper auctor neque. Blandit libero volutpat sed cras ornare arcu dui. Diam vulputate ut pharetra sit amet aliquam id. Feugiat pretium nibh ipsum consequat. Egestas sed sed risus pretium quam vulputate dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui ut. Amet porttitor eget dolor morbi non arcu risus. Vestibulum morbi blandit cursus risus. Lorem donec massa sapien faucibus. Odio tempor orci dapibus ultrices in iaculis nunc. Dolor purus non enim praesent elementum facilisis leo vel. Tempus quam pellentesque nec nam aliquam sem et tortor.
-
-						Nunc lobortis mattis aliquam faucibus purus in massa. Tempor orci dapibus ultrices in iaculis nunc sed. Amet aliquam id diam maecenas ultricies mi. At augue eget arcu dictum varius. Integer enim neque volutpat ac tincidunt vitae semper quis. Urna neque viverra justo nec ultrices. In eu mi bibendum neque egestas congue. Laoreet id donec ultrices tincidunt. Cras ornare arcu dui vivamus arcu felis bibendum. Accumsan lacus vel facilisis volutpat est. Ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum. Pharetra convallis posuere morbi leo. Sit amet volutpat consequat mauris nunc congue nisi vitae suscipit. Augue ut lectus arcu bibendum at varius. Malesuada fames ac turpis egestas maecenas.
-
-
-
-						<span class="text-xl font-bold">Tellus elementum sagittis vitae et leo.</span> 
-
-						Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus. Cras adipiscing enim eu turpis egestas pretium aenean pharetra magna. Arcu odio ut sem nulla pharetra diam sit. Venenatis lectus magna fringilla urna porttitor. Duis convallis convallis tellus id interdum velit. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Eleifend donec pretium vulputate sapien nec. Quam vulputate dignissim suspendisse in est ante in nibh. Dictum varius duis at consectetur. Pulvinar mattis nunc sed blandit libero volutpat sed cras ornare.
-					</p>
-
-				</div>
-
-				<div 
-			    	x-show.transition.100ms="tab === 'speakers'"
-			    	class="flex flex-col">
-			    	<div class="flex flex-row items-center">
-			    		@forelse($speakers as $speaker)
-			    			<div class="flex flex-col items-center flex-wrap mr-4">
-			    				<img src="{{ $speaker->avatar }}" class="w-12 h-12 md:w-24  w-12 h-12 md:h-24 rounded-full" alt="">
-
-			    				<h5 class="text-md text-gray-700 mt-4">{{ $speaker->first_name }} </h5>
-			    			</div>
-			    		@empty
-
-			    		@endforelse
-			    	</div>
-
-			    	<p class="mt-6 text-lg text-gray-900">{{ $event->description }}</p>
-			    </div>
-			    <div 
-			    	x-show.transition.100ms="tab === 'sponsers'"
-			    	class="flex flex-col">
-				    	<div class="flex flex-row items-center">
-				    		@forelse($sponsers as $sponser)
-				    			<div class="flex flex-col items-center mr-4">
-				    				<img src="{{ $sponser->avatar }}" class="w-24  h-24 rounded-full" alt="">
-
-				    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
-				    			</div>
-				    		@empty
-
-				    		@endforelse
-				    	</div>
-
-				</div>
-
-			</div>
-		    {{-- <div class="flex flex-col items">
-			    <div 
-					x-data="{ tab: 'speakers' }"				
-					>
-					<div class="flex items-center">
-		    			<button :class="{ 'active': tab === 'bar' }" x-on:click="tab = 'speakers'">Speakers</button>
-						<button :class="{ 'active': tab === 'foo' }" x-on:click="tab = 'sponsers'">Speakers</button>
-		    		</div>
-
-				    <div 
-				    	x-show.transition.100ms="tab === 'speakers'"
-				    	class="flex flex-col">
-				    	<h3 class="text-md text-gray-700 mb-4">Speakers</h3>
-				    	<div class="flex flex-col items-center">
+					<div 
+				    	class="flex flex-col mb-5">
+		    			<h3  class="  w-40">Speakers</h3>
+				    	<div class="mt-6 flex flex-row items-center">
 				    		@forelse($speakers as $speaker)
-				    			<div class="flex flex-col items-center mr-4">
-				    				<img src="{{ $speaker->avatar }}" class="w-24  h-24 rounded-full" alt="">
+				    			<div class="flex flex-col mb-5 items-center flex-wrap mr-4">
+				    				<img src="{{ $speaker->avatar }}" class="w-12 h-12  rounded-full" alt="">
 
 				    				<h5 class="text-md text-gray-700 mt-4">{{ $speaker->first_name }} </h5>
 				    			</div>
@@ -164,27 +94,27 @@
 				    		@endforelse
 				    	</div>
 
-				    	<p class="mt-6 text-lg text-gray-900">{{ $event->description }}</p>
 				    </div>
 				    <div 
-				    	x-show.transition.100ms="tab === 'sponsers'"
-				    	class="flex flex-col">
-				    	<h3 class="text-md text-gray-700 mb-4">Sponsers</h3>
-				    	<div class="flex flex-col items-center">
-				    		@forelse($sponsers as $sponser)
-				    			<div class="flex flex-col items-center mr-4">
-				    				<img src="{{ $sponser->avatar }}" class="w-24  h-24 rounded-full" alt="">
+				    	class="flex flex-col mb-5">
+		    			<h3  class="  w-40">Sponsers</h3>
+					    	<div class="mt-6 flex flex-row items-center">
+					    		@forelse($sponsers as $sponser)
+					    			<div class="flex flex-col items-center mr-4">
+					    				<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
 
-				    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
-				    			</div>
-				    		@empty
+					    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
+					    			</div>
+					    		@empty
 
-				    		@endforelse
-				    	</div>
+					    		@endforelse
+					    	</div>
 
-				    </div>
-				</div>
-			</div> --}}
+					</div>
+		    	</div>
+		    </div>
+		   
+		  
 
 		</div>
 
@@ -198,7 +128,7 @@
 					      <a href="{{ url('events', $event->id . '-' . $event->slug) }}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
 					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
 
-					      <div class="flex items-center mt-3">
+					      <div class="flex justify-between items-center mt-3 w-full">
 					      		<span class="text-lg">
 					      			{{ $event->title }}
 					      		</span>	
@@ -239,34 +169,38 @@
   
 var swiper = new Swiper('.swiper-container', {
   // Default parameters
-  slidesPerView: 1,
+	slidesPerView: 1,
   // spaceBetween: 2,
   // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 320px
-    0: {
-      slidesPerView: 1,
-      spaceBetween: 10
-    },
-    // when window width is >= 640px
-    640: {
-      slidesPerView: 2,
-      spaceBetween: 10
-    }
-    ,
-    // when window width is >= 640px
-    1080: {
-      slidesPerView: 3,
-      spaceBetween: 20
-    }
-    ,
-    // when window width is >= 640px
-    1440: {
-      slidesPerView: 4,
-      spaceBetween: 20
-    }
-  },
-      lazy: true
+	 breakpoints: {
+	    // when window width is >= 320px
+	    0: {
+	      slidesPerView: 1,
+	      spaceBetween: 10
+	    },
+	    // when window width is >= 640px
+	    640: {
+	      slidesPerView: 2,
+	      spaceBetween: 10
+	    }
+	    ,
+	    // when window width is >= 640px
+	    1080: {
+	      slidesPerView: 3,
+	      spaceBetween: 20
+	    }
+	    ,
+	    // when window width is >= 640px
+	    1440: {
+	      slidesPerView: 4,
+	      spaceBetween: 20
+	    }
+  	},
+      lazy: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
 })
 </script>
 @endpush

@@ -3,33 +3,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 	<style>
-		/*.swiper-container {
-		  width: 100%;
-		  height: 100%;
-		}*/
-
-		.swiper-slide {
-		  text-align: center;
-		  font-size: 18px;
-		  background: #fff;
-		  /* Center slide text vertically */
-		  display: -webkit-box;
-		  display: -ms-flexbox;
-		  display: flex;
-		  -webkit-box-pack: center;
-		  -ms-flex-pack: center;
-		  justify-content: center;
-		  -webkit-box-align: center;
-		  -ms-flex-align: center;
-		  align-items: center;
-		}
-
-		img {
-		  max-width: 100%;
-		  height: auto;
-		}
-
-		.swiper-button-next, .swiper-button-prev{color:black;}
+		
 	</style>
 @endsection
 
@@ -123,16 +97,16 @@
 	    <div class="mt-16 categories w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Categories</h2>
-			    <a href="/event" class="text-blue-500 hover:opacity-75">	
+			    {{-- <a href="/event" class="text-blue-500 hover:opacity-75">	
 			    	View all --
-			    </a>
+			    </a> --}}
 			</div>
 		    <div class="swiper-container w-full">
 		        <div class="swiper-wrapper">
 			        @forelse($query_category as $category)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide bg-gray-400 w-full">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}">
+					      <a href="/event?category={{ $category->id }}&slug={{ $category->slug }}">
 					      	<img data-src="{{ asset($category->thumbnail) }}" class="swiper-lazy w-full  rounded-lg">
 					      </a>
 					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
@@ -160,34 +134,38 @@
   
 var swiper = new Swiper('.swiper-container', {
   // Default parameters
-  slidesPerView: 1,
+  	slidesPerView: 1,
   // spaceBetween: 2,
   // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 320px
-    0: {
-      slidesPerView: 1,
-      spaceBetween: 10
+	breakpoints: {
+	    // when window width is >= 320px
+	    0: {
+	      slidesPerView: 1,
+	      spaceBetween: 10
+	    },
+	    // when window width is >= 640px
+	    640: {
+	      slidesPerView: 2,
+	      spaceBetween: 10
+	    }
+	    ,
+	    // when window width is >= 640px
+	    960: {
+	      slidesPerView: 3,
+	      spaceBetween: 20
+	    }
+	    ,
+	    // when window width is >= 640px
+	    1080: {
+	      slidesPerView: 4,
+	      spaceBetween: 20
+	    }
     },
-    // when window width is >= 640px
-    640: {
-      slidesPerView: 2,
-      spaceBetween: 10
-    }
-    ,
-    // when window width is >= 640px
-    960: {
-      slidesPerView: 3,
-      spaceBetween: 20
-    }
-    ,
-    // when window width is >= 640px
-    1080: {
-      slidesPerView: 4,
-      spaceBetween: 20
-    }
-  },
-      lazy: true
+      lazy: true,
+       navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
 })
 </script>
 @endpush

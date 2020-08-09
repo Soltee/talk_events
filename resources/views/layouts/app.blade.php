@@ -16,6 +16,30 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('head')
     <livewire:styles />
+    <style>
+        .swiper-slide {
+          text-align: center;
+          font-size: 18px;
+          background: #fff;
+          /* Center slide text vertically */
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        .swiper-button-next, .swiper-button-prev{color:blue;}
+    </style>
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
     <div>
@@ -31,11 +55,11 @@
                         </div>
                         <div class="flex-1 text-right">
                             @guest
-                                <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="no-underline hover:underline text-blue-900 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 
                             @else
-                                <a class="no-underline  text-gray-300 text-sm px-4 py-3 bg-indigo-600 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
-                                <span class="text-gray-300 text-sm pr-4">{{ Auth::user()->name }}</span>
+                                <a class="no-underline   text-white text-sm px-4 py-3 bg-indigo-600 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
+                                <span class=" text-blue-900 text-sm pr-4">{{ Auth::user()->name }}</span>
 
                                 <a href="{{ route('user.logout') }}"
                                    class="no-underline hover:underline text-blue-900 text-sm p-3"

@@ -98,7 +98,7 @@
 			        		</div>
 		        		</div>
 	        			<div class="sm:ml-4 py-3 w-full sm:w-2/3 flex flex-col items-start justify-between">
-	        				<div class="flex flex-row w-full items-center justify-between mb-4">
+	        				<div class="flex flex-row w-full items-center justify-between mb-5">
 	        					<h5 class="text-xl font-bold text-gray-900">{{ $event->title }}</h5>
 	        					@if($event->is_paid)
 					      			<span class="text-xl text-blue-500 font-bold">
