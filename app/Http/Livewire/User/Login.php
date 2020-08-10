@@ -27,14 +27,14 @@ class Login extends Component
         ]);
 
 
-    	$user = Auth::attempt(['email' => $data['email'], 'password' => $data['password']], $this->remember);
-    	// dd($user);
-    	if($user){
+    	if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']], $this->remember)){
+    	   // dd($user);
 
-			// Auth::login($user);
 	        session()->flash('success', 'Logged in.');
 	        return redirect()->route('home');
-    	}
+    	} else {
+            session()->flash('error', 'Credentials doesnot match.');
+        }
     }
 
 }

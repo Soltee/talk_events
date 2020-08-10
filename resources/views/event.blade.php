@@ -46,25 +46,31 @@
        
     <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  mt-8 mb-12">
 
-    	<div class="flex justify-between items-center">
-			<div class="flex items-center mb-4 ">
+    	<div class="flex justify-between items-center  mb-4 ">
+			<div class="flex items-center">
 				<a href="/"><h4 class="text-md font-light text-gray-800 mr-2">Home</h4></a>
 				@if($cat)
 	        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	        		<h4 class="text-md font-light text-c-pink opacity-75">{{ $cat->name }}</h4>
+	        		<a href="/event?category={{ $cat->id }}&slug={{ $cat->slug }}" class="text-md font-light text-c-pink opacity-75">{{ $cat->name }}</a>
 	        	@endif
 	    		<svg xmlns="http://www.w3.org/2000/svg" class="hidden lg:block w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	    		<a href="/events" class="hidden lg:block "><h4 class="text-md font-light text-gray-800 mr-2">Events</h4></a>
+	    		<a href="/event" class="hidden lg:block "><h4 class="text-md font-light text-gray-800 mr-2">Events</h4></a>
 	    		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 	    		<h4 class="text-md font-light text-gray-800 opacity-75">{{ $event->title }}</h4>
 		    </div>
-		    <div class="z-20 md:z-0 flex justify-between md:justify-end items-center fixed bottom-0 md:left-0 w-full md:w-auto py-4 md:py-0 px-10 md:static">
+		    <div class="hidden md:block flex justify-end items-center  py-4 md:py-0">
 		    	<span class="text-lg font-bold">$ {{ $event->price }} </span>
 			    <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}" class="md:ml-3">
 			    	<button type="submit" class="text-white bg-blue-600 hover:bg-blue-500 px-10 md:px-6 py-5 md:py-3 rounded-lg">Book Now</button>
 		    	</a>
 		    </div>
 		</div>
+		<div class="bg-gray-300 z-20 md:hidden flex justify-between items-center fixed bottom-0 w-full left-0 px-6 py-4">
+	    	<span class="text-lg font-bold text-blue-900">$ {{ $event->price }} </span>
+		    <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}">
+		    	<button type="submit" class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
+	    	</a>
+	    </div>
 
 
 		<div class="flex flex-col mt-8">

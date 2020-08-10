@@ -1,12 +1,19 @@
 <div class="flex px-6 py-3 md:px-0">
-    <div class="hidden md:block md:w-1/2">
-    	<img src="{{ asset('/images/auth.svg') }}" class="h-full w-full p-12  object-center">
+    <div class="hidden md:block md:w-1/2  h-screen">
+    	<img src="{{ asset('/images/reg.svg') }}" class="h-full w-full p-12  object-center">
     </div>
     <div class="w-full md:w-1/2 md:p-10 relative">
     	
 
-        <div class="font-semibold text-gray-700 py-3 px-6 mb-0">
-            {{ __('Register') }}
+        <div class="flex items-center text-gray-700 py-3 px-6 ">
+            <a href="/" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <span class="ml-2 text-sm">Back to Site</span>
+            </a>
+
+            <h2 class="ml-6 font-bold">
+                {{ __('Register') }}
+            </h2>
         </div>
 
         <form wire:submit.prevent="register" class="w-full p-6" >
@@ -17,7 +24,7 @@
                     {{ __('First name') }}:
                 </label>
 
-                <input id="first_name" type="text" class="form-input w-full @error('first_name')  border-red-500 @enderror" wire:model="first_name" value="{{ $first_name }}" required autocomplete="first_name" autofocus>
+                <input id="first_name" type="text" class="form-input w-full " wire:model="first_name" value="{{ $first_name }}"  autocomplete="first_name" >
 
                 @error('first_name')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -30,7 +37,7 @@
                     {{ __('Last name') }}:
                 </label>
 
-                <input id="last_name" type="text" class="form-input w-full @error('last_name')  border-red-500 @enderror" wire:model="last_name" value="{{ $last_name }}" required autocomplete="last_name" autofocus>
+                <input id="last_name" type="text" class="form-input w-full " wire:model="last_name" value="{{ $last_name }}"  autocomplete="last_name" >
 
                 @error('last_name')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -44,7 +51,7 @@
                     {{ __('E-Mail Address') }}:
                 </label>
 
-                <input id="email" type="email" class="form-input w-full @error('email') border-red-500 @enderror"  wire:model="email" value="{{ $email }}" required autocomplete="email">
+                <input id="email" type="email" class="form-input w-full"  wire:model="email" value="{{ $email }}"  autocomplete="email">
 
                 @error('email')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -58,7 +65,7 @@
                     {{ __('Password') }}:
                 </label>
 
-                <input id="password" type="password" class="form-input w-full @error('password') border-red-500 @enderror"  wire:model="password" required autocomplete="new-password">
+                <input id="password" type="password" class="form-input w-full"  wire:model="password"  autocomplete="new-password">
 
                 @error('password')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -72,7 +79,7 @@
                     {{ __('Confirm Password') }}:
                 </label>
 
-                <input id="password-confirm" type="password" class="form-input w-full" wire:model="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" type="password" class="form-input w-full" wire:model="password_confirmation"  autocomplete="new-password">
             </div>
 
             <div class="flex flex-wrap">

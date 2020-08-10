@@ -77,8 +77,10 @@
 	        	</div>
         		
         		<span class="pb-4 text-c-pink">
-        			{{ $events->firstItem() . '-' . $events->lastItem() }} of {{ $count }} 
-        			@if(request()->search) found @endif
+        			@if($count > 0)
+	        			{{ $events->firstItem() . '-' . $events->lastItem() }} of {{ $count }} 
+	        			@if(request()->search) found @endif
+        			@endif
         		</span>
         	</div>
 			<div class="plain
@@ -99,7 +101,7 @@
 		        		</div>
 	        			<div class="sm:ml-4 py-3 w-full sm:w-2/3 flex flex-col items-start justify-between">
 	        				<div class="flex flex-row w-full items-center justify-between mb-5">
-	        					<h5 class="text-xl font-bold text-gray-900">{{ $event->title }}</h5>
+	        					<h5 class="text-lg font-bold text-gray-900">{{ $event->title }}</h5>
 	        					@if($event->is_paid)
 					      			<span class="text-xl text-blue-500 font-bold">
 						      			$ {{ $event->price }}
@@ -119,7 +121,10 @@
 	        			
 	        		</div>
 	        	@empty
-	        		<p>No event yet.</p>
+		        	<div class=" flex flex-col justify-center w-full">
+			      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
+			      		<p class="mt-3">No event yet.</p>
+		     		</div>
 	        	@endforelse
 	        </div>
 
@@ -222,7 +227,7 @@
 						<label  class="custom_checkbox relative flex flex items-center">
 							<div class="flex items-center border">
 								<input class="hidden" class="roleCheckbox" type="checkbox"  
-								name="type" value="free" {{ request()->type == '0' ? 'checked' : '' }}>
+								name="type" value="free" {{ request()->type == 'free' ? 'checked' : '' }}>
 								<svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
 							</div>
 

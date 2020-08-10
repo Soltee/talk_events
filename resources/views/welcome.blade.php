@@ -20,7 +20,7 @@
         		</a>
 	        	</div>
         	<div id="heroImage" class=" hidden md:block md:w-1/2 h-full relative">
-	        	<img  src="/images/hero.svg" class="lozad w-full object-center h-74 object-cover hero" alt="">
+	        	<img  src="/images/events.svg" class="lozad w-full object-center h-74 object-cover hero" alt="">
 	        </div>
            
 	    </div>
@@ -81,18 +81,20 @@
 		    </div>
 	    </div>
 
+	    @if($featured)
+		    <div class="mt-16 recent_events w-full flex flex-col md:flex-row">
+		    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
+		    		<h5>{{ $featured->title }}</h5>
+		    	</div>
 
-	    <div class="mt-16 recent_events w-full flex flex-col md:flex-row">
-	    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
-	    		<h5>{{ $featured->title }}</h5>
-	    	</div>
+		    	<div class="w-full md:w-1/2">
+		    		<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+		    			<img src="{{ asset($featured->cover) }}" class="swiper-lazy w-full  rounded-lg">
+		    		</a>
+		    	</div>
+		    </div>
+		@endif
 
-	    	<div class="w-full md:w-1/2">
-	    		<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
-	    			<img src="{{ asset($featured->cover) }}" class="swiper-lazy w-full  rounded-lg">
-	    		</a>
-	    	</div>
-	    </div>
 
 	    <div class="mt-16 categories w-full">
 		    <div class="flex justify-between items-center mb-8">

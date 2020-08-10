@@ -1,22 +1,43 @@
 <div class="flex px-6 py-3 md:px-0">
-    <div class="hidden md:block md:w-1/2">
-        <img src="{{ asset('/images/auth.svg') }}" class="h-full w-full p-12 object-cover object-center">
+    <div class="hidden md:block md:w-1/2  h-screen">
+        <img src="{{ asset('/images/wel.svg') }}" class="h-full w-full p-12  object-center">
     </div>
-    <div class="w-full md:w-1/2 md:p-12">
+    <div class="w-full md:w-1/2 md:p-10 relative">
+        
 
-        <div class="font-semibold text-gray-700 py-3 px-6 mb-0">
-            {{ __('Login') }}
+        <div class="flex items-center text-gray-700 py-3 px-6 ">
+            <a href="/" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <span class="ml-2 text-sm">Back to Site</span>
+            </a>
+
+            <h2 class="ml-6 font-bold">
+                {{ __('Welcome Back') }}
+            </h2>
         </div>
 
-        <form wire:submit.prevent="login" class="w-full p-6" method="POST" >
+        
+
+        <form wire:submit.prevent="login" class="w-full p-6 mt-3" method="POST" >
             @csrf
+
+            
+            @if (session()->has('error'))
+
+                <div class="px-2 py-3 mb-6 rounded text-red-500 bg-red-100">
+
+                    {{ session('error') }}
+
+                </div>
+
+            @endif
 
             <div class="flex flex-wrap mb-6">
                 <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
                     {{ __('E-Mail Address') }}:
                 </label>
 
-                <input id="email" type="email" class="form-input w-full @error('email') border-red-500 @enderror" wire:model="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                <input id="email" type="email" class="form-input w-full" wire:model="email" value="{{ old('email') }}"  autocomplete="email" >
 
                 @error('email')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -30,7 +51,7 @@
                     {{ __('Password') }}:
                 </label>
 
-                <input id="password" type="password" class="form-input w-full @error('password') border-red-500 @enderror" wire:model="password" required>
+                <input id="password" type="password" class="form-input w-full " wire:model="password" >
 
                 @error('password')
                     <p class="text-red-500 text-xs italic mt-4">
