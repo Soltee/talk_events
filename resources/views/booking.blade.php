@@ -3,7 +3,7 @@
 @section('head')
 
 	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>    
-    <script src="https://unpkg.com/khalti-checkout-web@latest/dist/khalti-checkout.iffe.js"></script>
+    {{-- <script src="https://unpkg.com/khalti-checkout-web@latest/dist/khalti-checkout.iffe.js"></script> --}}
     <script src="https://js.stripe.com/v3/"></script>
     <style type="text/css">
             /**
@@ -45,98 +45,12 @@
        
     <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  my-8">
     	<p class="text-red-600 my-4">{{ session('error') }}</p>
+
     	<div class="flex-1 flex flex-col">
 		
-		    <form
-		    	id="bookForm"
-		    	method="POST" action="/events/{{$event->id}}/book">   
-	    		@csrf
-	    		<input type="hidden" name="eventId" value="{{ $event->id }}">		
-	    		<input type="hidden" name="eventPrice" value="{{ $event->price }}">		
-		    		<div class="flex flex-col border border-lighter-black rounded-lg p-3 mb-4">
-		    			<h3 class="mt-2 mb-3">
-		    				<span class="mr-2 border px-3 py-2 border-gray-400 rounded-full text-md text-c-light-blue">1</span> 
-		    				<span class="text-md text-c-light-blue font-semibold">Personal Info</span>
-		    			</h3>
-
-		    			<div class="mt-5 mb-3">
-			    			<div class="flex flex-col md:flex-row items-center mb-4">
-				    			<div class="md:w-1/2 md:mr-2 flex flex-col">
-				    				<label for="first_name" class="mb-2 text-c-lighter-black text-sm">First name</label>
-				    				<input type="text" name="first_name" value="{{ $auth ? $auth->first_name : '' }}" class="px-6 py-3 rounded-md border border-gray-300" placeholder="Shraddha">
-				    			</div>
-				    			<div class="md:w-1/2  md:ml-2 flex flex-col">
-				    				<label for="last_name" class="text-c-lighter-black text-sm mb-2">Last name</label>
-				    				<input type="text" name="last_name" value="{{ $auth ? $auth->last_name : '' }}" class="px-6 py-3 rounded-lg border border-gray-300" placeholder="Shrestha">
-				    			</div>
-			    			</div>
-			    			<div class="flex flex-col mb-4">
-				    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Email</label>
-				    				<input type="email" name="email" value="{{ $auth ? $auth->email : '' }}" class="px-6 py-3 rounded-lg border border-gray-300" placeholder="shrastha@gmail.com">
-				    		</div>
-		    			</div>		    			
-		    		</div>
-
-
-		    		<div class="flex flex-col border border-lighter-black rounded-lg p-3 mb-4">
-		    			<h3 class="mt-2 mb-3">
-		    				<span class="mr-2 border px-3 py-2 border-gray-400 rounded-full text-md text-c-light-blue">3</span> 
-		    				<span class="text-md text-c-light-blue font-semibold">Payment Info</span>
-		    			</h3>
-
-		    			<div class="mt-5 mb-3 flex  items-center">
-
-			    			<div
-			    				x-data="{ stripe : false }"
-			    				 class="flex flex-col">
-					    		<div
-					    			id="stripeTab" 
-					    			x-on:click="stripe = !stripe" class="flex flex-col mb-4 mr-3">
-				    				<label for="stripe" class="w-64 mb-2 px-4 py-2 flex items-center border border-c-light-green rounded cursor-pointer">
-				    					<svg xmlns="http://www.w3.org/2000/svg" class="rounded-full p-1 border border-c-green   w-8 h-8 text-c-light-green mr-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
-				    					<span class="text-md">Stripe</span>
-				    				</label>
-				    				
-					    		</div>
-
-					    		
-					    		
-
-					    	</div>
-
-					    	
-				    		
-		    			</div>
-
-              <div x-show.transition.50ms="stripe">
-                <input type="hidden" name="payment_type" value="stripe">
-                <div class="flex flex-col">
-                  
-                    <div id="card-element" class="mb-3">
-                      <!-- A Stripe Element will be inserted here. -->
-                    </div>
-
-                    <!-- Used to display form errors. -->
-                    <div id="card-errors" role="alert"></div>
-                </div>
-              </div>
-
-		    		</div>
-
-
-		    	
-
-	    			<div class="flex w-full justify-end mb-4">
-	    				<button type="submit" class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Pay Now</button>
-	    			</div>
-	    	</form>
-	    	
-		    
-		</div>
-
-		<div class="w-1/3">
-		</div>
-
+		    {{-- <livewire:user.booking  :event="$event"/> --}}
+	     
+		  </div>
 
     </div>
 

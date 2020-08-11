@@ -1,21 +1,12 @@
 @extends('layouts.app')
 
 @section('head')
-	{{-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-	   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-	   crossorigin=""/>
-	Make sure you put this AFTER Leaflet's CSS
-	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-	   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-	   crossorigin=""></script> --}}
-	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>    
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 	<style>
-		/*.swiper-container {
-		  width: 100%;
-		  height: 100%;
-		}*/
+	
 
 		.swiper-slide {
 		  text-align: center;
@@ -39,38 +30,95 @@
 		}
 
 		.swiper-button-next, .swiper-button-prev{color:blue;}
+            /**
+             * The CSS shown here will not be introduced in the Quickstart guide, but shows
+             * how you can use CSS to style your Element's container.
+             */
+            .StripeElement {
+              box-sizing: border-box;
+
+              height: 40px;
+
+              padding: 10px 12px;
+
+              border: 1px solid transparent;
+              border-radius: 4px;
+              background-color: white;
+
+              box-shadow: 0 1px 3px 0 #e6ebf1;
+              -webkit-transition: box-shadow 150ms ease;
+              transition: box-shadow 150ms ease;
+            }
+
+            .StripeElement--focus {
+              box-shadow: 0 1px 3px 0 #cfd7df;
+            }
+
+            .StripeElement--invalid {
+              border-color: #fa755a;
+            }
+
+            .StripeElement--webkit-autofill {
+              background-color: #fefde5 !important;
+            }
 	</style>
 @endsection
 
 @section('content')
        
     <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  mt-8 mb-12">
+	    <div
+	    	x-data="{open:false}" 
+	    	class="">
 
-    	<div class="flex justify-between items-center  mb-4 ">
-			<div class="flex items-center">
-				<a href="/"><h4 class="text-md font-light text-gray-800 mr-2">Home</h4></a>
-				@if($cat)
-	        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	        		<a href="/event?category={{ $cat->id }}&slug={{ $cat->slug }}" class="text-md font-light text-c-pink opacity-75">{{ $cat->name }}</a>
-	        	@endif
-	    		<svg xmlns="http://www.w3.org/2000/svg" class="hidden lg:block w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	    		<a href="/event" class="hidden lg:block "><h4 class="text-md font-light text-gray-800 mr-2">Events</h4></a>
-	    		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	    		<h4 class="text-md font-light text-gray-800 opacity-75">{{ $event->title }}</h4>
+	    	<div class="flex justify-between items-center  mb-4 ">
+				<div class="flex items-center">
+					<a href="/"><h4 class="text-md font-light text-gray-800 mr-2">Home</h4></a>
+					@if($cat)
+		        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+		        		<a href="/event?category={{ $cat->id }}&slug={{ $cat->slug }}" class="text-md font-light text-c-pink opacity-75">{{ $cat->name }}</a>
+		        	@endif
+		    		<svg xmlns="http://www.w3.org/2000/svg" class="hidden lg:block w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+		    		<a href="/event" class="hidden lg:block "><h4 class="text-md font-light text-gray-800 mr-2">Events</h4></a>
+		    		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+		    		<h4 class="text-md font-light text-gray-800 opacity-75">{{ $event->title }}</h4>
+			    </div>
+
+		    	<!--Book Btn on Desktop -->
+			    <div 
+					class="hidden md:block flex justify-end items-center  py-4 md:py-0">
+				    	<span class="text-lg font-bold">$ {{ $event->price }} </span>
+					    {{-- <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}" class="md:ml-3"> --}}
+					    	<button 
+					    		x-on:click="open = !open" 
+					    		type="submit" class="ml-3 text-white bg-blue-600 hover:bg-blue-500 px-10 md:px-6 py-5 md:py-3 rounded-lg">Book Now</button>
+				    	{{-- </a> --}}
+			    </div>
+			</div>
+
+		    <!--Book Btn on Mobile -->
+			<div
+				x-on:click="open = !open" 
+				class="bg-gray-300 z-20 md:hidden flex justify-between items-center fixed bottom-0 w-full left-0 px-6 py-4">
+		    	<span class="text-lg font-bold text-blue-900">$ {{ $event->price }} </span>
+			    {{-- <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}"> --}}
+			    	<button class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
+		    	{{-- </a> --}}
 		    </div>
-		    <div class="hidden md:block flex justify-end items-center  py-4 md:py-0">
-		    	<span class="text-lg font-bold">$ {{ $event->price }} </span>
-			    <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}" class="md:ml-3">
-			    	<button type="submit" class="text-white bg-blue-600 hover:bg-blue-500 px-10 md:px-6 py-5 md:py-3 rounded-lg">Book Now</button>
-		    	</a>
+
+		    <!-- Booking Modal -->
+		    <div 
+			    x-show.transition.50ms="open"
+			    class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+			        <div 
+			        	x-on:click="open = false;" class="h-full w-full bg-gray-300 opacity-50">
+			        </div>
+			        <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+				    	<livewire:user.booking :event="$event"/>
+				    </div>
 		    </div>
+
 		</div>
-		<div class="bg-gray-300 z-20 md:hidden flex justify-between items-center fixed bottom-0 w-full left-0 px-6 py-4">
-	    	<span class="text-lg font-bold text-blue-900">$ {{ $event->price }} </span>
-		    <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}">
-		    	<button type="submit" class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
-	    	</a>
-	    </div>
 
 
 		<div class="flex flex-col mt-8">
@@ -119,9 +167,6 @@
 					</div>
 		    	</div>
 		    </div>
-		   
-		  
-
 		</div>
 
 		<div class="mt-12 weekend_events w-full">
@@ -162,6 +207,9 @@
 	    </div>
 
 
+	    
+
+
 
     </div>
 
@@ -171,42 +219,142 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
+    window.addEventListener('DOMContentLoaded', function(){
 
-  
-var swiper = new Swiper('.swiper-container', {
-  // Default parameters
-	slidesPerView: 1,
-  // spaceBetween: 2,
-  // Responsive breakpoints
-	 breakpoints: {
-	    // when window width is >= 320px
-	    0: {
-	      slidesPerView: 1,
-	      spaceBetween: 10
-	    },
-	    // when window width is >= 640px
-	    640: {
-	      slidesPerView: 2,
-	      spaceBetween: 10
-	    }
-	    ,
-	    // when window width is >= 640px
-	    1080: {
-	      slidesPerView: 3,
-	      spaceBetween: 20
-	    }
-	    ,
-	    // when window width is >= 640px
-	    1440: {
-	      slidesPerView: 4,
-	      spaceBetween: 20
-	    }
-  	},
-      lazy: true,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-})
+    	var swiper = new Swiper('.swiper-container', {
+  			// Default parameters
+			slidesPerView: 1,
+		  // spaceBetween: 2,
+		  // Responsive breakpoints
+			 breakpoints: {
+			    // when window width is >= 320px
+			    0: {
+			      slidesPerView: 1,
+			      spaceBetween: 10
+			    },
+			    // when window width is >= 640px
+			    640: {
+			      slidesPerView: 2,
+			      spaceBetween: 10
+			    }
+			    ,
+			    // when window width is >= 640px
+			    1080: {
+			      slidesPerView: 3,
+			      spaceBetween: 20
+			    }
+			    ,
+			    // when window width is >= 640px
+			    1440: {
+			      slidesPerView: 4,
+			      spaceBetween: 20
+			    }
+		  	},
+		      lazy: true,
+		      navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		      },
+		});
+
+		// const stripeTab    = document.getElementById('stripeTab');
+  //       // const khaltiTab = document.getElementById('khaltiTab');
+  //       const bookForm         = document.getElementById('bookForm');
+
+  //   	// let component = window.livewire.find('unique_id')    
+
+	 //    //Stripe Confrimation 
+	 //    if(stripeTab){
+	 //       	stripeTab.addEventListener('click', () => {
+	 //       		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
+	 //            var stripe = Stripe(`${key}`);
+	 //            // Create an instance of Elements.
+	 //            var elements = stripe.elements();
+
+	 //            // Custom styling can be passed to options when creating an Element.
+	 //            // (Note that this demo uses a wider set of styles than the guide below.)
+	 //            var style = {
+	 //              base: {
+	 //                color: '#32325d',
+	 //                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+	 //                fontSmoothing: 'antialiased',
+	 //                fontSize: '16px',
+	 //                '::placeholder': {
+	 //                  color: '#aab7c4'
+	 //                }
+	 //              },
+	 //              invalid: {
+	 //                color: '#fa755a',
+	 //                iconColor: '#fa755a'
+	 //              }
+	 //            };
+
+	 //            // Create an instance of the card Element.
+	 //            var card = elements.create('card', {style: style});
+
+	 //            // Add an instance of the card Element into the `card-element` <div>.
+	 //            card.mount('#card-element');
+
+	 //            // Handle real-time validation errors from the card Element.
+	 //            card.addEventListener('change', function(event) {
+	 //              var displayError = document.getElementById('card-errors');
+	 //              if (event.error) {
+	 //                displayError.textContent = event.error.message;
+	 //              } else {
+	 //                displayError.textContent = '';
+	 //              }
+	 //            });
+
+	 //            // Handle form submission.
+	 //            document.getElementById('payBtn').addEventListener('click', (e, stripe)=>{
+
+	 //            	stripe.createToken(card).then(function(result) {
+		//                 if (result.error) {
+		//                   // Inform the user if there was an error.
+		//                   var errorElement = document.getElementById('card-errors');
+		//                   errorElement.textContent = result.error.message;
+		//                 } else {
+		//                   // Send the token to your server.
+		//                   stripeTokenHandler(result.token);
+		//                 }
+	 //              	});
+
+	 //            });
+	 //            // bookForm.addEventListener('submit', function(event) {
+	 //            //   event.preventDefault();
+
+	 //            //   stripe.createToken(card).then(function(result) {
+	 //            //     if (result.error) {
+	 //            //       // Inform the user if there was an error.
+	 //            //       var errorElement = document.getElementById('card-errors');
+	 //            //       errorElement.textContent = result.error.message;
+	 //            //     } else {
+	 //            //       // Send the token to your server.
+	 //            //       stripeTokenHandler(result.token);
+	 //            //     }
+	 //            //   });
+	 //            // });
+
+	 //           // Submit the form with the token ID.
+	 //            function stripeTokenHandler(token) {
+	 //            	@this.set('stripeToken', token.id);
+	 //            	document.getElementById('payBtn').display="none";
+	 //            	document.getElementById('conBtn').display="block";
+
+	 //            	// component.set('stripeToken', token.id)
+	 //              // Insert the token ID into the form so it gets submitted to the server
+	 //              // var hiddenInput = document.createElement('input');
+	 //              // hiddenInput.setAttribute('type', 'hidden');
+	 //              // hiddenInput.setAttribute('name', 'stripeToken');
+	 //              // hiddenInput.setAttribute('value', token.id);
+	 //              // bookForm.appendChild(hiddenInput);	    
+	 //              // bookForm.submit();
+	 //            }
+
+	 //       	});
+	 //    }
+        
+    });
+
 </script>
 @endpush

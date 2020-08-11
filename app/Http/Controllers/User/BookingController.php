@@ -50,10 +50,7 @@ class BookingController extends Controller
             'payment_type'  =>   'required|string',
         ]);
 
-        $price         = $data['eventPrice'];
-        $tax           = (12/100) * $price;
-        $total         = $price + $tax;
-        $paymentType   = $data['payment_type'];
+        
 
 
         $event  = Event::findOrfail($data['eventId']);

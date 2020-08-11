@@ -54,11 +54,12 @@
                             </a>
                         </div>
                         <div class="flex-1 text-right">
+                            <a class="no-underline   text-white text-sm px-4 py-3 bg-indigo-600 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
                             @guest
                                 <a class="no-underline hover:underline text-blue-900 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 
                             @else
-                                <a class="no-underline   text-white text-sm px-4 py-3 bg-indigo-600 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
+                                
                                 <span class=" text-blue-900 text-sm pr-4">{{ Auth::user()->name }}</span>
 
                                 <a href="{{ route('user.logout') }}"
@@ -80,8 +81,62 @@
     </div>
 
     <footer>
-        <div class="">
+        <div class="bg-gray-700">
 
+          <div class="xl:max-w-screen-lg xl:mx-auto">
+              Use Eventbrite
+
+                How It Works
+                For Large & Complex Events
+                Pricing
+                Content Standards
+                Eventbrite Mobile Ticket App
+                Eventbrite Check-In App
+                Eventbrite App Marketplace
+                COVID-19 (Coronavirus) Resources
+                FAQs
+                Sitemap
+
+            Plan Events
+
+                Conference Management Software
+                Eventbrite + Yoga
+                Nonprofits & Fundraisers
+                Sell Tickets
+                Event Management & Planning
+                Online Event Registration
+                Online RSVP
+                How to List Your Event for Free
+                COVID-19 Safety Playbook for Events
+
+            Find Events
+
+                Virtual Events
+                Online Webinars
+                Online Classes
+                Online Yoga
+                Virtual Runs
+                Online Zumba Classes
+                Virtual Conferences
+                Online Seminars
+                Online Speed Dating
+                Virtual Wine Tasting
+
+            Connect With Us
+
+                Contact Support
+                Twitter
+                Facebook
+                LinkedIn
+                Instagram
+
+            © 2020 Eventbrite
+
+                AboutBlogHelpCareersPressInvestorsSecurityDevelopersTermsPrivacyCA Privacy NoticeCookies
+
+            Locale
+            United States
+          </div>
 
         </div>
     </footer>
