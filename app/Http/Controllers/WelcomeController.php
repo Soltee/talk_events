@@ -61,11 +61,11 @@ class WelcomeController extends Controller
         }
 
         if($type){
-            if($type == 'free'){
+            if($type == 'both'){
+
+            } elseif($type == 'free'){
                 $query    = $query->where('price', 0); 
             } else {
-
-                // $query    = $query->where('is_paid', $type); 
                 $query    = $query->where('price', '>', $type); 
             }
         }

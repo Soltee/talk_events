@@ -84,58 +84,7 @@
         <div class="bg-gray-700">
 
           <div class="xl:max-w-screen-lg xl:mx-auto">
-              Use Eventbrite
-
-                How It Works
-                For Large & Complex Events
-                Pricing
-                Content Standards
-                Eventbrite Mobile Ticket App
-                Eventbrite Check-In App
-                Eventbrite App Marketplace
-                COVID-19 (Coronavirus) Resources
-                FAQs
-                Sitemap
-
-            Plan Events
-
-                Conference Management Software
-                Eventbrite + Yoga
-                Nonprofits & Fundraisers
-                Sell Tickets
-                Event Management & Planning
-                Online Event Registration
-                Online RSVP
-                How to List Your Event for Free
-                COVID-19 Safety Playbook for Events
-
-            Find Events
-
-                Virtual Events
-                Online Webinars
-                Online Classes
-                Online Yoga
-                Virtual Runs
-                Online Zumba Classes
-                Virtual Conferences
-                Online Seminars
-                Online Speed Dating
-                Virtual Wine Tasting
-
-            Connect With Us
-
-                Contact Support
-                Twitter
-                Facebook
-                LinkedIn
-                Instagram
-
-            © 2020 Eventbrite
-
-                AboutBlogHelpCareersPressInvestorsSecurityDevelopersTermsPrivacyCA Privacy NoticeCookies
-
-            Locale
-            United States
+             
           </div>
 
         </div>
