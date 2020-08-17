@@ -2,8 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', 'WelcomeController@index')->name('welcome');
+
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
 Route::get('/events/{event}-{slug}', 'WelcomeController@event')->name('event');
 Route::get('/event', 'WelcomeController@events')->name('events.all');
 

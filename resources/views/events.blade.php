@@ -60,7 +60,7 @@
 	        			<div class="sm:ml-4 py-3 w-full sm:w-2/3 flex flex-col items-start justify-between">
 	        				<div class="flex flex-row w-full items-center justify-between mb-5">
 	        					<h5 class="text-lg font-bold text-gray-900">{{ $event->title }}</h5>
-	        					@if($event->is_paid)
+	        					@if($event->price > 0)
 					      			<span class="text-xl text-blue-500 font-bold">
 						      			$ {{ $event->price }}
 						      		</span>	
@@ -89,33 +89,17 @@
 			<div class="">
 				{{ $events->onEachSide(5)->appends(request()->input())->links() }}
 			</div>
-			{{-- <div class="page-load-status">
-		      	<div class="loader-ellips infinite-scroll-request">
-			        <span class="loader-ellips__dot"></span>
-			        <span class="loader-ellips__dot"></span>
-			        <span class="loader-ellips__dot"></span>
-			        <span class="loader-ellips__dot"></span>
-		      	</div>
-		      	<div class="infinite-scroll-last flex flex-col justify-center w-full">
-		      		<svg class="h-8 w-8 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
-		      		<p class="mt-3">No more events..</p>
-		     	</div>
-		     	<div class="infinite-scroll-error flex flex-col justify-center w-full">
-		      		<svg class="h-8 w-8 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
-		      		<p class="mt-3">No more pages to load</p>
-		     	</div>
-		    </div>
-	        --}}
+			
         </div>
 
         <div 
         	x-data="{ open: false }"
-        	id="filters" class="absolute top-0 left-0 right-0 bg-gray-100 py-4 px-6 w-full flex flex-col items-start">
-        	<div class="flex justify-between items-center w-full md:hidden mb-4 ">
+        	id="filters" class="absolute top-0 left-0 right-0 bg-gray-100 py-4 px-6 w-full flex flex-col items-start md:px-24 lg:hidden">
+        	<div class="flex justify-between items-center w-full  mb-4 ">
         		<h3 class="text-md text-gray-900">Filters</h3>
 				<svg 
 					x-on:click="open = !open"
-					xmlns="http://www.w3.org/2000/svg" class='h-8 w-8 text-blue-500 cursor-pointer md:hidden' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+					xmlns="http://www.w3.org/2000/svg" class='h-8 w-8 text-blue-500 cursor-pointer' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
         	</div>
         	<div 
@@ -253,7 +237,7 @@
 			</div>
 
         </div>
-        <div  class="hidden md:block md:ml-3 w-full md:w-64 flex flex-col items-start">
+        <div  class="hidden lg:block lg:ml-3 w-full lg:w-64 flex flex-col items-start">
         	
         	<form method="GET">
         		<div class="flex justify-between items-center">
@@ -387,9 +371,8 @@
 @endsection
 
 @push('scripts')
-    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
 	<script>
-		function debounce(func, wait = 20, immediate = true){
+		function debounce(func, wait = 10, immediate = true){
 		    var timeout;
 		    return function(){
 		      var context = this, args = arguments;

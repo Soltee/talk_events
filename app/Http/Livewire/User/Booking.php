@@ -51,50 +51,70 @@ class Booking extends Component
     public function book()
     {
         
-    	$data = $this->validate([
-            'first_name'    =>  'required|string|min:2',
-            'last_name'     =>  'required|string|min:2',
-            'email'         =>  'required|email',
-            'stripeToken'   =>  'required|string'
-        ]);
+        if($this->price > 0){
+        	
+            $this->validate([
+                'first_name'    =>  'required|string|min:2',
+                'last_name'     =>  'required|string|min:2',
+                'email'         =>  'required|email',
+                'stripeToken'   =>  'required|string'
+            ]);
 
-        if($this->step){
-            
-            try {
-                // dd($data);
-                $gateway = Omnipay::create('Stripe');               
-                $gateway->setApiKey(env('STRIPE_SECRET_KEY'));
-                            
-                $response = $gateway->purchase([
-                    'amount'    => $this->price,
-                    'currency'  => 'usd',
-                    'token'     => $this->stripeToken,
-                ])->send();
-                
-                // dd($response);
-                if ($response->isSuccessful()) {
+            if($this->step){
+                try {
+                    // dd($data);
+                    $gateway = Omnipay::create('Stripe');               
+                    $gateway->setApiKey(env('STRIPE_SECRET_KEY'));
+                                
+                    $response = $gateway->purchase([
+                        'amount'    => $this->price,
+                        'currency'  => 'usd',
+                        'token'     => $this->stripeToken,
+                    ])->send();
+                    
                     // dd($response);
-                    
-                    
-                    $booking = $this->store();
+                    if ($response->isSuccessful()) {
+                        // dd($response);
+                        
+                        
+                        $booking = $this->store();
 
-                    session()->flash('success', $this->event->title.' is booked.');
-                    $this->first_name  = '';
-                    $this->last_name   = '';
-                    $this->email       = '';
-                    $this->stripeToken = '';
+                        session()->flash('success', $this->event->title.' is booked.');
+                        $this->first_name  = '';
+                        $this->last_name   = '';
+                        $this->email       = '';
+                        $this->stripeToken = '';
 
-                } else {
-                    session()->flash('error', 'Sorry! Your booking was cancelled.');
+                    } else {
+                        session()->flash('error', 'Sorry! Your booking was cancelled.');
+                    }
+                   
+                    
+                } catch (CardErrorException $e) {
+                    session()->flash('error', $e->getMessage());
                 }
-               
                 
-            } catch (CardErrorException $e) {
-                session()->flash('error', $e->getMessage());
+            }
+
+        } else {
+            $this->validate([
+                'first_name'    =>  'required|string|min:2',
+                'last_name'     =>  'required|string|min:2',
+                'email'         =>  'required|email'
+            ]);
+
+            if($this->step){
+                $booking = $this->store();
+
+                session()->flash('success', $this->event->title.' is booked.');
+                $this->first_name  = '';
+                $this->last_name   = '';
+                $this->email       = '';
+                $this->stripeToken = '';
             }
         }
 
-        
+
     }
 
     /**

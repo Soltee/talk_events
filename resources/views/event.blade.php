@@ -66,7 +66,7 @@
 
 @section('content')
        
-    <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  mt-8 mb-12">
+    <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  mt-8 mb-24 md:mb-12">
 	    <div
 	    	x-data="{open:false}" 
 	    	class="">
@@ -87,7 +87,15 @@
 		    	<!--Book Btn on Desktop -->
 			    <div 
 					class="hidden md:block flex justify-end items-center  py-4 md:py-0">
-				    	<span class="text-lg font-bold">$ {{ $event->price }} </span>
+				    	@if($event->price > 0)
+			      			<span class="text-lg font-bold text-blue-900">
+				      			$ {{ $event->price }}
+				      		</span>	
+			      		@else
+			      			<span class="text-lg font-bold text-blue-900">
+				      			Free
+				      		</span>	
+			      		@endif
 					    {{-- <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}" class="md:ml-3"> --}}
 					    	<button 
 					    		x-on:click="open = !open" 
@@ -100,7 +108,15 @@
 			<div
 				x-on:click="open = !open" 
 				class="bg-gray-300 z-20 md:hidden flex justify-between items-center fixed bottom-0 w-full left-0 px-6 py-4">
-		    	<span class="text-lg font-bold text-blue-900">$ {{ $event->price }} </span>
+				@if($event->price > 0)
+	      			<span class="text-lg font-bold text-blue-900">
+		      			$ {{ $event->price }}
+		      		</span>	
+	      		@else
+	      			<span class="text-lg font-bold text-blue-900">
+		      			Free
+		      		</span>	
+	      		@endif
 			    {{-- <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}"> --}}
 			    	<button class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
 		    	{{-- </a> --}}
@@ -122,16 +138,59 @@
 
 
 		<div class="flex flex-col mt-8">
-		    <div class="mb-6">
-		    	<img src="{{ $event->cover }}" class="w-full h-56 rounded-lg object-cover object-center" alt="">
+			<div class="flex flex-col md:flex-row mb-6">
+		    	<div class="flex-1 mb-4 md:mb-0 md:mr-6">
+				    <img src="{{ $event->cover }}" class="w-full h-40 md:h-full rounded-lg object-cover object-center" alt="">
+		    	</div>
+		    	<div class="w-full md:w-64">
+	      			<span class="text-xl text-blue-500 font-bold">
+		      			{{ date("F j, Y, g:i a", strtotime($event->start)) }}
+		      		</span>	
+		      	
+					<div 
+				    	class="flex flex-col my-5">
+		    			<h3  class="  w-40">Speakers</h3>
+				    	<div class="mt-6 flex flex-row items-center">
+				    		@forelse($speakers as $speaker)
+				    			<div class="flex flex-col mb-5 items-center flex-wrap mr-4">
+				    				<img src="{{ $speaker->avatar }}" class="w-12 h-12  rounded-full" alt="">
+
+				    				<h5 class="text-md text-gray-700 mt-4">{{ $speaker->first_name }} </h5>
+				    			</div>
+				    		@empty
+
+				    		@endforelse
+				    	</div>
+
+				    </div>
+				    <div 
+				    	class="flex flex-col mb-5">
+		    			<h3  class="  w-40">Sponsers</h3>
+					    	<div class="mt-6 flex flex-row items-center">
+					    		@forelse($sponsers as $sponser)
+					    			<div class="flex flex-col items-center mr-4">
+					    				<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
+
+					    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
+					    			</div>
+					    		@empty
+
+					    		@endforelse
+					    	</div>
+
+					</div>
+		    	</div>
 		    </div>
+		   {{--  <div class="mb-6">
+		    	<img src="{{ $event->cover }}" class="w-full h-56 rounded-lg object-cover object-center" alt="">
+		    </div> --}}
 
 		    <div class="flex flex-col md:flex-row">
 		    	<div class="flex-1">
-		    		<h3  class="py-4 px-6 md:px-5 rounded-l border border-l w-40">Details</h3>
+		    		<h3  class="">Details</h3>
 					<p class="mt-6">{{ $event->description }}</p>
 		    	</div>
-		    	<div class="w-full md:w-64">
+		    	{{-- <div class="w-full md:w-64">
 
 					<div 
 				    	class="flex flex-col mb-5">
@@ -165,13 +224,13 @@
 					    	</div>
 
 					</div>
-		    	</div>
+		    	</div> --}}
 		    </div>
 		</div>
 
 		<div class="mt-12 weekend_events w-full">
 		    <h2 class="text-blue-900 text-lg font-bold mb-8">You may be interested in</h2>
-		    <div class="swiper-container w-full">
+		    <div class="{{ ($similar_count) ? 'swiper-container' : ''}} w-full">
 		        <div class="swiper-wrapper">
 			        @forelse($similar as $event)
 						    <!-- Lazy image -->
@@ -196,13 +255,18 @@
 					    </div>
 
 				    @empty
-
+				    	<div class=" flex flex-col justify-center w-full">
+				      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
+				      		<p class="mt-3">Empty events.</p>
+			     		</div>
 				    @endforelse
 		        </div>
 		      <!-- Add Pagination -->
 		      <!-- <div class="swiper-pagination"></div> -->
-		      <div class="swiper-button-next"></div>
-		      <div class="swiper-button-prev"></div>
+		      @if($similar_count)
+			      <div class="swiper-button-next"></div>
+			      <div class="swiper-button-prev"></div>
+		      @endif
 		    </div>
 	    </div>
 
@@ -257,102 +321,6 @@
 		      },
 		});
 
-		// const stripeTab    = document.getElementById('stripeTab');
-  //       // const khaltiTab = document.getElementById('khaltiTab');
-  //       const bookForm         = document.getElementById('bookForm');
-
-  //   	// let component = window.livewire.find('unique_id')    
-
-	 //    //Stripe Confrimation 
-	 //    if(stripeTab){
-	 //       	stripeTab.addEventListener('click', () => {
-	 //       		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
-	 //            var stripe = Stripe(`${key}`);
-	 //            // Create an instance of Elements.
-	 //            var elements = stripe.elements();
-
-	 //            // Custom styling can be passed to options when creating an Element.
-	 //            // (Note that this demo uses a wider set of styles than the guide below.)
-	 //            var style = {
-	 //              base: {
-	 //                color: '#32325d',
-	 //                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-	 //                fontSmoothing: 'antialiased',
-	 //                fontSize: '16px',
-	 //                '::placeholder': {
-	 //                  color: '#aab7c4'
-	 //                }
-	 //              },
-	 //              invalid: {
-	 //                color: '#fa755a',
-	 //                iconColor: '#fa755a'
-	 //              }
-	 //            };
-
-	 //            // Create an instance of the card Element.
-	 //            var card = elements.create('card', {style: style});
-
-	 //            // Add an instance of the card Element into the `card-element` <div>.
-	 //            card.mount('#card-element');
-
-	 //            // Handle real-time validation errors from the card Element.
-	 //            card.addEventListener('change', function(event) {
-	 //              var displayError = document.getElementById('card-errors');
-	 //              if (event.error) {
-	 //                displayError.textContent = event.error.message;
-	 //              } else {
-	 //                displayError.textContent = '';
-	 //              }
-	 //            });
-
-	 //            // Handle form submission.
-	 //            document.getElementById('payBtn').addEventListener('click', (e, stripe)=>{
-
-	 //            	stripe.createToken(card).then(function(result) {
-		//                 if (result.error) {
-		//                   // Inform the user if there was an error.
-		//                   var errorElement = document.getElementById('card-errors');
-		//                   errorElement.textContent = result.error.message;
-		//                 } else {
-		//                   // Send the token to your server.
-		//                   stripeTokenHandler(result.token);
-		//                 }
-	 //              	});
-
-	 //            });
-	 //            // bookForm.addEventListener('submit', function(event) {
-	 //            //   event.preventDefault();
-
-	 //            //   stripe.createToken(card).then(function(result) {
-	 //            //     if (result.error) {
-	 //            //       // Inform the user if there was an error.
-	 //            //       var errorElement = document.getElementById('card-errors');
-	 //            //       errorElement.textContent = result.error.message;
-	 //            //     } else {
-	 //            //       // Send the token to your server.
-	 //            //       stripeTokenHandler(result.token);
-	 //            //     }
-	 //            //   });
-	 //            // });
-
-	 //           // Submit the form with the token ID.
-	 //            function stripeTokenHandler(token) {
-	 //            	@this.set('stripeToken', token.id);
-	 //            	document.getElementById('payBtn').display="none";
-	 //            	document.getElementById('conBtn').display="block";
-
-	 //            	// component.set('stripeToken', token.id)
-	 //              // Insert the token ID into the form so it gets submitted to the server
-	 //              // var hiddenInput = document.createElement('input');
-	 //              // hiddenInput.setAttribute('type', 'hidden');
-	 //              // hiddenInput.setAttribute('name', 'stripeToken');
-	 //              // hiddenInput.setAttribute('value', token.id);
-	 //              // bookForm.appendChild(hiddenInput);	    
-	 //              // bookForm.submit();
-	 //            }
-
-	 //       	});
-	 //    }
         
     });
 

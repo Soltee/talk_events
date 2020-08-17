@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Event;
 use App\Category;
+use Cache;
 
 class WelcomeController extends Controller
 {
@@ -19,18 +20,54 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $query_category   = Category::latest()->take(10)->get();
+        // $query_category   = Category::latest()->take(10)->get();
+        // $query_events     = Event::latest();
+        // $trending         = $query_events
+        //                         // ->with(['bookings' => function($query){
+        //                         //     $query->count('')
+        //                         // }])
+        //                         ->take(6)->get();
+        // $featured         = Event::inRandomOrder()->where('is_featured', true)->first();
+        // $today_events     = $query_events->where('start', '>', now())->take(30)->get();
+        // $this_weekend     = $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
+
+        $query_category      = Cache::remember('query_category', now()->addMinutes(3), function() {
+            return Category::latest()->take(10)->get();
+        });
         $query_events     = Event::latest();
-        $trending         = $query_events
-                                // ->with(['bookings' => function($query){
-                                //     $query->count('')
-                                // }])
+
+        $trending      = Cache::remember('trending', now()->addMinutes(3), function() use ($query_events) {
+            return $query_events
+                                ->with('bookings')
                                 ->take(6)->get();
-        $featured         = Event::inRandomOrder()->where('is_featured', true)->first();
-        $today_events     = $query_events->where('start', '>', now())->take(30)->get();
-        $this_weekend     = $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
+        });
+
+        $today_events   = Cache::remember('today_events', now()->addMinutes(3), function() use ($query_events) {
+            return $query_events->where('start', '>', now())->take(30)->get();
+        });
+
+        $free   = Cache::remember('free', now()->addMinutes(3), function() use ($query_events) {
+            return $query_events->where('is_paid', false)->take(30)->get();
+        });
+
+        $free_total   = Cache::remember('free_total', now()->addMinutes(3), function() use ($free) {
+            return $free->count();
+        });
+
+        $this_weekend  = Cache::remember('this_weekend', now()->addMinutes(3), function() use ($query_events) {
+            return $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
+        });
+
+        $this_weekend_total   = Cache::remember('free_total', now()->addMinutes(3), function() use ($this_weekend) {
+            return $this_weekend->count();
+        });
+
+        // $featured  = Cache::remember('this_weekend', now()->addMinutes(3), function() {
+        //     return Event::inRandomOrder()->where('is_featured', true)->first();
+        // });
+
         //popular, online, free, paid, today, tomorrow, this_weekend, online_classes, more categoies, trending
-        return view('welcome', compact('trending', 'today_events', 'featured', 'this_weekend', 'query_category'));
+        return view('welcome', compact('trending', 'today_events', 'this_weekend', 'this_weekend_total', 'free', 'free_total', 'query_category'));
     }
 
     /**
@@ -70,6 +107,18 @@ class WelcomeController extends Controller
             }
         }
 
+        // $categories = Cache::remember('categories', now()->addMinutes(3), function() {
+        //     return Category::latest()->get();
+        // });
+
+        // $events     = Cache::remember('events', now()->addMinutes(3), function() use ($query) {
+        //     return $query->paginate(10);
+        // });
+
+        // $count      = Cache::remember('count', now()->addMinutes(3), function() use ($events) {
+        //     return $events->total();
+        // });
+
         $categories   =   Category::latest()->get();
         $events       =   $query->paginate(10);
         $count        =   $events->total();
@@ -86,14 +135,44 @@ class WelcomeController extends Controller
      */
     public function event(Event $event, $slug)
     {
+
         $venue    = $event->location;
         $cat      = $event->category;
 
         $speakers = $event->speakers;
         $sponsers = $event->sponsers;
 
-        $similar  = $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(6)->get();
+        // $similar  = $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(6)->get();
+        // $event = Cache::remember('event', now()->addMinutes(3), function() use ($event){
+        //     return $event;
+        // });
+
+        // $venue = Cache::remember('venue', now()->addMinutes(3), function() use ($event){
+        //     return $event->location;
+        // });
+
+        // $cat   = Cache::remember('cat', now()->addMinutes(3), function() use ($event){
+        //     return $event->category;
+        // });
+
+        // $speakers = Cache::remember('speakers', now()->addMinutes(3), function() use ($event){
+        //     return $event->speakers;
+        // });
+
+        // $sponsers = Cache::remember('sponsers', now()->addMinutes(3), function() use ($event){
+        //     return $event->sponsers;
+        // });
+
+        $similar = Cache::remember('similar', now()->addMinutes(3), function() use ($event){
+            return $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(6)->get();
+        });
+
+        $similar_count   = Cache::remember('similar_count', now()->addMinutes(3), function() use ($similar) {
+            return $similar->count();
+        });
+
+
         // dd(count($sponsers));
-        return view('event', compact('venue', 'cat', 'event', 'speakers', 'sponsers', 'similar'));
+        return view('event', compact('venue', 'cat', 'event', 'speakers', 'sponsers', 'similar', 'similar_count'));
     }
 }

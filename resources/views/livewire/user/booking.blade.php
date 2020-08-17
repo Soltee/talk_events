@@ -77,7 +77,7 @@
 		                        {{ $message }}
 		                    </p>
 		                @enderror
-
+		                @if($event->price > 0)
 		                <div wire:ignore class="flex flex-col mb-4">
 		    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Card</label>
 		    				<div 
@@ -93,6 +93,7 @@
 						            <div id="card-errors" role="alert"></div>
 						        </div>
 					    </div>
+					    @endif
 	    			</div>		    			
 	    		</div>
 
