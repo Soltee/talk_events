@@ -66,7 +66,7 @@
 
 @section('content')
        
-    <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  mt-8 mb-24 md:mb-12">
+    <div class="w-full flex flex-col  mt-8 mb-24 md:mb-12">
 	    <div
 	    	x-data="{open:false}" 
 	    	class="">

@@ -36,7 +36,7 @@
         <div id='events' class="w-full">
 		 
 			
-			<table id="example" class="stripe hover w-full">
+			<table id="example" class="stripe hover min-w-full">
 				<thead>
 					<tr>
 						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Image</th>

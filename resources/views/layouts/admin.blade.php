@@ -29,7 +29,7 @@
         </div>
 
         <div class="flex-1 flex flex-col">
-            <nav class="shadow py-3 md:py-6 px-3 md:px-6">
+            <nav class=" py-3 md:py-6 px-3 md:px-6">
                 <div class="flex items-center justify-center">
                     <div class="mr-6">
                         

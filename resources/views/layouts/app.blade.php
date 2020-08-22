@@ -17,6 +17,7 @@
     @yield('head')
     <livewire:styles />
     <style>
+      a{scroll-behavior:  smooth;}
         .swiper-slide {
           text-align: center;
           font-size: 18px;
@@ -45,52 +46,154 @@
     <div>
         @if(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
         @else
-            <nav class="">
-                <div class="w-full  px-6 md:px-24  lg:px-40  py-8">
-                    <div class="flex items-center justify-center">
-                        <div class="mr-6">
-                            <a href="{{ url('/') }}" class="text-lg font-semibold text-blue-900 no-underline">
-                                {{ config('app.name', 'Laravel') }}
-                            </a>
-                        </div>
-                        <div class="flex-1 text-right">
-                            <a class="no-underline   text-white text-sm px-4 py-3 bg-indigo-600 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
-                            @guest
-                                <a class="no-underline hover:underline text-blue-900 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                
-                            @else
-                                
-                                <span class=" text-blue-900 text-sm pr-4">{{ Auth::user()->name }}</span>
+            <nav class="px-6  py-8 max-w-screen-lg mx-auto">
+                <div class="flex items-center justify-center">
+                    <div class="mr-6">
+                        <a href="{{ url('/') }}" class="text-lg font-semibold text-blue-900 no-underline">
+                            {{ config('app.name', 'Laravel') }}
+                        </a>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <a class="no-underline   text-white text-sm px-4 py-3 bg-indigo-600 hover:opacity-75 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
+                        @guest
+                            <a class="no-underline hover:underline text-blue-900 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            
+                        @else
+                            
+                            <span class=" text-blue-900 text-sm pr-4">{{ Auth::user()->name }}</span>
 
-                                <a href="{{ route('user.logout') }}"
-                                   class="no-underline hover:underline text-blue-900 text-sm p-3"
-                                   onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="hidden">
-                                    {{ csrf_field() }}
-                                </form>
-                            @endguest
-                        </div>
+                            <a href="{{ route('user.logout') }}"
+                               class="no-underline hover:underline text-blue-900 text-sm p-3"
+                               onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                            <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="hidden">
+                                {{ csrf_field() }}
+                            </form>
+                        @endguest
                     </div>
                 </div>
             </nav>
         @endif
 
-        @yield('content')
-        @yield('authentication')
+        <div class="max-w-screen-lg mx-auto px-6  py-2">
+          @yield('content')
+          @yield('authentication')
+        </div>
+
+
+      <footer>
+          <div class="bg-gray-700">
+
+            <div class="max-w-screen-lg mx-auto px-6 py-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="flex flex-col mb-8">
+                        <h3 class="text-white hover:opacity-75 mb-4 text-md pr-3">About</h3>
+                        <p class="text-white leading-relaxed">
+                            Talk Events is a startup just 4 months in the business that assists people to find variety of free as well as paid events around the world.
+                        </p>
+                    </div>
+                    
+                    <div class="">
+                        <h3 class="text-white hover:opacity-75 mb-8 text-md  pr-3">Useful Links</h3>
+                        
+                        <div class="flex flex-col items-right md:justify-end w-full mt-4">
+                            <li class="list-none mb-4 md:mb-2">
+                                <a href="/shoes" class="text-white hover:opacity-75">
+                                    Events
+                                </a>
+                            </li>
+                            <li class="list-none mb-4 md:mb-2">
+                                <a href="/#" class="text-white hover:opacity-75">
+                                    Privacy Policy
+                                </a>
+                            </li>
+                            <li class="list-none mb-4 md:mb-2">
+                                <a href="/#" class="text-white hover:opacity-75">
+                                    Terms & Conditions
+                                </a>
+                            </li>
+                            <li class="list-none mb-4 md:mb-2">
+                                <a href="/#" class="text-white hover:opacity-75">
+                                    How it Works
+                                </a>
+                            </li>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="flex flex-row justify-between items-center mt-12">
+                    <span class="font-sm text-sm text-white">&copy; Talk Events 2020</span>
+                    <div class="flex items-center">
+                      <a href="/#" class="text-white hover:opacity-75">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather w-6 h-6 md:ml-4 feather-twitter">
+                              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                          </svg>
+                      </a>
+                      <a href="/#" class="text-white hover:opacity-75">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather w-6 h-6 md:ml-4 feather-facebook">
+                              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                          </svg>
+                      </a>
+          
+                      <a href="/#" class="text-white hover:opacity-75">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather w-6 h-6 md:ml-4 feather-instagram">
+                              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                          </svg>
+                      </a>
+                  </div>
+                </div>
+            </div>
+          
+          </div>
+      </footer>
+      <a href="#" id="upTO" class="fixed bottom-0 right-0 mr-12 mb-12">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-600 hover:opacity-75 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="16 12 12 8 8 12"></polyline>
+              <line x1="12" y1="16" x2="12" y2="8"></line>
+          </svg>
+      </a>
     </div>
 
-    <footer>
-        <div class="bg-gray-700">
-
-          <div class="xl:max-w-screen-lg xl:mx-auto">
-             
-          </div>
-
-        </div>
-    </footer>
+    <script src="{{ asset('/js/debounce.min.js') }}"></script>
     <livewire:scripts />
     @stack('scripts')
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+          const upTO   = document.getElementById('upTO');
+          function debounce(func, wait = 10, immediate = true) {
+            var timeout;
+            return function() {
+                var context = this,
+                    args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            }
+}
 
+        var upTOPostion  = upTO.getBoundingClientRect();
+
+          window.addEventListener("scroll", debounce(applyFixedPostion));
+          function applyFixedPostion() { 
+              console.log(window.innerHeight);
+                  if(window.innerHeight > 500){
+                      upTO.classList.remove('hidden');
+                      upTO.classList.add('block');
+                  } else {
+                      upTO.classList.add('hidden');
+                      upTO.classList.remove('block');
+                  }
+               
+              } 
+      });
+    </script>
 </body>
 </html>

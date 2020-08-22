@@ -43,7 +43,7 @@
 
 @section('content')
        
-    <div class="w-full flex flex-col  px-6 md:px-24  lg:px-40  my-8">
+    <div class="w-full flex flex-col  my-8">
     	<p class="text-red-600 my-4">{{ session('error') }}</p>
 
     	<div class="flex-1 flex flex-col">

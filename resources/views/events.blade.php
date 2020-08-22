@@ -17,7 +17,7 @@
 
 @section('content')
     
-    <div id="parentDiv" class="relative w-full flex flex-col lg:flex-row  px-6 md:px-24  lg:px-40 my-3 md:my-8">
+    <div id="parentDiv" class="relative w-full flex flex-col lg:flex-row  my-3 md:my-8">
         
         <div class="flex-1 md:mr-10 flex flex-col">
         	<div class="flex justify-between items-center mb-8">
@@ -372,20 +372,22 @@
 
 @push('scripts')
 	<script>
-		function debounce(func, wait = 10, immediate = true){
-		    var timeout;
-		    return function(){
-		      var context = this, args = arguments;
-		      var later = function(){
-		        timeout = null;
-		        if(!immediate) func.apply(context, args);
-		      };
-		      var callNow  = immediate && !timeout;
-		      clearTimeout(timeout);
-		      timeout = setTimeout(later, wait);
-		      if(callNow) func.apply(context, args);
-		    }
-	  	}
+		function debounce(func, wait = 10, immediate = true) {
+    var timeout;
+    return function() {
+        var context = this,
+            args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    }
+}
+
 		const filters   = document.getElementById('filters');
 		const parentDiv   = document.getElementById('parentDiv');
 

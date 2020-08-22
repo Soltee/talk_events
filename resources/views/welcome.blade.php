@@ -8,15 +8,15 @@
 @endsection
 
 @section('content')
-    <div class="px-6 md:px-24  lg:px-40 w-full mb-8">
+    <div class=" w-full mb-8">
 
 	    <div class="mt-12 hero w-full flex flex-col md:flex-row justify-between items-center">
 	    	<div class="flex flex-col w-full md:w-1/2">
-	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black mb-3">Grow your Horizon</h1>
+	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black mb-3">Broaden your Horizon</h1>
 	            <h1 class="text-lg md:text-2xl text-c-black ">Meet people that transform you</h1>
 	            <img src="/images/hero.svg" class="lozad w-full sm:w2/3 md:hidden h-64 object-cover object-center w-full hero mt-3" alt="">
         		<a href="/event" class="mt-10 w-40 text-center px-4 py-4 md:px-8 md:py-4 rounded bg-blue-600 hover:opacity-75 text-white text-md md:text-lg">
-        			Grow Now
+        			Meet Now
         		</a>
 	        	</div>
         	<div id="heroImage" class=" hidden md:block md:w-1/2 h-full relative">
@@ -28,8 +28,8 @@
 	    <div class="mt-16 recent_events w-full">
 	    	<div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Recent Events</h2>
-			    <a href="/event" class="text-blue-500 hover:opacity-75">	
-			    	View all --
+			    <a href="/event" class="{{ ($trending_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
+			    	View all 
 			    </a>
 			</div>
 
@@ -43,7 +43,7 @@
 					      <div class="mt-2 flex ">
 					      	{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 					      </div>
-					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
+					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
 				    @empty
@@ -60,8 +60,8 @@
 	    <div class="mt-16 weekend_events w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Comming Weekends</h2>
-			    <a href="/event" class="text-blue-500 hover:opacity-75">	
-			    	View all --
+			    <a href="/event" class="{{ ($this_weekend_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
+			    	View all 
 			    </a>
 			</div>
 
@@ -71,7 +71,7 @@
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full">
 					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
-					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
+					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
 				    @empty
@@ -108,8 +108,8 @@
 	    <div class="mt-16 free_events w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Free Events</h2>
-			    <a href="/event?search=&type=free" class="text-blue-500 hover:opacity-75">	
-			    	View all --
+			    <a href="/event?search=&type=free" class="{{ ($free_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
+			    	View all
 			    </a>
 			</div>
 		    <div class="{{ ($free_total) ? 'swiper-container' : '' }} w-full">
@@ -118,7 +118,7 @@
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full">
 					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
-					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
+					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
 				    @empty
@@ -128,8 +128,7 @@
 			     		</div>
 				    @endforelse
 		        </div>
-		      <!-- Add Pagination -->
-		      <!-- <div class="swiper-pagination"></div> -->
+		     
 		      @if($free_total)
 		      <div class="swiper-button-next"></div>
 		      <div class="swiper-button-prev"></div>
@@ -154,7 +153,7 @@
 					      <div class="mt-2 flex">
 					      	<a class="event?category={{ $category->id }}&slug={{ $category->slug }}">{{ $category->name }}</a>
 					      </div>
-					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
+					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
 				    @empty

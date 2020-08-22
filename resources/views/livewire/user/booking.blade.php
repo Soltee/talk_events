@@ -50,7 +50,7 @@
 			    			</div>
 		    			</div>
 
-		    			<div class="hidden md:block flex justify-between items-center">
+		    			<div class="hidden md:block grid mt-3 md:grid-cols-2 mb-3 w-full justify-between items-center">
 			    			<div class="md:w-1/2 md:mr-2 flex flex-col">
 			    				@error('first_name')
 				                    <p class="text-red-500 text-xs italic mt-4">
@@ -98,21 +98,29 @@
 	    		</div>
 
 	    		
-	    		@if($step)
-					<div class="conBtn  flex w-full justify-end mb-4">
-						
+	    		@if($event->price > 0)
+		    		@if($step)
+						<div class="conBtn  flex w-full justify-end mb-4">
+							
 
-						<div class="flex flex-col">
+							<div class="flex flex-col">
 
-								<span 
-									wire:click="book"
-									class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Confirm</span>
+									<span 
+										wire:click="book"
+										class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Confirm</span>
 
+							</div>
 						</div>
-					</div>
-	    		@else
+		    		@else
+		    			<div id="payBtn"  class="flex w-full justify-end mb-4">
+							<span type="span" wire:click="changeStep" class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Pay Now</span>
+						</div>
+					@endif
+				@else
 	    			<div id="payBtn"  class="flex w-full justify-end mb-4">
-						<span type="span" wire:click="changeStep" class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Pay Now</span>
+						<span 
+							wire:click="book"
+							class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Pay Now</span>
 					</div>
 				@endif
 		</form>

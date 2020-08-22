@@ -31,15 +31,21 @@ class WelcomeController extends Controller
         // $today_events     = $query_events->where('start', '>', now())->take(30)->get();
         // $this_weekend     = $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
 
-        $query_category      = Cache::remember('query_category', now()->addMinutes(3), function() {
+        $query_category   = Cache::remember('query_category', now()->addMinutes(3), function() {
             return Category::latest()->take(10)->get();
         });
-        $query_events     = Event::latest();
 
-        $trending      = Cache::remember('trending', now()->addMinutes(3), function() use ($query_events) {
+        $query_events     =  Event::latest();
+       
+
+        $trending         = Cache::remember('trending', now()->addMinutes(3), function() use ($query_events) {
             return $query_events
                                 ->with('bookings')
                                 ->take(6)->get();
+        });
+
+        $trending_total   = Cache::remember('trending_total', now()->addMinutes(3), function() use ($trending) {
+            return $trending->count();
         });
 
         $today_events   = Cache::remember('today_events', now()->addMinutes(3), function() use ($query_events) {
@@ -67,7 +73,7 @@ class WelcomeController extends Controller
         // });
 
         //popular, online, free, paid, today, tomorrow, this_weekend, online_classes, more categoies, trending
-        return view('welcome', compact('trending', 'today_events', 'this_weekend', 'this_weekend_total', 'free', 'free_total', 'query_category'));
+        return view('welcome', compact('trending', 'trending_total', 'today_events', 'this_weekend', 'this_weekend_total', 'free', 'free_total', 'query_category'));
     }
 
     /**

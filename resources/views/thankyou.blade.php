@@ -6,7 +6,7 @@
 
 @section('content')
        
-    <div class="w-full flex flex-col md:flex-row justify-center  px-6 md:px-24  lg:px-40  my-8">
+    <div class="w-full flex flex-col md:flex-row justify-center   my-8">
 
     	<div class="">
 
