@@ -7,7 +7,7 @@
 	</style>
 @endsection
 
-@section('content')
+{{-- @section('content')
     <div class=" w-full mb-8">
 
 	    <div class="mt-12 hero w-full flex flex-col md:flex-row justify-between items-center">
@@ -90,20 +90,7 @@
 		    </div>
 	    </div>
 
-	   {{--  @if($featured)
-		    <div class="mt-16 recent_events w-full flex flex-col md:flex-row">
-		    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
-		    		<h5>{{ $featured->title }}</h5>
-		    	</div>
-
-		    	<div class="w-full md:w-1/2">
-		    		<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
-		    			<img src="{{ asset($featured->cover) }}" class="swiper-lazy w-full  rounded-lg">
-		    		</a>
-		    	</div>
-		    </div>
-		@endif
- --}}
+	
 
 	    <div class="mt-16 free_events w-full">
 		    <div class="flex justify-between items-center mb-8">
@@ -171,8 +158,21 @@
 	    </div>
 
     </div>
-@endsection
+@endsection --}}
+   {{--  @if($featured)
+		    <div class="mt-16 recent_events w-full flex flex-col md:flex-row">
+		    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
+		    		<h5>{{ $featured->title }}</h5>
+		    	</div>
 
+		    	<div class="w-full md:w-1/2">
+		    		<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+		    			<img src="{{ asset($featured->cover) }}" class="swiper-lazy w-full  rounded-lg">
+		    		</a>
+		    	</div>
+		    </div>
+		@endif
+ --}}
 @push('scripts')
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

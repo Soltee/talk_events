@@ -85,14 +85,14 @@
           <div class="bg-gray-700">
 
             <div class="max-w-screen-lg mx-auto px-6 py-8">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <div class="flex flex-col mb-8">
-                        <h3 class="text-white hover:opacity-75 mb-4 text-md pr-3">About</h3>
-                        <p class="text-white leading-relaxed">
-                            Talk Events is a startup just 4 months in the business that assists people to find variety of free as well as paid events around the world.
-                        </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative">
+                    <div class="flex flex-col mb-8 ">
+                      <div class=>
+                      
+                          <livewire:user.newsletter/>
+                              
+                      </div>
                     </div>
-                    
                     <div class="">
                         <h3 class="text-white hover:opacity-75 mb-8 text-md  pr-3">Useful Links</h3>
                         
@@ -118,6 +118,13 @@
                                 </a>
                             </li>
                         </div>
+                        
+                    </div>
+                    <div class="flex flex-col mb-8 ">
+                        <h3 class="text-white hover:opacity-75 mb-4 text-md pr-3">About</h3>
+                        <p class="text-white leading-relaxed">
+                            Talk Events is a startup just 4 months in the business that assists people to find variety of free as well as paid events around the world.
+                        </p>
                     </div>
                     
                 </div>
