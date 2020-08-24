@@ -7,7 +7,7 @@
 	</style>
 @endsection
 
-{{-- @section('content')
+@section('content')
     <div class=" w-full mb-8">
 
 	    <div class="mt-12 hero w-full flex flex-col md:flex-row justify-between items-center">
@@ -33,28 +33,32 @@
 			    </a>
 			</div>
 
-		    <div class="swiper-container w-full">
-		        <div class="swiper-wrapper">
-			        @forelse($trending as $event)
-						    <!-- Lazy image -->
-					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full flex flex-col items-center">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
+			<div class="my-8 {{ $trending_total ? 'swiper-container' : ''  }} w-full relative">
+			    <div class="swiper-wrapper">
+			    	@forelse($trending as $event)
 
-					      <div class="mt-2 flex ">
-					      	{{ date("F j, Y, g:i a", strtotime($event->start)) }}
-					      </div>
-					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
-					    </div>
+		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
+				            <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
+				            <div class="mt-2 flex ">
+						      	{{ date("F j, Y, g:i a", strtotime($event->start)) }}
+						      </div>
+				            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+			          	</div>
+			       
 
-				    @empty
+			        @empty
+			        	<div class="">
 
-				    @endforelse
-		        </div>
-		      <!-- Add Pagination -->
+			        	</div>
+			        @endforelse
+				      
+			    </div>
+			    <!-- Add Pagination -->
 		      <!-- <div class="swiper-pagination"></div> -->
 		      <div class="swiper-button-next"></div>
 		      <div class="swiper-button-prev"></div>
-		    </div>
+			</div>
+		    
 	    </div>
 
 	    <div class="mt-16 weekend_events w-full">
@@ -158,7 +162,7 @@
 	    </div>
 
     </div>
-@endsection --}}
+@endsection
    {{--  @if($featured)
 		    <div class="mt-16 recent_events w-full flex flex-col md:flex-row">
 		    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
@@ -182,6 +186,8 @@
 var swiper = new Swiper('.swiper-container', {
   // Default parameters
   	slidesPerView: 1,
+    lazy: true,
+	grabCursor: true,
   // spaceBetween: 2,
   // Responsive breakpoints
 	breakpoints: {
@@ -208,7 +214,6 @@ var swiper = new Swiper('.swiper-container', {
 	      spaceBetween: 20
 	    }
     },
-      lazy: true,
        navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',

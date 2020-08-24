@@ -20,11 +20,11 @@ class Newsletter extends Component
             'email'       => 'required|email',
     	]);
 
-    	if($this->isSubscribed($data['email'])){
-    		return session()->flash('success', 'Your email has already been  added to our list.');
-    	}
+    	// if($this->isSubscribed($data['email'])){
+    	// 	return session()->flash('success', 'Your email has already been  added to our list.');
+    	// }
 
-    	News::subscribe($data['email']);
+    	// News::subscribe($data['email']);
 
     	session()->flash('success', 'Your email has been added to our list.');
     }
