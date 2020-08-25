@@ -12,6 +12,10 @@ Route::get('/clear', function() {
 Route::get('/events/{event}-{slug}', 'WelcomeController@event')->name('event');
 Route::get('/event', 'WelcomeController@events')->name('events.all');
 
+/*Livewire*/
+Route::livewire('/events/schedules', 'user.schedule');
+
+
 /** Booking */
 Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')->name('booking.checkout');
 Route::post('/events/{event_id}/book', "User\BookingController@checkout")->name('event.book');
