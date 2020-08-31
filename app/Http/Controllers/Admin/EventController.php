@@ -60,8 +60,7 @@ class EventController extends Controller
         $last     = $query->lastItem();
         $previous     = $query->previousPageUrl();
         $next     = $query->nextPageUrl();
-        // $previous     = $paginate->appends(request()->input())->previousPageUrl();
-        // $next     = $paginate->appends(request()->input())->nextPageUrl();
+        
         return view('admin.events.index', compact('events', 'total', 'first', 'last', 'previous', 'next'));
     }
 

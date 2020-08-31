@@ -31,6 +31,10 @@ Auth::routes();
 Route::group(['middleware' => ['role:user']], function () {
     Route::get('/home', 'User\HomeController@index')->name('home');
 	Route::post('logout', 'User\HomeController@logout')->name('user.logout');
+
+	//Booking
+	Route::livewire('/bookings/{book}', 'user.bookings.booking');
+
 });
 
 

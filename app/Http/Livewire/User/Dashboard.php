@@ -20,7 +20,7 @@ class Dashboard extends Component
                                         {
                                             $query->select('id', 'title');
                                          }
-                                    ])->paginate(1);
+                                    ])->paginate(2);
 
         $first    = $bookings->firstItem();
         $last     = $bookings->lastItem();

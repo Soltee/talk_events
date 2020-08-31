@@ -29,15 +29,17 @@
                 </thead>
                 <tbody>
                     @forelse($bookings as $booking)
+
+
                     <tr>
                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ $booking->event->title }}</p>
+                            <a href="/bookings/{{ $booking->id }}" class="text-blue-500 hover:font-bold whitespace-no-wrap">{{ $booking->event->title }}</p>
                         </td>
                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">$ {{ $booking->price }}</p>
                         </td>
-                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ $booking->payment_type }}</p>
+                         <td class="px-5 whitespace-no-wrap py-3 border-b border-gray-200 bg-white text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap">{!! $booking->typeOfPayment() !!}</p>
                         </td>
                          <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">$ {{ $booking->grand_total}}</p>
@@ -62,31 +64,8 @@
                 </tbody>
             </table>
 
-            {{-- {{ $bookings->links() }} --}}
-
-            <div
-                class="px-5  py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                <span class="text-xs xs:text-sm text-gray-900">
-                    Showing {{ $first }} to {{ $last }} of {{$total}} Entries
-                </span>
-                <div class="inline-flex mt-2 xs:mt-0">
-                    @if($has_previous)
-                        <a href="{{ $has_previous }}">
-                            <button
-                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                            Prev
-                            </button>
-                        </a>
-                        @endif
-                    @if($has_next)
-                        <a href="{{ $has_next }}">
-                            <button
-                                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                                Next
-                            </button>
-                        </a>
-                    @endif
-                </div>
+            <div class="my-6">
+                {{ $bookings->links('vendor.pagination.tailwind') }}
             </div>
         </div>
     </div>
