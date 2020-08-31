@@ -71,7 +71,6 @@
 					      		@endif
 	        				</div>
 	        				<p class="mb-5 text-lg text-gray-900">{{ \Illuminate\Support\Str::limit($event->description, 100) }}</p>	
-	        				<p class="mb-5 text-lg text-gray-900">{{ $event->category->name }}</p>	
 		        			<a  href="{{ url('events', $event->id . '-' . $event->slug)}}" class="text-blue-600 font-semibold">
 		        				Show More <span class="ml-3 font-bold text-lg w-12">-</span>
 		        			</a>

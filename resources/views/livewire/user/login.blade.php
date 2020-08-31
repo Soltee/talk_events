@@ -1,4 +1,4 @@
-<div class="flex px-6 py-3 md:px-0">
+<div class="flex px-6 py-3 md:px-0 items-center">
     <div class="hidden md:block md:w-1/2  h-screen">
         <img src="{{ asset('/images/wel.svg') }}" class="h-full w-full p-12  object-center">
     </div>

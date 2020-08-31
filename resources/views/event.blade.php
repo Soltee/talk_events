@@ -181,50 +181,14 @@
 					</div>
 		    	</div>
 		    </div>
-		   {{--  <div class="mb-6">
-		    	<img src="{{ $event->cover }}" class="w-full h-56 rounded-lg object-cover object-center" alt="">
-		    </div> --}}
+		 
 
 		    <div class="flex flex-col md:flex-row">
 		    	<div class="flex-1">
 		    		<h3  class="">Details</h3>
 					<p class="mt-6">{{ $event->description }}</p>
 		    	</div>
-		    	{{-- <div class="w-full md:w-64">
-
-					<div 
-				    	class="flex flex-col mb-5">
-		    			<h3  class="  w-40">Speakers</h3>
-				    	<div class="mt-6 flex flex-row items-center">
-				    		@forelse($speakers as $speaker)
-				    			<div class="flex flex-col mb-5 items-center flex-wrap mr-4">
-				    				<img src="{{ $speaker->avatar }}" class="w-12 h-12  rounded-full" alt="">
-
-				    				<h5 class="text-md text-gray-700 mt-4">{{ $speaker->first_name }} </h5>
-				    			</div>
-				    		@empty
-
-				    		@endforelse
-				    	</div>
-
-				    </div>
-				    <div 
-				    	class="flex flex-col mb-5">
-		    			<h3  class="  w-40">Sponsers</h3>
-					    	<div class="mt-6 flex flex-row items-center">
-					    		@forelse($sponsers as $sponser)
-					    			<div class="flex flex-col items-center mr-4">
-					    				<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
-
-					    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
-					    			</div>
-					    		@empty
-
-					    		@endforelse
-					    	</div>
-
-					</div>
-		    	</div> --}}
+		   
 		    </div>
 		</div>
 

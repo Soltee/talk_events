@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 class Login extends Component
 {
 
-	public $email      = '';
-	public $password   = '';
+	public $email      = 'user@example.com';
+	public $password   = 'user1234';
 	public $remember   = false;
 	public $attempts   = 0;
 

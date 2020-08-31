@@ -20,16 +20,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        // $query_category   = Category::latest()->take(10)->get();
-        // $query_events     = Event::latest();
-        // $trending         = $query_events
-        //                         // ->with(['bookings' => function($query){
-        //                         //     $query->count('')
-        //                         // }])
-        //                         ->take(6)->get();
-        // $featured         = Event::inRandomOrder()->where('is_featured', true)->first();
-        // $today_events     = $query_events->where('start', '>', now())->take(30)->get();
-        // $this_weekend     = $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
+
 
         $query_category   = Cache::remember('query_category', now()->addMinutes(3), function() {
             return Category::latest()->take(10)->get();
@@ -147,27 +138,6 @@ class WelcomeController extends Controller
 
         $speakers = $event->speakers;
         $sponsers = $event->sponsers;
-
-        // $similar  = $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(6)->get();
-        // $event = Cache::remember('event', now()->addMinutes(3), function() use ($event){
-        //     return $event;
-        // });
-
-        // $venue = Cache::remember('venue', now()->addMinutes(3), function() use ($event){
-        //     return $event->location;
-        // });
-
-        // $cat   = Cache::remember('cat', now()->addMinutes(3), function() use ($event){
-        //     return $event->category;
-        // });
-
-        // $speakers = Cache::remember('speakers', now()->addMinutes(3), function() use ($event){
-        //     return $event->speakers;
-        // });
-
-        // $sponsers = Cache::remember('sponsers', now()->addMinutes(3), function() use ($event){
-        //     return $event->sponsers;
-        // });
 
         $similar = Cache::remember('similar', now()->addMinutes(3), function() use ($event){
             return $event->category->events()->inRandomOrder()->where('id', '!=' , $event->id)->take(6)->get();
