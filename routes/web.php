@@ -32,6 +32,9 @@ Route::group(['middleware' => ['role:user']], function () {
     Route::get('/home', 'User\HomeController@index')->name('home');
 	Route::post('logout', 'User\HomeController@logout')->name('user.logout');
 
+	//Profile
+	Route::livewire('/profile', 'user.auth.profile')->name('profile');
+
 	//Booking
 	Route::livewire('/bookings/{book}', 'user.bookings.booking');
 
@@ -44,11 +47,12 @@ Route::prefix('admin')->group(function () {
 	Route::get('login', 'Admin\LoginController@index')->name('admin.login.view');
 	Route::post('login', 'Admin\LoginController@login')->name('admin.login');
 
+	
 	/* After Authenctication*/
-	Route::post('logout', 'Admin\LoginController@logout')->name('admin.logout');
+	Route::post('logout', 'Admin\LoginController@logout')->middleware('auth')->name('admin.logout');
 
 	//Dashboard
-	Route::get('dashboard', 'Admin\HomeController@index')->name('admin.dashboard');
+	Route::get('dashboard', 'Admin\HomeController@index')->middleware('auth')->name('admin.dashboard');
 
 
 	//Category
@@ -115,6 +119,7 @@ Route::prefix('admin')->group(function () {
 		//Permissions
 		Route::post('permissions', 'Admin\PermissionController@store');
 		Route::delete('permissions/{permission}', 'Admin\PermissionController@destroy');
+
 		//Booking
 		// Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
 		// Route::post('bookings', 'Admin\BookingController@store')->name('booking.store');

@@ -1,9 +1,9 @@
 <div class="my-6">
 
-    <p class="my-2 text-red-600">{{ session('success') }}</p>
-    <p class="my-2 text-red-600">{{ session('error') }}</p>
+	@include('partials.user-nav', ['event' => $event['title']])
 
-		<div class="flex justify-between items-center  mb-6">
+
+	<div class="flex justify-between items-center  mb-6">
    		<div class="flex items-center">
    			<a href="/home" class=" text-md font-md text-gray-900   mr-5  hover:opacity-75">Back</a>
    			<h3 class="text-gray-900 text-lg ">{{ $event['title'] }}</h3>
