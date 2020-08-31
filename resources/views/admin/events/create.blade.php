@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 
 @section('head')
-{{-- 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/css/tail.datetime-default.css">
- --}}	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
 @endsection
 

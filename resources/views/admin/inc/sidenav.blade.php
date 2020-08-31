@@ -22,6 +22,16 @@
     		</a>
     	</li>
     	@endcan
+
+        <li class="list-none rounded-lg ">
+            <a 
+                class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'bookings') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
+                href="{{ route('bookings') }}">
+
+                <span class="text-lg">Bookings</span>
+            </a>
+        </li>
+
     	@can('add speakers')
     	<li class="list-none rounded-lg">
     		<a 

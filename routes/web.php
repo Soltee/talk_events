@@ -146,7 +146,7 @@ Route::prefix('admin')->group(function () {
 	Route::group(['middleware' => ['role:super-admin']], function () {
 		Route::livewire('/profile', 'admin.auth.profile')
 							->name('admin.profile')
-							->layout('layouts.admin');;
+							->layout('layouts.admin');
 
 		//User
 		Route::get('users', 'Admin\UserController@index')
@@ -171,7 +171,16 @@ Route::prefix('admin')->group(function () {
 		Route::post('permissions', 'Admin\PermissionController@store');
 		Route::delete('permissions/{permission}', 'Admin\PermissionController@destroy');
 
-		//Booking
+
+		Route::group(['layout' => 'layouts.admin'], function () {
+		    
+			//Booking
+			Route::livewire('/bookings', 'admin.bookings.index')
+										->name('bookings');
+			Route::livewire('/bookings/{booking}', 'admin.bookings.show')
+										->name('booking');
+		});
+
 		// Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
 		// Route::post('bookings', 'Admin\BookingController@store')->name('booking.store');
 		// Route::patch('bookings/{booking}', 'Admin\BookingController@update')->name('booking.update');
