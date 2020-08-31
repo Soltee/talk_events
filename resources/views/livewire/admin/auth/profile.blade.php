@@ -1,4 +1,4 @@
-<div class="mb-10">
+<div class="px-3 md:px-6 pb-6 mb-10">
     @include('partials.user-nav')
 
 	<div class="mt-5">
@@ -15,11 +15,6 @@
 
 						    @error('avatar') <span class="text-red-600 px-3 py-3">{{ $message }}</span> @enderror
 						</div>
-						{{-- @if ($avatar)
-					        <img src="{{ $avatar->temporaryUrl() }}" class="w-40 h-40 mt-3 rounded object-cover">
-					    @else
-							<img src="{{ $oldAvatar }}"  class="w-40 h-40 mt-3 rounded object-cover" />
-					    @endif --}}
 
 						<div class="flex justify-end items-center mt-5">
 				    		<button type="submit" class="px-3 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded w-32 font-semibold">Save Photo</button>

@@ -10,29 +10,30 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
     
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('head')
+    <livewire:styles />
+
 </head>
 <body class="relative bg-gray-100 antialiased leading-none">
-    
-    <div class="mt-6 overflow-x-scroll md:overflow-x-auto min-w-full">
-        <div class="min-w-full flex 
+    @include('sweetalert::alert')
+
+    <div class="">
+        <div class="w-full flex 
             ">
 
             @auth
-            <div id="sidebar" class="w-40 px-4 py-3 h-screen flex justify-center items-center ">
+            <div id="sidebar" class="w-40 px-4 py-3 h-screen flex justify-center  ">
                 @include('admin.inc.sidenav')
             </div>
-           {{--  <div class="w-40 px-4 py-3 md:hidden bg-white">
-                @include('admin.inc.sidenav')
-            </div> --}}
-
+          
             <div id="content" class="flex-1 lex flex-col">
                 <nav class=" py-3 md:py-6 px-3 md:px-6">
-                    <div class="flex items-center justify-center">
+                    <div class="flex items-center justify-between">
                         <div class="mr-6">
                             <svg id="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 hover:opacity-75 text-gray-900 cursor-pointer hover:opacity-75">
                                 <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -40,16 +41,42 @@
                                 <line x1="3" y1="18" x2="21" y2="18"></line>
                             </svg>
                         </div>
-                        <div class="flex-1 text-right">
-                            <span class="text-gray-900 text-sm pr-4">{{ Auth::user()->name }}</span>
-
-                            <a href="{{ route('admin.logout') }}"
-                               class="no-underline hover:underline text-gray-900 text-sm p-3"
-                               onclick="event.preventDefault();
+                        
+                        <div class="flex justify-end items-center">
+                            <div class="relative flex flex-row items-center text-right" 
+                            x-data="{ open : false}">
+                            <div class="flex items-center">
+                              @if(auth()->user()->avatar)
+                                <img  src="/storage/{{ auth()->user()->avatar }}" class="w-8 h-8 rounded-full object-cover object-center">
+                                <svg
+                                  x-on:click="open = !open;"
+                                  class="ml-2 h-8 w-8 text-blue-600 cursor-pointer hover:text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                              @else
+                                <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-blue-600 hover:text-blue-500 rounded-full object-cover object-center">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <svg
+                                  x-on:click="open = !open;"
+                                  class="ml-2 h-8 w-8 text-blue-600 cursor-pointer hover:text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                              @endif
+                            </div>
+                            <div 
+                              x-show.transition.70ms="open"
+                               class="absolute top-0 right-0 mt-10 px-2 py-1 rounded flex  flex-col border-gray-200 border z-20  bg-gray-100">
+                                <a href="/admin/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'admin.profile') ? 'underline font-semibold' : ''}}">Profile</a>
+                                <a href="{{ route('admin.logout') }}"
+                                  class="no-underline hover:underline text-blue-600 text-sm md:text-md hover:font-semibold p-3"
+                                  onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
-                                {{ csrf_field() }}
-                            </form>
+                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
+                                    {{ csrf_field() }}
+                                </form>
+
+                            </div>
+                          </div>
                         </div>
                     </div>
                 </nav>
@@ -62,6 +89,8 @@
     </div>
     @yield('login-content')
 
+
+    <livewire:scripts />
     @stack('scripts')
     <script>
       document.addEventListener('DOMContentLoaded', function(){

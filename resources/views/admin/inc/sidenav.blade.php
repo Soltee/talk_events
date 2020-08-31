@@ -1,5 +1,5 @@
 <div class="">
-	<a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline">
+	<a href="{{ url('/') }}" class="text-lg font-semisemibold text-gray-100 no-underline">
         {{ config('app.name', 'Laravel') }}
     </a>
 
@@ -7,7 +7,7 @@
     	<li class="list-none rounded-lg "
                 >
     		<a href="{{ route('admin.dashboard') }}"
-    			class="flex items-center  px-3 py-3 rounded-lg  border border-gray-200 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'admin.dashboard') ? 'bg-gray-900 text-white' : '' }}">
+    			class="flex items-center  px-3 py-3  border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'admin.dashboard') ? 'border-r-2 border-gray-900 font-semibold' : '' }}">
 
     			<span class="text-lg">Dashboard</span>
     		</a>
@@ -15,7 +15,7 @@
     	@can('add events')
     	<li class="list-none rounded-lg ">
     		<a 
-    			class="flex items-center px-3 py-3 rounded-lg border border-gray-200 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'events') ? 'bg-gray-900 text-white' : '' }}"
+    			class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'events') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
     			href="{{ route('events') }}">
 
     			<span class="text-lg">Events</span>
@@ -25,7 +25,7 @@
     	@can('add speakers')
     	<li class="list-none rounded-lg">
     		<a 
-    			class="flex items-center px-3 py-3 rounded-lg border border-gray-200 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'speakers') ? 'bg-gray-900 text-white' : '' }}"
+    			class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'speakers') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
     			href="{{ route('speakers') }}">
 
     			<span class="text-lg">Speakers</span>
@@ -35,7 +35,7 @@
     	@can('add sponsers')
     	<li class="list-none rounded-lg ">
     		<a 
-    			class="flex items-center px-3 py-3 rounded-lg border border-gray-200 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'sponsers') ? 'bg-gray-900 text-white' : '' }}"
+    			class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'sponsers') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
     			href="{{ route('sponsers') }}">
 
     			<span class="text-lg">Sponsers</span>
@@ -45,7 +45,7 @@
         @can('add users')
         <li class="list-none rounded-lg">
             <a 
-                class="flex items-center  px-3 py-3 rounded-lg border border-gray-200 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'users') ? 'bg-gray-900 text-white' : '' }}"
+                class="flex items-center  px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'users') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
                 href="{{ route('users') }}">
 
                 <span class="text-lg">Users</span>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire\User\Auth;
 
 use Livewire\Component;
 use App\Booking;
@@ -14,8 +14,7 @@ class Dashboard extends Component
 
     public function render()
     {
-
-        $bookings = Auth::guard()->user()->bookings()->with([
+    	$bookings = Auth::guard()->user()->bookings()->with([
                                     'event' => function($query)
                                         {
                                             $query->select('id', 'title');
@@ -29,7 +28,7 @@ class Dashboard extends Component
         $has_previous  = $bookings->previousPageUrl();
         $has_next      = $bookings->nextPageUrl();
 
-        return view('livewire.user.dashboard', [
+        return view('livewire.user.auth.dashboard', [
         		'bookings'     => $bookings,
         		'first'        => $first,
         		'last'         => $last,

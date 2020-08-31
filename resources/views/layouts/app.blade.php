@@ -11,9 +11,6 @@
     <link rel="icon" href="{{ asset('/img/logo.svg') }}">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-    <meta >
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('head')
@@ -304,22 +301,8 @@
                 timeout = setTimeout(later, wait);
                 if (callNow) func.apply(context, args);
             }
-}
+          }
 
-        var upTOPostion  = upTO.getBoundingClientRect();
-
-          window.addEventListener("scroll", debounce(applyFixedPostion));
-          function applyFixedPostion() { 
-              console.log(window.innerHeight);
-                  if(window.innerHeight > 500){
-                      upTO.classList.remove('hidden');
-                      upTO.classList.add('block');
-                  } else {
-                      upTO.classList.add('hidden');
-                      upTO.classList.remove('block');
-                  }
-               
-              } 
       });
     </script>
 </body>

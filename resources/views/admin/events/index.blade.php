@@ -33,43 +33,42 @@
     	
     	</div>
 
-        <div class="mt-6 overflow-x-scroll md:overflow-x-auto ">
-                <table class=" min-w-full  table-auto">
+            <table class="leading-normal w-full overflow-x-scroll">
 				<thead>
 					<tr>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Image</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Title</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Price</th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600">Image</th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600">Title</th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600">Price</th>
 
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Ticket</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Venue</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600">Start</th>
-						<th class="px-4 py-4 text-left text-capitalize text-gray-600"></th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600">Ticket</th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600">Venue</th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600">Start</th>
+						<th class="whitespace-no-wrap px-4 py-4 text-left text-capitalize text-gray-600"></th>
 					</tr>
 				</thead>
 				<tbody>
 					@forelse($events as $event)
 					<tr>
 						
-							<td class="border px-4 py-4 whitespace-no-wrap">
+							<td class="whitespace-no-wrap border px-4 py-4">
 								{{-- <a href="{{ route('event.show', $event->id) }}">
 									<img class="" src="{{ $event->cover }}" >
 								</a> --}}
 							</td>
-							<td class="border px-4 py-4 whitespace-no-wrap">
+							<td class="whitespace-no-wrap border px-4 py-4">
 								<a class="text-blue-600" href="{{ route('event.show', $event->id) }}">
 									{{ $event->title }}
 								</a>
 							</td>
-							<td class="border px-4 py-4 whitespace-no-wrap">$ {{ $event->price }}</td>
+							<td class="whitespace-no-wrap border px-4 py-4">$ {{ $event->price }}</td>
 					
 
 							
 
-							<td class="border px-4 py-4 whitespace-no-wrap">{{ $event->ticket }}</td>
-							<td class="border px-4 py-4 whitespace-no-wrap">{{ $event->venue_full_address }}</td>
-							<td class="border px-4 py-4 whitespace-no-wrap">{{ $event->format_date($event->start) }}</td>
-							<td class="border px-4 py-4 whitespace-no-wrap">
+							<td class="whitespace-no-wrap border px-4 py-4">{{ $event->ticket }}</td>
+							<td class="whitespace-no-wrap border px-4 py-4">{{ $event->venue_full_address }}</td>
+							<td class="whitespace-no-wrap border px-4 py-4">{{ $event->format_date($event->start) }}</td>
+							<td class="whitespace-no-wrap border px-4 py-4">
 								<div class="flex items-center">
 									<a class="text-blue-600 mr-5" href="{{ route('event.edit', $event->id) }}">
 										Edit
@@ -86,7 +85,7 @@
 					</tr>
 					@empty
 						<tr>
-							<td class="border px-4 py-4">No Event yet.</td>
+							<td class="whitespace-no-wrap border px-4 py-4">
 						</tr>
 					@endforelse
 					
