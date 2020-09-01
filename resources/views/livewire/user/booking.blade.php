@@ -92,6 +92,7 @@
 						            <!-- Used to display form errors. -->
 						            <div id="card-errors" role="alert"></div>
 						        </div>
+						    </div>
 					    </div>
 					    @endif
 	    			</div>		    			

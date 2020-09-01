@@ -16,8 +16,11 @@ Route::get('/event', 'WelcomeController@events')
 										->name('events.all');
 
 /*Livewire*/
-Route::livewire('/events/schedules', 'user.schedule');
+Route::livewire('/events/schedules', 'user.schedule')
+									 ->name('calender');
 
+Route::livewire('/events/search', 'user.search')
+									 ->name('search.events');
 
 /** Booking */
 Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')

@@ -1,5 +1,12 @@
+@section('title')
+	{{ $auth->first_name . ' ' . $auth->last_name }}
+@endsection
+
+@section('head')
+@endsection
+
 <div class="mb-10">
-    @include('partials.user-nav')
+    @include('partials.user-nav', ['event' => ''])
 
 	<div class="mt-5">
     	<div class="flex flex-col md:flex-row">

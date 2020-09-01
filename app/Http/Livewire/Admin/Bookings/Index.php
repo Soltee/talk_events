@@ -33,10 +33,6 @@ class Index extends Component
                 ->appends(request()->query());
      
 
-    	// $bookings = Booking::latest()
-    	// 						->with('event')
-    	// 						->paginate(10);
-
         $first    = $bookings->firstItem();
         $last     = $bookings->lastItem();
         $total    = $bookings->total();

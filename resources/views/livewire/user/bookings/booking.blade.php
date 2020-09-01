@@ -1,3 +1,9 @@
+@section('title')
+	{{ $event['title'] }}
+@endsection
+@section('head')
+@endsection
+
 <div class="my-6">
 
 	@include('partials.user-nav', ['event' => $event['title']])
@@ -5,34 +11,32 @@
 
 	<div class="flex justify-between items-center  mb-6">
    		<div class="flex items-center">
-   			<a href="/home" class=" text-md font-md text-gray-900   mr-5  hover:opacity-75">Back</a>
-   			<h3 class="text-gray-900 text-lg ">{{ $event['title'] }}</h3>
    		</div>
 
-   		<div class="flex items-center">
-   			@if($status === 'Incoming')
-				
-   				<span class="px-3 py-3 text-lg font-bold text-white rounded bg-green-600">
-   					{{ $status }}
-				</span>
-   			@elseif($status === 'Ended')
-   				<span class="px-3 py-3 text-lg font-bold text-white rounded bg-red-500">
-   					{{ $status }}
-				</span>
-				<span class="ml-3">{{ $booking->format_date($event['end']) }}</span>
-   			@else
-				<p class="">
-					<span class="ml-3 text-lg font-bold text-gray-900">{{ $status }}
-					</span>
-				</p>
-			@endif
-		</div>
 
 		
 	</div>
 
 	<div class="flex flex-col md:flex-row">
 		<div class="w-full md:w-64">
+			<div class="flex items-center mb-3">
+	   			@if($status === 'Incoming')
+					
+	   				<span class="px-3 py-3 text-lg font-bold text-white rounded bg-green-600">
+	   					{{ $status }}
+					</span>
+	   			@elseif($status === 'Ended')
+	   				<span class="px-3 py-3 text-lg font-bold text-white rounded bg-red-500">
+	   					{{ $status }}
+					</span>
+					<span class="ml-3">{{ $booking->format_date($event['end']) }}</span>
+	   			@else
+					<p class="">
+						<span class="ml-3 text-lg font-bold text-gray-900">{{ $status }}
+						</span>
+					</p>
+				@endif
+			</div>
     		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($event['cover']) }}">
     	</div>
     	<div class="flex-1 md:ml-6">
@@ -88,3 +92,5 @@
         </div>
    
     </div>
+
+</div>

@@ -1,4 +1,6 @@
 @extends('layouts.app')
+
+@section('title', 'Welcome To Events')
 @section('head')
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -10,15 +12,36 @@
 @section('content')
     <div class=" w-full mb-8">
 
-	    <div class="mt-12 hero w-full flex flex-col md:flex-row justify-between items-center">
+	    <div class="mt-6 md:mt-8 hero w-full flex flex-col md:flex-row justify-between items-center">
 	    	<div class="flex flex-col w-full md:w-1/2">
-	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black mb-3">Broaden your Horizon</h1>
+
+	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black font-semibold mb-3">Broaden your Horizon</h1>
 	            <h1 class="text-lg md:text-2xl text-c-black ">Meet people that transform you</h1>
-	            <img src="/images/hero.svg" class="lozad w-full sm:w2/3 md:hidden h-64 object-cover object-center w-full hero mt-3" alt="">
-        		<a href="/event" class="mt-10 w-40 text-center px-4 py-4 md:px-8 md:py-4 rounded bg-blue-600 hover:opacity-75 text-white text-md md:text-lg">
-        			Meet Now
-        		</a>
-	        	</div>
+	    		<img  src="/images/events.svg" class="lozad w-full sm:w2/3 md:hidden h-64 object-cover object-center w-full hero my-6" alt="">
+
+	            <form method="GET" action="/events/search">
+	            	<div class="flex flex-col md:flex-row items-center w-full mt-4 md:mt-10">
+	            		<div class="flex items-center relative w-full md:w-1/4">
+						  <select name="category" class="block appearance-none w-full border border-gray-400 hover:border-gray-500   pl-4 pr-6 py-4  border-t md:border-none md:border-l  rounded-t md:rounded-none md:rounded-l  shadow leading-tight focus:outline-none focus:shadow-outline">
+						    @forelse($query_category as $category)
+			          			<option  class="bg-gray-900 text-white border" value="{{ $category->id }}">{{ $category->name }} </option>
+			          		@empty
+			          			<option>Empty</option>
+			          		@endforelse
+						  </select>
+						  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-900">
+						    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+						  </div>
+						</div>
+                        	
+
+                        <input type="text" name="keyword" class="w-full md:w-2/4 px-4 border py-4 " value="" placeholder="Event...">
+                        <button type="submit" class="w-full md:w-1/4 px-4 py-5  hover:opacity-75 text-white bg-blue-500 border-b md:border-none md:border-r  rounded-b md:rounded-none md:rounded-r uppercase">Find</button>      
+                    </div>
+
+                </form>
+		            
+	        </div>
         	<div id="heroImage" class=" hidden md:block md:w-1/2 h-full relative">
 	        	<img  src="/images/events.svg" class="lozad w-full object-center h-74 object-cover hero" alt="">
 	        </div>
@@ -27,7 +50,7 @@
 
 	    <div class="mt-16 recent_events w-full">
 	    	<div class="flex justify-between items-center mb-8">
-			    <h2 class="text-blue-900 text-lg font-bold">Recent Events</h2>
+			    <h2 class="text-blue-900 text-lg font-bold">Upcoming Events</h2>
 			    <a href="/event" class="{{ ($trending_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
 			    	View all 
 			    </a>

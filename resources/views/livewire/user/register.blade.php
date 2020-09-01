@@ -1,3 +1,7 @@
+@section('title' , 'Sign Up')
+@section('head')
+@endsection
+
 <div class="flex px-6 py-3 md:px-0">
     <div class="hidden md:block md:w-1/2  h-screen">
     	<img src="{{ asset('/images/reg.svg') }}" class="h-full w-full p-12  object-center">
@@ -12,7 +16,7 @@
             </a>
 
             <h2 class="ml-6 font-bold">
-                {{ __('Register') }}
+                {{ __('Sign Up') }}
             </h2>
         </div>
 
@@ -87,7 +91,7 @@
 			        Processing . ..
 			    </div> --}}
                 <button  wire:loading.attr="disabled" type="submit" class="inline-block w-full align-middle text-center select-none border font-bold whitespace-no-wrap py-3 px-4 rounded text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700">
-                    {{ __('Register') }}
+                    {{ __('Sign Up') }}
                 </button>
 
                 <p class="w-full text-xs text-center text-gray-700 mt-8 -mb-4">

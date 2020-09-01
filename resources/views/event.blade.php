@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+	{{ $event->title }}
+@endsection
+
 @section('head')
 	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>    
 
@@ -73,15 +77,15 @@
 
 	    	<div class="flex justify-between items-center  mb-4 ">
 				<div class="flex items-center">
-					<a href="/"><h4 class="text-md font-light text-gray-800 mr-2">Home</h4></a>
+					<a href="/"><h4 class="text-md font-light hover:font-semibold text-gray-800 mr-2">Home</h4></a>
 					@if($cat)
 		        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-		        		<a href="/event?category={{ $cat->id }}&slug={{ $cat->slug }}" class="text-md font-light text-c-pink opacity-75">{{ $cat->name }}</a>
+		        		<a href="/event?category={{ $cat->id }}&slug={{ $cat->slug }}" class="text-md font-light hover:font-semibold text-c-pink opacity-75">{{ $cat->name }}</a>
 		        	@endif
 		    		<svg xmlns="http://www.w3.org/2000/svg" class="hidden lg:block w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-		    		<a href="/event" class="hidden lg:block "><h4 class="text-md font-light text-gray-800 mr-2">Events</h4></a>
+		    		<a href="/event" class="hidden lg:block "><h4 class="text-md font-light hover:font-semibold text-gray-800 mr-2">Events</h4></a>
 		    		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-		    		<h4 class="text-md font-light text-gray-800 opacity-75">{{ $event->title }}</h4>
+		    		<h4 class="text-md font-bold text-gray-800 opacity-75">{{ $event->title }}</h4>
 			    </div>
 
 		    	<!--Book Btn on Desktop -->
@@ -130,7 +134,7 @@
 			        	x-on:click="open = false;" class="h-full w-full bg-gray-300 opacity-50">
 			        </div>
 			        <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
-				    	<livewire:user.booking :event="$event"/>
+				    	<livewire:user.booking :event="$event" />
 				    </div>
 		    </div>
 
@@ -158,7 +162,10 @@
 				    				<h5 class="text-md text-gray-700 mt-4">{{ $speaker->first_name }} </h5>
 				    			</div>
 				    		@empty
-
+				    			<div class=" flex flex-col justify-center w-full items-center">
+						      		<svg class="h-16 w-16 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
+						      		<p class="mt-3">No speakers yet.</p>
+					     		</div>
 				    		@endforelse
 				    	</div>
 
@@ -166,17 +173,17 @@
 				    <div 
 				    	class="flex flex-col mb-5">
 		    			<h3  class="  w-40">Sponsers</h3>
-					    	<div class="mt-6 flex flex-row items-center">
-					    		@forelse($sponsers as $sponser)
-					    			<div class="flex flex-col items-center mr-4">
-					    				<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
+				    	<div class="mt-6 flex flex-row items-center">
+				    		@forelse($sponsers as $sponser)
+				    			<div class="flex flex-col items-center mr-4">
+				    				<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
 
-					    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
-					    			</div>
-					    		@empty
+				    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
+				    			</div>
+				    		@empty
 
-					    		@endforelse
-					    	</div>
+				    		@endforelse
+				    	</div>
 
 					</div>
 		    	</div>
@@ -192,6 +199,7 @@
 		    </div>
 		</div>
 
+		<!-- Similar Events-->
 		<div class="mt-12 weekend_events w-full">
 		    <h2 class="text-blue-900 text-lg font-bold mb-8">You may be interested in</h2>
 		    <div class="{{ ($similar_count) ? 'swiper-container' : ''}} w-full">
@@ -202,7 +210,7 @@
 					      <a href="{{ url('events', $event->id . '-' . $event->slug) }}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
 					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
 
-					      <div class="flex justify-between items-center mt-3 w-full">
+					       <div class="flex justify-between items-center mt-3 w-full">
 					      		<span class="text-lg">
 					      			{{ $event->title }}
 					      		</span>	
@@ -215,29 +223,24 @@
 						      			Free
 						      		</span>	
 					      		@endif
-					      </div>
+					       </div>
 					    </div>
 
 				    @empty
-				    	<div class=" flex flex-col justify-center w-full">
+				    	<div class=" flex flex-col justify-center w-full items-center">
 				      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
 				      		<p class="mt-3">Empty events.</p>
 			     		</div>
 				    @endforelse
 		        </div>
-		      <!-- Add Pagination -->
-		      <!-- <div class="swiper-pagination"></div> -->
-		      @if($similar_count)
+		        <!-- Add Pagination -->
+		        <!-- <div class="swiper-pagination"></div> -->
+		        @if($similar_count)
 			      <div class="swiper-button-next"></div>
 			      <div class="swiper-button-prev"></div>
-		      @endif
+		        @endif
 		    </div>
 	    </div>
-
-
-	    
-
-
 
     </div>
 

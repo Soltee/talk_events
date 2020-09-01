@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title' , 'Browse Events')
+
 @section('head')
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 	<style>
@@ -17,21 +19,24 @@
 
 @section('content')
     
-    <div id="parentDiv" class="relative w-full flex flex-col lg:flex-row  my-3 md:my-8">
-        
+    <div id="parentDiv" class="relative w-full flex flex-col lg:flex-row  my-3 md:mt-4 md:mb-8">
+
         <div class="flex-1 md:mr-10 flex flex-col">
+        	<!--  BreadCrumb -->
         	<div class="flex justify-between items-center mb-8">
 
         		<div class="flex items-center">
-	        		<a href="/"><h4 class="text-sm md:text-md font-light text-c-pink mr-2">Home</h4></a>
+	        		<a href="/"><h4 class="text-sm md:text-md  hover:font-semibold font-light text-c-pink mr-2">Home</h4></a>
 	        		
-	        		@if($category)
-		        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-		        		<h4 class="text-sm md:text-md font-light text-c-pink opacity-75">{{ $category->name }}</h4>
-		        	@endif
+	        		
 	        		
 	        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-	        		<h4 class="text-sm md:text-md font-light text-c-pink opacity-75">Events</h4>
+	        		<h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">Events</h4>
+
+	        		@if($category)
+		        		<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+		        		<h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $category->name }}</h4>
+		        	@endif
 	        	</div>
         		
         		<span class="text-c-pink text-md">
@@ -41,25 +46,27 @@
         			@endif
         		</span>
         	</div>
-			<div class="plain
-				{{-- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 --}}
+
+        	<!--  Events -->
+			<div class="plain mt-4
 				">
 	        	@forelse($events as $event)
 	        		<div class="flex flex-col sm:flex-row items-start mb-6 plain-item 
-	        		{{-- w-full md:w-1/2 lg:w-1/3 --}}
 	        		">
 	        			<div class="img-hover-zoom w-full sm:w-1/3">
 	        				<div class="relative py-3">
 		        				<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
 			        				
-			        				<img  class="w-full mb-5 rounded-lg " src="{{ asset($event->cover) }}" alt="">
+			        				<img  class="w-full mb-5 rounded-lg hover:opacity-75" src="{{ asset($event->cover) }}" alt="">
 			        			</a>
 			        		
 			        		</div>
 		        		</div>
 	        			<div class="sm:ml-4 py-3 w-full sm:w-2/3 flex flex-col items-start justify-between">
 	        				<div class="flex flex-row w-full items-center justify-between mb-5">
-	        					<h5 class="text-lg font-bold text-gray-900">{{ $event->title }}</h5>
+	        					<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+	        						<h5 class="text-lg font-bold text-gray-900 hover:opacity-75">{{ $event->title }}</h5>
+	        					</a>
 	        					@if($event->price > 0)
 					      			<span class="text-xl text-blue-500 font-bold">
 						      			$ {{ $event->price }}
@@ -71,7 +78,7 @@
 					      		@endif
 	        				</div>
 	        				<p class="mb-5 text-lg text-gray-900">{{ \Illuminate\Support\Str::limit($event->description, 100) }}</p>	
-		        			<a  href="{{ url('events', $event->id . '-' . $event->slug)}}" class="text-blue-600 font-semibold">
+		        			<a  href="{{ url('events', $event->id . '-' . $event->slug)}}" class="text-blue-600 font-semibold hover:opacity-75">
 		        				Show More <span class="ml-3 font-bold text-lg w-12">-</span>
 		        			</a>
 	        			</div>
@@ -91,9 +98,10 @@
 			
         </div>
 
+        <!-- Mobile Screen Filters -->
         <div 
         	x-data="{ open: false }"
-        	id="filters" class="absolute top-0 left-0 right-0 bg-gray-100 py-4 px-6 w-full flex flex-col items-start md:px-24 lg:hidden">
+        	id="filters" class="absolute top-0 left-0 right-0 bg-gray-100 md:py-4 md:px-6 w-full flex flex-col items-start md:px-24 lg:hidden">
         	<div class="flex justify-between items-center w-full  mb-4 ">
         		<h3 class="text-md text-gray-900">Filters</h3>
 				<svg 
@@ -236,6 +244,8 @@
 			</div>
 
         </div>
+
+        <!-- Large Screen Filters -->
         <div  class="hidden lg:block lg:ml-3 w-full lg:w-64 flex flex-col items-start">
         	
         	<form method="GET">
@@ -400,10 +410,12 @@
             	// parentDiv.classList.remove('relative');
             	filters.classList.remove('absolute');
             	filters.classList.add('fixed');
+            	filters.classList.add('px-6');
             } else {
             	// console.log(window.pageYOffset);
 				document.body.style.paddingTop = 0;
             	filters.classList.remove('fixed');
+            	filters.classList.remove('px-6');
             	filters.classList.add('absolute');
             	// parentDiv.classList.add('parentDiv');
             }

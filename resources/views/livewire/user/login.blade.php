@@ -1,3 +1,7 @@
+@section('title' , 'Login')
+@section('head')
+@endsection
+
 <div class="flex px-6 py-3 md:px-0 items-center">
     <div class="hidden md:block md:w-1/2  h-screen">
         <img src="{{ asset('/images/wel.svg') }}" class="h-full w-full p-12  object-center">
@@ -76,7 +80,7 @@
                     <p class="w-full text-xs text-center text-gray-700 mt-8 -mb-4">
                         {{ __("Don't have an account?") }}
                         <a class="text-blue-500 hover:text-blue-700 no-underline" href="{{ route('register') }}">
-                            {{ __('Register') }}
+                            {{ __('Sign Up') }}
                         </a>
                     </p>
                 @endif

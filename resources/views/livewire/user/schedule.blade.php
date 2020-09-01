@@ -1,30 +1,42 @@
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js'></script>
+@section('title' , 'Calendar')
+@section('head')
 
-  
-<script>
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js'></script>
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+    
+  <script>
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      initialDate: '2020-08-07',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      events: {!! $events !!}
-        
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        initialDate: '2020-08-07',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: {!! $events !!}
+          
+      });
+
+      calendar.render();
     });
 
-    calendar.render();
-  });
+   </script>
 
- </script>
+@endsection
+
 
 <div>
-    {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
-    <div id='calendar'></div>
+  <div class="flex items-center mb-4">
+    <a href="/"><h4 class="text-sm md:text-md font-light text-c-pink mr-2">Home</h4></a>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">Calender</h4>
+  </div>
+
+  <div id='calendar' class="mb-10"></div>
 </div>

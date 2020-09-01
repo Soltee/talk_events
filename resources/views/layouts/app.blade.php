@@ -143,9 +143,10 @@
                         </a>
                     </div>
                     <div class="flex justify-end items-center">
-                        <a class="no-underline   text-white text-sm px-4 py-3 bg-indigo-600 hover:opacity-75 rounded-lg mr-3" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
+                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'events.all' ? 'font-bold' : '' }}" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
+                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'calender' ? 'font-bold' : '' }}" href="/events/schedules">{{ __('Calender') }}</a>
                         @guest
-                            <a class="no-underline hover:underline text-blue-900 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="no-underline hover:underline text-blue-600 text-sm" href="{{ route('login') }}">{{ __('Login') }}</a>
                             
                         @else
                             
@@ -174,6 +175,7 @@
                                class="absolute top-0 right-0 mt-10 px-2 py-1 rounded flex  flex-col border-gray-200 border z-20  bg-gray-100">
                                 <a href="/home" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'home') ? 'underline font-semibold' : ''}}">Dashboard</a>
                                 <a href="/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'profile') ? 'underline font-semibold' : ''}}">Profile</a>
+                                
                                 <a href="{{ route('user.logout') }}"
                                   class="no-underline hover:underline text-blue-600 text-sm md:text-md hover:font-semibold p-3"
                                   onclick="event.preventDefault();
@@ -192,7 +194,7 @@
         @endif
 
         @include('sweetalert::alert')
-        <div class="max-w-screen-lg mx-auto px-6  py-2">
+        <div class="max-w-screen-lg mx-auto px-6  py-2 overflow-hidden">
 
 
           @yield('content')
@@ -265,19 +267,22 @@
                                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                             </svg>
                         </a>
+
+                        <a href="#" id="upTO" class="ml-5">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white hover:opacity-75 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <polyline points="16 12 12 8 8 12"></polyline>
+                              <line x1="12" y1="16" x2="12" y2="8"></line>
+                          </svg>
+                        </a>
                     </div>
+
                   </div>
               </div>
             
             </div>
         </footer>
-        <a href="#" id="upTO" class="fixed bottom-0 right-0 mr-12 mb-12">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-500 hover:opacity-75 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="16 12 12 8 8 12"></polyline>
-                <line x1="12" y1="16" x2="12" y2="8"></line>
-            </svg>
-        </a>
+        
       @endif
     </div>
 
