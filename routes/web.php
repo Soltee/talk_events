@@ -151,21 +151,6 @@ Route::prefix('admin')->group(function () {
 							->name('admin.profile')
 							->layout('layouts.admin');
 
-		//User
-		Route::get('users', 'Admin\UserController@index')
-							->name('users');
-		Route::get('users/create', 'Admin\UserController@create')
-							->name('user.create');
-		Route::post('users', 'Admin\UserController@store')
-							->name('user.store');
-		Route::patch('users/{user}', 'Admin\UserController@update')
-							->name('user.update');
-		Route::get('users/{user}', 'Admin\UserController@show')
-							->name('user.show');
-		Route::delete('users/{user}', 'Admin\UserController@destroy')
-							->name('user.destroy');
-
-
 		//Role
 		Route::post('roles', 'Admin\RoleController@store');
 		Route::delete('roles/{role}', 'Admin\RoleController@destroy');
@@ -182,13 +167,22 @@ Route::prefix('admin')->group(function () {
 										->name('bookings');
 			Route::livewire('/bookings/{booking}', 'admin.bookings.show')
 										->name('booking');
+
+			//User
+			Route::livewire('users', 'admin.users.index')
+								->name('users');
+			// Route::get('users/create', 'Admin\UserController@create')
+			// 					->name('user.create');
+			// Route::post('users', 'Admin\UserController@store')
+			// 					->name('user.store');
+			// Route::patch('users/{user}', 'Admin\UserController@update')
+			// 					->name('user.update');
+			Route::livewire('users/{user}', 'admin.users.show')
+								->name('user.show');
+			// Route::delete('users/{user}', 'Admin\UserController@destroy')
+			// 					->name('user.destroy');
 		});
 
-		// Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
-		// Route::post('bookings', 'Admin\BookingController@store')->name('booking.store');
-		// Route::patch('bookings/{booking}', 'Admin\BookingController@update')->name('booking.update');
-		// Route::get('bookings/{booking}', 'Admin\BookingController@show')->name('booking.show');
-		// Route::delete('bookings/{booking}', 'Admin\BookingController@destroy')->name('booking.destroy');
 	});
 
 });

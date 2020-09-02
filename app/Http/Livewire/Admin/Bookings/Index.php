@@ -7,8 +7,6 @@ use App\Booking;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
 
 class Index extends Component
 {
