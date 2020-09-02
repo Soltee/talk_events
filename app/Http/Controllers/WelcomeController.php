@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Event;
 use App\Category;
+use App\Speaker;
 use Cache;
 
 class WelcomeController extends Controller
@@ -63,8 +64,27 @@ class WelcomeController extends Controller
         //     return Event::inRandomOrder()->where('is_featured', true)->first();
         // });
 
+        $speakers      = Cache::remember('speakers', now()->addMinutes(3), function() {
+            return Speaker::latest()->take(10)->get();
+        });
+
+        $speakers_total   = Cache::remember('speakers_total', now()->addMinutes(3), function() use ($speakers) {
+            return $speakers->count();
+        });
+
         //popular, online, free, paid, today, tomorrow, this_weekend, online_classes, more categoies, trending
-        return view('welcome', compact('trending', 'trending_total', 'today_events', 'this_weekend', 'this_weekend_total', 'free', 'free_total', 'query_category'));
+        return view('welcome', compact(
+                                'trending', 
+                                'trending_total', 
+                                'today_events', 
+                                'this_weekend', 
+                                'this_weekend_total', 
+                                'free', 
+                                'free_total', 
+                                'query_category',
+                                'speakers',
+                                'speakers_total'
+                            ));
     }
 
     /**
