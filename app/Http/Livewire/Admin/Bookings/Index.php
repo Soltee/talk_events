@@ -7,46 +7,50 @@ use App\Booking;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
 
 class Index extends Component
 {
     use WithPagination;
 
+    protected $updatesQueryString = ['first_name', 'last_name', 'payment_type', 'created_at'];
+    public $first_name     = '';
+    public $last_name      = '';
+    public $payment_type   = '';
+    public $created_at     = '';
+    public $modal          = false;
+    public $status         = false;
+
     public function render()
     {
 
-    	$bookings = QueryBuilder::for(Booking::class)
-                ->latest()
-                ->allowedFilters(
-                    [
-                        'first_name',
-                        'last_name', 
-                        'email',
-                        'price',
-                        // AllowedFilter::exact('title'),  
-                        AllowedFilter::scope('starts_at')
-                    ])
-                ->allowedSorts(['title', 'created_at'])
-                ->paginate(10)
-                ->appends(request()->query());
-     
-
-        $first    = $bookings->firstItem();
-        $last     = $bookings->lastItem();
-        $total    = $bookings->total();
-
-        $has_previous  = $bookings->previousPageUrl();
-        $has_next      = $bookings->nextPageUrl();
+        $paginate            = Booking::latest()
+                                ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
+                                ->where('last_name' ,   'LIKE', '%'. $this->last_name .'%')
+                                ->where('payment_type' ,   'LIKE', '%'. $this->payment_type .'%')
+                                ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+                                ->with(['user', 'event'])
+                                ->paginate(10)
+                                ->appends(request()->query());
 
         return view('livewire.admin.bookings.index', [
-        		'bookings'     => $bookings,
-        		'first'        => $first,
-        		'last'         => $last,
-        		'total'        => $total,
-        		'has_previous' => $has_previous,
-        		'has_next'     => $has_next
-        	]);
+            'bookings'     => $paginate,
+            'first'        => $paginate->firstItem(),
+            'last'         => $paginate->lastItem(),
+            'total'        => $paginate->total()
+        ]);
+
+    }
+
+    /* Set Model Visiibility*/
+    public function setVisibility(){
+        $this->modal  = !$this->modal;
+        $this->status = '';
+    }
+
+    /* Remove the Booking */
+    public function drop($booking){
+        // $booking = Booking::findOrfail($booking);
+        // $booking->delete();
+        $this->status = 'Success';
     }
 }

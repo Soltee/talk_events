@@ -55,8 +55,8 @@ Route::group(['middleware' => ['role:user']], function () {
 });
 
 
-/** Company */
-Route::prefix('admin')->group(function () {
+/** Admin Dashboard */
+Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 	/* Before Authenctication*/
 	Route::get('login', 'Admin\LoginController@index')
 						->name('admin.login.view');
@@ -87,27 +87,7 @@ Route::prefix('admin')->group(function () {
 												->name('category.destroy');
 	});
 
-	//Events
-	Route::group(['middleware' => ['permission:add events']], function () {
-		Route::get('events', 'Admin\EventController@index')
-										->name('events');
-		Route::get('events/create', 'Admin\EventController@create')
-										->name('event.create');
-		Route::post('events', 'Admin\EventController@store')
-										->name('event.store');
-		Route::get('events/{event}', 'Admin\EventController@show')
-										->name('event.show');
-		Route::get('events/{event}/edit', 'Admin\EventController@edit')
-										->name('event.edit');
-		Route::patch('events/{event}', 'Admin\EventController@update')
-										->name('event.update');
-		Route::delete('events/{event}', 'Admin\EventController@destroy')
-										->name('event.destroy');
-
-
-		//Api
-		Route::get('api/events', 'Admin\Api\EventController@index');
-	});
+	
 
 	//Speakers
 	Route::group(['middleware' => ['permission:add speakers']], function () {
@@ -145,26 +125,48 @@ Route::prefix('admin')->group(function () {
 								->name('sponser.destroy');
 	});
 
+
+	//Events (Event    manager)
+	Route::group(['middleware' => ['permission:add events']], function () {
+
+		Route::livewire('/events', 'admin.events.index')
+									->name('events');
+		Route::livewire('/events/{event}', 'admin.events.show')
+									->name('event.show');
+
+		// Route::get('events', 'Admin\EventController@index')
+		// 								->name('events');
+		// Route::get('events/create', 'Admin\EventController@create')
+		// 								->name('event.create');
+		// Route::post('events', 'Admin\EventController@store')
+		// 								->name('event.store');
+		// Route::get('events/{event}', 'Admin\EventController@show')
+		// 								->name('event.show');
+		// Route::get('events/{event}/edit', 'Admin\EventController@edit')
+		// 								->name('event.edit');
+		// Route::patch('events/{event}', 'Admin\EventController@update')
+		// 								->name('event.update');
+		// Route::delete('events/{event}', 'Admin\EventController@destroy')
+		// 								->name('event.destroy');
+
+
+		//Api
+		Route::get('api/events', 'Admin\Api\EventController@index');
+	});
+
+
+
 	//Super Admin
 	Route::group(['middleware' => ['role:super-admin']], function () {
 		Route::livewire('/profile', 'admin.auth.profile')
 							->name('admin.profile')
 							->layout('layouts.admin');
 
-		//User
-		Route::get('users', 'Admin\UserController@index')
-							->name('users');
-		Route::get('users/create', 'Admin\UserController@create')
-							->name('user.create');
-		Route::post('users', 'Admin\UserController@store')
-							->name('user.store');
-		Route::patch('users/{user}', 'Admin\UserController@update')
-							->name('user.update');
-		Route::get('users/{user}', 'Admin\UserController@show')
-							->name('user.show');
-		Route::delete('users/{user}', 'Admin\UserController@destroy')
-							->name('user.destroy');
-
+		//Booking
+		Route::livewire('/bookings', 'admin.bookings.index')
+									->name('bookings');
+		Route::livewire('/bookings/{booking}', 'admin.bookings.show')
+									->name('booking.show');
 
 		//Role
 		Route::post('roles', 'Admin\RoleController@store');
@@ -175,20 +177,17 @@ Route::prefix('admin')->group(function () {
 		Route::delete('permissions/{permission}', 'Admin\PermissionController@destroy');
 
 
-		Route::group(['layout' => 'layouts.admin'], function () {
-		    
-			//Booking
-			Route::livewire('/bookings', 'admin.bookings.index')
-										->name('bookings');
-			Route::livewire('/bookings/{booking}', 'admin.bookings.show')
-										->name('booking');
-		});
 
-		// Route::get('bookings', 'Admin\BookingController@index')->name('bookings');
-		// Route::post('bookings', 'Admin\BookingController@store')->name('booking.store');
-		// Route::patch('bookings/{booking}', 'Admin\BookingController@update')->name('booking.update');
-		// Route::get('bookings/{booking}', 'Admin\BookingController@show')->name('booking.show');
-		// Route::delete('bookings/{booking}', 'Admin\BookingController@destroy')->name('booking.destroy');
+		//User
+		Route::livewire('users', 'admin.users.index')
+							->name('users');
+		Route::get('users/create', 'Admin\UserController@create')
+							->name('user.create');
+		Route::post('users', 'Admin\UserController@store')
+							->name('user.store');
+		Route::livewire('users/{user}', 'admin.users.show')
+							->name('user.show');
+
 	});
 
 });

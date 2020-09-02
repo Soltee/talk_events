@@ -1,5 +1,5 @@
 @section('title')
-	{{ $booking->first_name . ' ' . $booking->last_name }}
+	{{ $event->title }}
 @endsection
 
 <div class="px-3 md:px-6 pb-6">
@@ -7,7 +7,7 @@
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">
-			@include('partials.admin-breadcrumb', ['url' => 'admin/bookings/', 'link' => true, 'pageName' => 'Bookings', 'routeName' => Route::currentRouteName()])
+			@include('partials.admin-breadcrumb', ['url' => 'admin/events/', 'link' => true, 'pageName' => 'Events', 'routeName' => Route::currentRouteName()])
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 
 		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $event->title }}</h4>
@@ -23,7 +23,7 @@
 	   				<span class="px-3 py-2 text-md font-bold text-white rounded bg-red-500">
 	   					{{ $event_status }}
 					</span>
-					<span class="ml-3">{{ $booking->format_date($event->end) }}</span>
+					<span class="ml-3">{{ $event->format_date($event->end) }}</span>
 	   			@else
 					<span class="px-3 py-2 text-md font-bold text-white rounded bg-yellow-500">{{ $event_status }}
 					</span>
@@ -40,7 +40,7 @@
 			@if($modal)
 			<div>
 	        	@include('partials.modal', [
-	        		'key'    => $booking->id, 
+	        		'key'    => $event->id, 
 	        		'modal'  => $modal,
 					'status' => $status 
 	        	])
@@ -58,27 +58,34 @@
 		<div class="w-full md:w-64">
 			
     		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($event->cover) }}">
+
+    		<h5 class="mb-4 text-md text-gray-800 px-2">General Info</h5>
+	    	<div class="flex items-center mb-6 w-full">
+	    		<label for="" class=" border rounded px-4 py-3 w-40">Price</label>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $event->price }}</h4>
+	    	</div>
+
+	    	<div class="flex items-center mb-6 w-full">
+	    		<label for="" class=" border rounded px-4 py-3 w-40">Sub Title</label>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800"> {{ $event->subtitle }}</h4>
+	    	</div>
     	</div>
     	<div class="flex-1 md:ml-6">
-    		<h5 class="mb-4 text-md text-gray-800 px-2">General Info</h5>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Price</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->price }}</h4>
-	    	</div>
+    		
 
 
     		<h5 class="mb-4 text-md text-gray-800 px-2">DateTime</h5>
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Start</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->format_date($event->start) }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->format_date($event->start) }}</h4>
 	    	</div>
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Time</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->format_time($event->time) }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->format_time($event->time) }}</h4>
 	    	</div>
 	    	<div class="flex items-center mb-8">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">End</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->format_date($event->end) }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->format_date($event->end) }}</h4>
 	    	</div>
 
 	    	<h5 class="mb-4 text-md text-gray-800 px-2">Venue</h5>
@@ -86,31 +93,28 @@
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Venue Name</label>
 	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->venue_name }}</h4>
 	    	</div>
-	    	<div class="flex items-center mb-6">
+	    	<div class="flex items-center mb-10">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Venue Name</label>
 	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->venue_full_address }}</h4>
 	    	</div>
 
-	    	<!-- Payment -->
-	    	<h5 class="mb-4 text-md text-gray-800 px-2">Payment</h5>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Type</label>
-	    		<h4 class=" ml-3 rounded font-bold text-gray-800">{!! $booking->typeOfPayment() !!}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">SubTotal</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->sub_total }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Taxes</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->taxes }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Grand Total</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->grand_total }}</h4>
-	    	</div>
-        </div>
-   
+
+
+	    	<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">Bookings {{ $bookings_count }}</h5>
+    		<div class="flex flex-col mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+    			@forelse($bookings as $booking)
+    				<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->first_name }}</h4>
+
+    			@empty
+    				<p class="text-red-600 font-semibold">No Bookings Made yet.</p>
+    			@endforelse
+    		</div>
+
+    		<div class="my-6">
+                {{ $bookings->links('vendor.pagination.tailwind') }}
+            </div>
+
+   		</div>
     </div>
 
 </div>

@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class, 15)->create();
+        $users = factory(App\User::class, 40)->create();
         //Roles & Permisssons
         $user_role = Role::create(['name' => 'user']);
         $user_role = Role::findByName('user');
@@ -56,16 +56,26 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view sponsers']);
         Permission::create(['name' => 'delete sponsers']);
 
+        Permission::create(['name' => 'add users']);
+        Permission::create(['name' => 'update users']);
+        Permission::create(['name' => 'view users']);
+        Permission::create(['name' => 'delete users']);
+
         //Event manager
         $event_manager_role = Role::create(['name' => 'event-manager']);
-        $event_manager_role->givePermissionTo('add categories');
-        $event_manager_role->givePermissionTo('update categories');
-        $event_manager_role->givePermissionTo('view categories');
-        $event_manager_role->givePermissionTo('delete categories');
-        $event_manager_role->givePermissionTo('add events');
-        $event_manager_role->givePermissionTo('update events');
-        $event_manager_role->givePermissionTo('view events');
-        $event_manager_role->givePermissionTo('delete events');
+        $event_manager_role->givePermissionTo([
+            
+                'add categories',
+                'update categories',
+                'view categories',
+                'delete categories',
+
+                'add events',
+                'update events',
+                'view events',
+                'delete events',
+
+            ]);
 
         $event_manager = factory(App\User::class)->create([
             'first_name'        => 'Event',
@@ -77,19 +87,37 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $event_manager->assignRole($event_manager_role);
+        $event_manager->givePermissionTo([
+            
+                'add categories',
+                'update categories',
+                'view categories',
+                'delete categories',
+
+                'add events',
+                'update events',
+                'view events',
+                'delete events',
+
+            ]);
 
         //Others manager
         $manager_role = Role::create(['name' => 'manager']);
-        $manager_role->givePermissionTo('add speakers');
-        $manager_role->givePermissionTo('update speakers');
-        $manager_role->givePermissionTo('view speakers');
-        $manager_role->givePermissionTo('delete speakers');
-        $manager_role->givePermissionTo('add sponsers');
-        $manager_role->givePermissionTo('update sponsers');
-        $manager_role->givePermissionTo('view sponsers');
-        $manager_role->givePermissionTo('delete sponsers');
+        $manager_role->givePermissionTo([
+            
+                'add speakers',
+                'update speakers',
+                'view speakers',
+                'delete speakers',
 
-        $event_manager = factory(App\User::class)->create([
+                'add sponsers',
+                'update sponsers',
+                'view sponsers',
+                'delete sponsers',
+
+            ]);
+
+        $manager = factory(App\User::class)->create([
             'first_name'        => 'only',
             'last_name'         => 'manager',
             'email'             => 'manager@example.com',
@@ -98,35 +126,52 @@ class DatabaseSeeder extends Seeder
             'remember_token'    => Str::random(10)
         ]);
 
-        $event_manager->assignRole($manager_role);
+        $manager->assignRole($manager_role);
+        $manager->givePermissionTo([
+            
+                'add speakers',
+                'update speakers',
+                'view speakers',
+                'delete speakers',
+
+                'add sponsers',
+                'update sponsers',
+                'view sponsers',
+                'delete sponsers',
+
+            ]);
 
         //super admin
-        Permission::create(['name' => 'add users']);
-        Permission::create(['name' => 'update users']);
-        Permission::create(['name' => 'view users']);
-        Permission::create(['name' => 'delete users']);
 
         $super_admin_role = Role::create(['name' => 'super-admin']);
-        $super_admin_role->givePermissionTo('add categories');
-        $super_admin_role->givePermissionTo('update categories');
-        $super_admin_role->givePermissionTo('view categories');
-        $super_admin_role->givePermissionTo('delete categories');
-        $super_admin_role->givePermissionTo('add events');
-        $super_admin_role->givePermissionTo('update events');
-        $super_admin_role->givePermissionTo('view events');
-        $super_admin_role->givePermissionTo('delete events');
-        $super_admin_role->givePermissionTo('add speakers');
-        $super_admin_role->givePermissionTo('update speakers');
-        $super_admin_role->givePermissionTo('view speakers');
-        $super_admin_role->givePermissionTo('delete speakers');
-        $super_admin_role->givePermissionTo('add sponsers');
-        $super_admin_role->givePermissionTo('update sponsers');
-        $super_admin_role->givePermissionTo('view sponsers');
-        $super_admin_role->givePermissionTo('delete sponsers');
-        $super_admin_role->givePermissionTo('add users');
-        $super_admin_role->givePermissionTo('update users');
-        $super_admin_role->givePermissionTo('view users');
-        $super_admin_role->givePermissionTo('delete users');
+        $super_admin_role
+            ->givePermissionTo([
+                'add categories', 
+                'update categories',
+                'delete categories',
+
+                'add events',
+                'update events',
+                'view events',
+                'delete events',
+
+                'add speakers',
+                'update speakers',
+                'view speakers',
+                'delete speakers',
+
+                'add sponsers',
+                'update sponsers',
+                'view sponsers',
+                'delete sponsers',
+
+                'add users',
+                'update users',
+                'view users',
+                'delete users'
+
+            ]);
+       
 
         $super_admin = factory(App\User::class)->create([
             'first_name'        => 'super-admin',
@@ -138,7 +183,34 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $super_admin->assignRole($super_admin_role);
+        $super_admin
+            ->givePermissionTo([
+                'add categories', 
+                'update categories',
+                'delete categories',
 
+                'add events',
+                'update events',
+                'view events',
+                'delete events',
+
+                'add speakers',
+                'update speakers',
+                'view speakers',
+                'delete speakers',
+
+                'add sponsers',
+                'update sponsers',
+                'view sponsers',
+                'delete sponsers',
+
+                'add users',
+                'update users',
+                'view users',
+                'delete users'
+
+            ]);
+       
 
         factory(App\Category::class, 10)->create();
         factory(App\Event::class, 100)->create();
