@@ -21,7 +21,7 @@ class Index extends Component
     public $role           = '';
     public $created_at     = '';
     public $modal          = false;
-    public $status         = '';
+    public $status         = false;
 
     public function render()
     {
@@ -57,7 +57,7 @@ class Index extends Component
     /* Set Model Visiibility*/
     public function setVisibility(){
     	$this->modal  = !$this->modal;
-    	$this->status = '';
+        $this->status = !$this->status;
     }
 
     /* Remove the User */
@@ -65,13 +65,7 @@ class Index extends Component
     	// dd($user);
     	$user = User::findOrfail($user);
     	$user->delete();
-    	// dd($user->email);
-    	// session()->flash('done', 'User dropped');
-    	// $this->dispatchBrowserEvent('closeDeleteModal');
-    	$this->status = 'success';
-    	// $this->setVisibility();
-
-    	// return redirect()->to('/admin/users');
+    	$this->status = true;
     }
 
 }

@@ -11,7 +11,9 @@ class Show extends Component
 {
 	public $booking;
 	public $event;
-	public $status;
+    public $event_status = '';
+    public $modal;
+    public $status;
 
     public function mount($booking)
     {
@@ -19,11 +21,11 @@ class Show extends Component
     	$this->event   = $booking->event;
         $this->booking = $booking;
         if(now() < $this->event->start){
-        	$this->status = 'Incoming';
+        	$this->event_status = 'Incoming';
         } elseif(now() > $this->event->end){
-        	$this->status = 'Ended';
+        	$this->event_status = 'Ended';
         } else {
-        	$this->status = 'OnGoing';
+        	$this->event_status = 'OnGoing';
         }
 
     }
@@ -32,16 +34,22 @@ class Show extends Component
     public function render()
     {
         return view('livewire.admin.bookings.show', [
-        		'booking' => $this->booking,
-        		'event'   => $this->event,
-        		'status'  => $this->status
+        		'booking'       => $this->booking,
+        		'event'         => $this->event,
+        		'event_status'  => $this->event_status
         	]);
     }
 
+    /* Set Model Visiibility*/
+    public function setVisibility(){
+        $this->modal  = !$this->modal;
+        $this->status = !$this->status;
+        // dd($this->modal);
+    }
 
     /* Remove the Booking */
-    public function drop(){
-    	$this->booking->delete();
+    public function drop($booking){
+    	// $this->booking->delete();
     	session()->flash('success', 'Booking dropped');
     	return redirect()->to('/admin/bookings');
     }

@@ -1,5 +1,6 @@
 <div 
 	id="modal"
+	
 	class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
         <div class="h-full w-full bg-gray-300" x-on:click="open = false;">
             

@@ -18,22 +18,25 @@
 		    
         </div>
 
-        <div x-data="{ open: false }">
-			<div x-on:click="open = true;"
-			 	class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded border cursor-pointer">
-				<span  class="text-md font-bold text-red-500 rounded ">
-					Drop
-				</span>
+        <div >
+			<div 
+				wire:click="setVisibility"
+			 	class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 			</div>
 
-			<div x-show.transition.60ms="open">
-	        	@include('partials.modal', [
-	        		'key'    => $user->id, 
-	        		'modal'  => $modal,
-					'status' => $status 
-	        	])
-	        </div>
+			@if($modal)
+				<div 
+					{{-- x-on:close-modal.window="on = false" --}}
+
+					>
+		        	@include('partials.modal', [
+		        		'key'    => $user->id, 
+		        		'modal'  => $modal,
+						'status' => $status 
+		        	])
+		        </div>
+	        @endif
 		   
 		</div>
 			

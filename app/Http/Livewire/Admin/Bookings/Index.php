@@ -17,6 +17,8 @@ class Index extends Component
     public $last_name      = '';
     public $payment_type   = '';
     public $created_at     = '';
+    public $modal;
+    public $status;
 
     public function render()
     {
@@ -38,5 +40,18 @@ class Index extends Component
             'total'        => $paginate->total()
         ]);
 
+    }
+
+    /* Set Model Visiibility*/
+    public function setVisibility(){
+        $this->modal  = !$this->modal;
+        $this->status = !$this->status;
+    }
+
+    /* Remove the Booking */
+    public function drop($booking){
+        // $booking = Booking::findOrfail($booking);
+        // $booking->delete();
+        $this->status = true;
     }
 }

@@ -14,35 +14,38 @@
 
 		    <!----Status -->
 		    <div class="ml-3 flex items-center">
-	   			@if($status === 'Incoming')
+	   			@if($event_status === 'Incoming')
 					
 	   				<span class="px-3 py-2 text-md font-bold text-white rounded bg-green-600">
-	   					{{ $status }}
+	   					{{ $event_status }}
 					</span>
-	   			@elseif($status === 'Ended')
+	   			@elseif($event_status === 'Ended')
 	   				<span class="px-3 py-2 text-md font-bold text-white rounded bg-red-500">
-	   					{{ $status }}
+	   					{{ $event_status }}
 					</span>
 					<span class="ml-3">{{ $booking->format_date($event->end) }}</span>
 	   			@else
-					<span class="px-3 py-2 text-md font-bold text-white rounded bg-yellow-500">{{ $status }}
+					<span class="px-3 py-2 text-md font-bold text-white rounded bg-yellow-500">{{ $event_status }}
 					</span>
 				@endif
 			</div>
         </div>
 
-        <div x-data="{ open: false }">
-			<div x-on:click="open = true;"
-			 	class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded border cursor-pointer">
-				<span  class="text-md font-bold text-red-500 rounded ">
-					Drop
-				</span>
+        <div>
+			<div wire:click="setVisibility"
+			 	class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 			</div>
 
-			<div x-show.transition.60ms="open">
-	        	@include('partials.modal', ['key' => $booking->id, 'emitUP' => true])
+			@if($modal)
+			<div>
+	        	@include('partials.modal', [
+	        		'key'    => $booking->id, 
+	        		'modal'  => $modal,
+					'status' => $status 
+	        	])
 	        </div>
+	        @endif
 		   
 		</div>
 			
