@@ -11,7 +11,7 @@ class Show extends Component
 	public $roles;
 	public $permissions;
 	public $modal          = false;
-    public $status         = false;
+    public $status;
 
 	public function mount(User $user){
 
@@ -33,8 +33,8 @@ class Show extends Component
     /* Set Model Visiibility*/
     public function setVisibility(){
     	$this->modal  = !$this->modal;
-        $this->status = !$this->status;
-        $this->dispatchBrowserEvent('close-modal');
+        $this->status = '';
+        // $this->dispatchBrowserEvent('close-modal');
 
     }
 

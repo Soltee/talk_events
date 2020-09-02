@@ -2,16 +2,16 @@
 	id="modal"
 	
 	class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-        <div class="h-full w-full bg-gray-300" x-on:click="open = false;">
+        <div class="h-full w-full bg-gray-300" wire:click="setVisibility">
             
     </div>
     <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
-    	@if($status === 'success')
-    		<div class="flex flex-col items-center">
+    	@if($status === 'Success')
+    		<div class="flex flex-col items-center w-full">
     			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check mb-3 h-32 w-32 text-green-600 font-semibold border p-1 border-green-600 rounded-full"><polyline points="20 6 9 17 4 12"></polyline></svg>
-				<p class=" bg-green-200 rounded  px-6 py-3 text-green-600">{{ $status }}</p>
+				<p class=" bg-green-200 rounded  px-6 py-3 text-green-600">{{ $status }}!</p>
 
-				<div class="mt-6 mb-3 flex justify-end">
+				<div class="mt-6 mb-3 flex justify-end w-full">
 	                <button wire:click="setVisibility" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Close</button>
 	            </div>
 

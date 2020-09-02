@@ -33,7 +33,7 @@ class UserController extends Controller
      * Show the company dashboard.
      *
      * @return \Illuminate\Http\Response
-     */d
+     */
     public function index()
     {
         abort_if(auth()->user()->hasRole('user'), 403);

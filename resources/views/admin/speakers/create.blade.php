@@ -1,9 +1,6 @@
 @extends('layouts.admin')
 
 @section('head')
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/select7.min.css') }}">
-    <script type="text/javascript" src="{{ asset('js/select7.min.js') }}"></script>
- --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
 @endsection

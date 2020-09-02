@@ -43,8 +43,7 @@ class Show extends Component
     /* Set Model Visiibility*/
     public function setVisibility(){
         $this->modal  = !$this->modal;
-        $this->status = !$this->status;
-        // dd($this->modal);
+        $this->status = '';
     }
 
     /* Remove the Booking */

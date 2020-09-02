@@ -57,15 +57,15 @@ class Index extends Component
     /* Set Model Visiibility*/
     public function setVisibility(){
     	$this->modal  = !$this->modal;
-        $this->status = !$this->status;
+        $this->status = '';
     }
 
     /* Remove the User */
     public function drop($user){
     	// dd($user);
-    	$user = User::findOrfail($user);
-    	$user->delete();
-    	$this->status = true;
+    	// $user = User::findOrfail($user);
+    	// $user->delete();
+        $this->status = 'Success';
     }
 
 }

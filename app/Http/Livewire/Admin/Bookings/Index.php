@@ -17,12 +17,11 @@ class Index extends Component
     public $last_name      = '';
     public $payment_type   = '';
     public $created_at     = '';
-    public $modal;
-    public $status;
+    public $modal          = false;
+    public $status         = false;
 
     public function render()
     {
-        // echo (Auth::user()->hasRole('super-admin')) ? 'Yes' : 'Hah!';
 
         $paginate            = Booking::latest()
                                 ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
@@ -45,13 +44,13 @@ class Index extends Component
     /* Set Model Visiibility*/
     public function setVisibility(){
         $this->modal  = !$this->modal;
-        $this->status = !$this->status;
+        $this->status = '';
     }
 
     /* Remove the Booking */
     public function drop($booking){
         // $booking = Booking::findOrfail($booking);
         // $booking->delete();
-        $this->status = true;
+        $this->status = 'Success';
     }
 }

@@ -24,16 +24,7 @@ class Booking extends Component
         } else {
         	$this->status = 'OnGoing';
         }
-    	// $now   = new DateTime();
-    	// if($now > new DateTime($this->event['start'])){
-    	// 	$this->status = 'Ongoing';
-    	// }
-    	// elseif($now < new DateTime($this->event['end'])){
-    	// 	$this->status = 'Ended';
-    	// }
-    	// elseif(new DateTime($this->event['start']) < $now){
-    	// 	$this->status = $this->booking->format_date($event['start']);
-    	// }
+    	
     }
 
 
