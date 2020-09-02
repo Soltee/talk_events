@@ -1,5 +1,5 @@
 <div class="px-3 md:px-6 pb-6 mb-10">
-    @include('partials.user-nav')
+    {{-- @include('partials.user-nav') --}}
 
 	<div class="mt-5">
     	<div class="flex flex-col md:flex-row">
