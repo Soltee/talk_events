@@ -12,6 +12,9 @@
 
 		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $user->email }}</h4>
 
+		    <span class="ml-4 px-3 py-2 text-md font-bold text-white rounded bg-green-600">
+	   			{{ $roles }}
+			</span>
 		    
         </div>
 
@@ -25,7 +28,11 @@
 			</div>
 
 			<div x-show.transition.60ms="open">
-	        	@include('partials.modal')
+	        	@include('partials.modal', [
+	        		'key'    => $user->id, 
+	        		'modal'  => $modal,
+					'status' => $status 
+	        	])
 	        </div>
 		   
 		</div>
@@ -35,63 +42,52 @@
 	</div>
 
 
-	{{-- <div class="flex flex-col md:flex-row">
+	<div class="flex flex-col md:flex-row">
 		<div class="w-full md:w-64">
 			
-    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($event->cover) }}">
+    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($user->avatar) }}">
     	</div>
     	<div class="flex-1 md:ml-6">
-    		<h5 class="mb-4 text-md text-gray-800 px-2">General Info</h5>
+    		<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">General Info</h5>
 	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Price</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->price }}</h4>
+	    		<label for="" class=" border rounded px-4 py-3 w-40">Full Name</label>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $user->first_name . ' - ' . $user->last_name }}</h4>
+	    	</div>
+	    	<div class="flex items-center mb-6">
+	    		<label for="" class=" border rounded px-4 py-3 w-40">Email</label>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $user->email }}</h4>
 	    	</div>
 
-
-    		<h5 class="mb-4 text-md text-gray-800 px-2">DateTime</h5>
 	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Start</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->format_date($event->start) }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Time</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->format_time($event->time) }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-8">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">End</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $booking->format_date($event->end) }}</h4>
+	    		<label for="" class=" border rounded px-4 py-3 w-40">Created At</label>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
 	    	</div>
 
-	    	<h5 class="mb-4 text-md text-gray-800 px-2">Venue</h5>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Venue Name</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->venue_name }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Venue Name</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $event->venue_full_address }}</h4>
-	    	</div>
+	    	@if($roles !== 'user')
 
-	    	<!-- Payment -->
-	    	<h5 class="mb-4 text-md text-gray-800 px-2">Payment</h5>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Type</label>
-	    		<h4 class=" ml-3 rounded font-bold text-gray-800">{!! $booking->typeOfPayment() !!}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">SubTotal</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->sub_total }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Taxes</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->taxes }}</h4>
-	    	</div>
-	    	<div class="flex items-center mb-6">
-	    		<label for="" class=" border rounded px-4 py-3 w-40">Grand Total</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $booking->grand_total }}</h4>
-	    	</div>
+		    	<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">Permissions & roles</h5>
+		    	<div class="flex items-center mb-6">
+		    		<label for="" class=" border rounded px-4 py-3 w-40">Roles</label>
+		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ ucfirst($roles) }}</h4>
+		    	</div>
+		    	<div class="flex mb-6">
+		    		<label for="" class=" border rounded px-4 py-3 w-40">Permissions</label>
+		    		<div class="flex flex-col">
+		    			@forelse($permissions as $permission)
+		    			<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ ucfirst($permission) }}</h4>
+		    			@empty
+		    				<p class="text-red-600 font-semibold">No permissions.</p>
+		    			@endforelse
+		    		</div>
+		    	</div>
+
+	    	@endif
+
+
+
+    		
         </div>
    
-    </div> --}}
+    </div>
 
 </div>

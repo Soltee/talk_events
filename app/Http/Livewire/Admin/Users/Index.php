@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 class Index extends Component
 {	
 	use WithPagination;
+    // protected $listeners = ['deleteType'];
 
     protected $updatesQueryString = ['first_name', 'last_name', 'email', 'role', 'created_at'];
     public $first_name     = '';
@@ -19,6 +20,8 @@ class Index extends Component
     public $email          = '';
     public $role           = '';
     public $created_at     = '';
+    public $modal          = false;
+    public $status         = '';
 
     public function render()
     {
@@ -49,6 +52,26 @@ class Index extends Component
             'total'        => $paginate->total()
         ]);
 
+    }
+
+    /* Set Model Visiibility*/
+    public function setVisibility(){
+    	$this->modal  = !$this->modal;
+    	$this->status = '';
+    }
+
+    /* Remove the User */
+    public function drop($user){
+    	// dd($user);
+    	$user = User::findOrfail($user);
+    	$user->delete();
+    	// dd($user->email);
+    	// session()->flash('done', 'User dropped');
+    	// $this->dispatchBrowserEvent('closeDeleteModal');
+    	$this->status = 'success';
+    	// $this->setVisibility();
+
+    	// return redirect()->to('/admin/users');
     }
 
 }

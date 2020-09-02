@@ -55,7 +55,7 @@
         @can('add users')
         <li class="list-none rounded-lg">
             <a 
-                class="flex items-center  px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'users') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
+                class="flex items-center  px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'users' || Route::currentRouteName() == 'user.show') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
                 href="{{ route('users') }}">
 
                 <span class="text-lg">Users</span>

@@ -41,7 +41,7 @@
 			</div>
 
 			<div x-show.transition.60ms="open">
-	        	@include('partials.modal')
+	        	@include('partials.modal', ['key' => $booking->id, 'emitUP' => true])
 	        </div>
 		   
 		</div>
