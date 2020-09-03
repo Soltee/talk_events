@@ -100,26 +100,28 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 											->name('speakers');
 		Route::livewire('speakers/{speaker}', 'admin.speakers.show')
 											->name('speaker.show');
+
 		Route::get('speakers/create', 'Admin\SpeakerController@create')
 											->name('speaker.create');
-		Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')
-											->name('speaker.edit');
+		// Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')
+		// 									->name('speaker.edit');
 		Route::post('speakers', 'Admin\SpeakerController@store')
 											->name('speaker.store');
-		Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
-											->name('speaker.update');
-		Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')
-											->name('speaker.destroy');
+		// Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
+		// 									->name('speaker.update');
+		// Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')
+		// 									->name('speaker.destroy');
 	});
 
 	//Sponsers
 	Route::group(['middleware' => ['permission:add sponsers']], function () {
-		Route::get('sponsers', 'Admin\SponserController@index')
+		
+		Route::livewire('sponsers', 'admin.sponsers.index')
 								->name('sponsers');
+		Route::livewire('sponsers/{sponser}', 'admin.sponsers.show')
+								->name('sponser.show');
 		Route::get('sponsers/create', 'Admin\SponserController@create')	
 								->name('sponser.create');
-		Route::get('sponsers/{sponser}', 'Admin\SponserController@show')
-								->name('sponser.show');
 		Route::get('sponsers/{sponser}/edit', 'Admin\SponserController@edit')
 								->name('sponser.edit');
 		Route::post('sponsers', 'Admin\SponserController@store')

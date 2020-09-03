@@ -1,16 +1,16 @@
-@section('title', 'Speakers')
+@section('title', 'Sponsers')
 
 <div class="px-3 md:px-6 pb-6">
 
 	<!-- Add User Icon -->
-	@can('add speakers')
-		<a href="{{ route('speaker.create') }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
+	@can('add sponsers')
+		<a href="{{ route('sponser.create') }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
 	@endcan
     	
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">
-            @include('partials.admin-breadcrumb', ['url' => '/admin/speakers', 'link' => false, 'pageName' => 'Speakers', 'routeName' => Route::currentRouteName()])
+            @include('partials.admin-breadcrumb', ['url' => '/admin/sponsers', 'link' => false, 'pageName' => 'Sponsers', 'routeName' => Route::currentRouteName()])
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf
@@ -60,14 +60,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($speakers as $speaker)
+                    @forelse($sponsers as $sponser)
 
                     	<div >
 							<tr>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-							        @if($speaker->avatar)
-							            <a class="text-blue-500 hover:underline" href="{{ route('speaker.show', $speaker->id) }}">
-							                    <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $speaker->avatar }}" >
+							        @if($sponser->avatar)
+							            <a class="text-blue-500 hover:underline" href="{{ route('sponser.show', $sponser->id) }}">
+							                    <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $sponser->avatar }}" >
 							            </a>
 							        @else
 							            <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center text-blue-600 hover:text-blue-500 rounded-full object-cover object-center">
@@ -77,26 +77,26 @@
 							        @endif
 							    </td> 
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-							        <a href="/speaker/{{ $speaker->id }} }}" class="text-blue-500 hover:font-bold whitespace-no-wrap">
-							        	<p class="text-gray-900 whitespace-no-wrap"> {{ $speaker->first_name . ' ' . $speaker->last_name }}</p>
+							        <a href="/sponser/{{ $sponser->id }} }}" class="text-blue-500 hover:font-bold whitespace-no-wrap">
+							        	<p class="text-gray-900 whitespace-no-wrap"> {{ $sponser->full_name  }}</p>
 							        </a>
 							    </td>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-							        <p class="text-gray-900 whitespace-no-wrap"> {{ $speaker->email }}</p>
+							        <p class="text-gray-900 whitespace-no-wrap"> {{ $sponser->email }}</p>
 							    </td>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-							        <p class="text-gray-900 whitespace-no-wrap"> {{ $speaker->twitter_link }}</p>
+							        <p class="text-gray-900 whitespace-no-wrap"> {{ $sponser->twitter_link }}</p>
 							    </td>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 							        <p class="text-gray-900 whitespace-no-wrap">
-							            {{ ($speaker->created_at->diffForHumans()) }}
+							            {{ ($sponser->created_at->diffForHumans()) }}
 							        </p>
 							    </td>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 							        <div class="flex items-center">
 							            <a 
 							                class="hover:font-semibold" 
-							                href="/admin/speakers/{{ $speaker->id }}" >
+							                href="/admin/sponsers/{{ $sponser->id }}" >
 							                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 							            </a>
 
@@ -110,7 +110,7 @@
 											<div 	
 												>
 									        	@include('partials.modal', [
-									        		'key' => $speaker->id, 
+									        		'key' => $sponser->id, 
 									        		'modal' => $modal,
 									        		'status' => $status 
 									        		])
@@ -131,7 +131,7 @@
                             <td class="">
                                 <div class=" flex flex-col justify-center w-full my-3 items-center">
 						      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
-						      		<p class="mt-3">Oops! No Speakers or must have mispelled .</p>
+						      		<p class="mt-3">Oops! No sponsers or must have mispelled .</p>
 					     		</div>
                             </td>
                         </tr>
@@ -140,7 +140,7 @@
             </table>
 
             <div class="my-6">
-                {{ $speakers->links('vendor.pagination.tailwind') }}
+                {{ $sponsers->links('vendor.pagination.tailwind') }}
             </div>
         </div>
     </div>

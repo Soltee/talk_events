@@ -1,5 +1,5 @@
 @section('title')
-	{{ $speaker->first_name . ' ' . $speaker->last_name }}
+	{{ $sponser->full_name  }}
 @endsection
 
 <div class="px-3 md:px-6 pb-6">
@@ -7,10 +7,10 @@
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">
-            @include('partials.admin-breadcrumb', ['url' => '/admin/speakers', 'link' => false, 'pageName' => 'Speakers', 'routeName' => Route::currentRouteName()])
+			@include('partials.admin-breadcrumb', ['url' => 'admin/sponsers/', 'link' => true, 'pageName' => 'Sponsers', 'routeName' => Route::currentRouteName()])
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 
-		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $speaker->email }}</h4>
+		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $sponser->email }}</h4>
 
 		    
         </div>
@@ -28,7 +28,7 @@
 
 					>
 		        	@include('partials.modal', [
-		        		'key'    => $speaker->id, 
+		        		'key'    => $sponser->id, 
 		        		'modal'  => $modal,
 						'status' => $status 
 		        	])
@@ -45,22 +45,22 @@
 	<div class="flex flex-col md:flex-row mb-5">
 		<div class="w-full md:w-64">
 			
-    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($speaker->avatar) }}">
+    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($sponser->avatar) }}">
     	</div>
     	<div class="flex-1 md:ml-6">
     		<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">General Info</h5>
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Full Name</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $speaker->first_name . ' - ' . $speaker->last_name }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $sponser->full_name }}</h4>
 	    	</div>
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Email</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $speaker->email }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $sponser->email }}</h4>
 	    	</div>
 
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Created At</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($speaker->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($sponser->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
 	    	</div>
 
 	    	
