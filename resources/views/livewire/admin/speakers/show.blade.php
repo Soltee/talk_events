@@ -12,9 +12,6 @@
 
 		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $speaker->email }}</h4>
 
-		    <span class="ml-4 px-3 py-2 text-md font-bold text-white rounded bg-green-600">
-	   			{{ $roles }}
-			</span>
 		    
         </div>
 
@@ -45,7 +42,7 @@
 	</div>
 
 
-	<div class="flex flex-col md:flex-row">
+	<div class="flex flex-col md:flex-row mb-5">
 		<div class="w-full md:w-64">
 			
     		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($speaker->avatar) }}">
@@ -66,31 +63,47 @@
 	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($speaker->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
 	    	</div>
 
-	    	@if($roles !== 'speaker')
-
-		    	<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">Permissions & roles</h5>
-		    	<div class="flex items-center mb-6">
-		    		<label for="" class=" border rounded px-4 py-3 w-40">Roles</label>
-		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ ucfirst($roles) }}</h4>
-		    	</div>
-		    	<div class="flex mb-6">
-		    		<label for="" class=" border rounded px-4 py-3 w-40">Permissions</label>
-		    		<div class="flex flex-col">
-		    			@forelse($permissions as $permission)
-		    			<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ ucfirst($permission) }}</h4>
-		    			@empty
-		    				<p class="text-red-600 font-semibold">No permissions.</p>
-		    			@endforelse
-		    		</div>
-		    	</div>
-
-	    	@endif
-
-
-
+	    	
     		
         </div>
    
+    </div>
+
+    <!--- Speakers Events -->
+	<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">Events</h5>
+	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+		@forelse($events as $event)
+			<div class="flex flex-col  items-start mb-6 plain-item 
+        		">
+    			<div class="img-hover-zoom w-full">
+    				<div class="relative py-3">
+        				<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+	        				
+	        				<img  class="w-full mb-5 rounded-lg hover:opacity-75" src="{{ asset($event->cover) }}" alt="">
+	        			</a>
+	        		
+	        		</div>
+        		</div>
+    			<div class="w-full flex flex-col items-start justify-between">
+    				<div class="flex flex-row w-full items-center justify-between ">
+    					<a class="" href="/admin/events/{{ $event->id }}">
+    						<h5 class="text-lg font-bold text-gray-900 hover:opacity-75">{{ $event->title }}</h5>
+    					</a>
+    				</div>
+    			</div>
+    			
+    		</div>
+    	@empty
+        	<div class=" flex flex-col justify-center w-full">
+	      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
+	      		<p class="mt-3">No event yet.</p>
+     		</div>
+    	@endforelse
+
+	</div>
+
+	<div class="my-6">
+        {{ $events->links('vendor.pagination.tailwind') }}
     </div>
 
 </div>

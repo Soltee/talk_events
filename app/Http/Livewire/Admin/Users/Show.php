@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Admin\Users;
 
 use Livewire\Component;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Cache;
+use Livewire\WithPagination;
 
 class Show extends Component
 {
+    use WithPagination;
 	public $user;
 	public $roles;
 	public $permissions;
