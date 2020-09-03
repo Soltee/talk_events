@@ -22,6 +22,10 @@ class Index extends Component
     public function render()
     {
 
+        if($this->full_name || $this->email || $this->created_at){
+            $this->goToPage(1);
+        }
+
         $query     =  Sponser::latest();
         if($this->name) {
         	$query = $query

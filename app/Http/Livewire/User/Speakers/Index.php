@@ -17,6 +17,10 @@ class Index extends Component
 
     public function render()
     {
+        if($this->keyword){
+            $this->goToPage(1);
+        }
+        
     	$speakers = Speaker::latest()
     							->where('first_name', 'LIKE', '%'. $this->keyword . '%')
     							->orWhere('last_name', 'LIKE', '%'. $this->keyword . '%')
@@ -26,7 +30,7 @@ class Index extends Component
                                             $query->select('title', 'price');
                                          }
                                   	])
-    							->paginate(10);
+    							->paginate(8);
 
         $first    = $speakers->firstItem();
         $last     = $speakers->lastItem();

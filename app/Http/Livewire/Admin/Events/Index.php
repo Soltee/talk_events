@@ -23,6 +23,10 @@ class Index extends Component
 
     public function render()
     {	
+        if($this->title || $this->price || $this->venue_name || $this->created_at){
+            $this->goToPage(1);
+        }
+
     	$paginate            = Event::latest()
                                 ->where('title' ,   'LIKE', '%'. $this->title .'%')
                                 ->where('price' ,   'LIKE', '%'. $this->price .'%')

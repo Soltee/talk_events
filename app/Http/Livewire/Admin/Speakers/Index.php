@@ -22,6 +22,9 @@ class Index extends Component
 
     public function render()
     {
+        if($this->first_name || $this->last_name || $this->email || $this->created_at){
+            $this->goToPage(1);
+        }
 
         $query     =  Speaker::latest();
         if($this->name) {

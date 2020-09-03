@@ -25,19 +25,28 @@
     			{{-- {{ $speaker }} --}}
     			<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">General Info</h5>
 		    	<div class="flex items-center mb-6">
-		    		<label for="" class=" border rounded px-4 py-3 w-32">Full Name</label>
+		    		<label for="" class=" border rounded px-4 py-3 w-32 font-semibold">Full Name</label>
 		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $speaker->first_name . ' - ' . $speaker->last_name }}</h4>
 		    	</div>
 
 		    	<div class="flex items-center mb-6">
-		    		<label for="" class=" border rounded px-4 py-3 w-32">Email</label>
+		    		<label for="" class=" border rounded px-4 py-3 w-32 font-semibold">Email</label>
 		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $speaker->email }}</h4>
 		    	</div>
 
 		    	<div class="flex items-center mb-6">
-		    		<label for="" class=" border rounded px-4 py-3 w-32">Created At</label>
+		    		<label for="" class=" border rounded px-4 py-3 w-32 font-semibold">Created At</label>
 		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($speaker->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
-	    	</div>
+	    		</div>
+
+	    		<div class="flex  mt-3 mb-6">
+		    		<label for="" class=" border rounded px-4 py-3 w-32 font-semibold">Recent Event</label>
+		    		<div class="flex flex-col border p-2">
+			    		<h4 class=" rounded px-4 py-3 font-bold text-gray-800">{{ $recent_event->title }}</h4>
+			    		<span class="mt-3  rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($speaker->created_at)->translatedFormat('l jS F Y g:i a') }}</span>
+			    	</div>
+
+		    	</div>
 
     		</div>
     	</div>

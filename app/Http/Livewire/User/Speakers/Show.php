@@ -19,10 +19,14 @@ class Show extends Component
 
     public function render()
     {
-    	$events = $this->speaker->events()->paginate(2);
+        $events       = $this->speaker->events()->paginate(2);
+        $recent_event = $this->speaker->events()
+                                        ->latest()
+                                        ->first();
         return view('livewire.user.speakers.show', [
         		'speaker'       => $this->speaker,
-        		'events'        => $events,
+                'events'        => $events,
+                'recent_event'  => $recent_event,
         		'events_count'  => $events->total(),
         	]);
     }
