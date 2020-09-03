@@ -79,7 +79,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 	
 	//Dashboard
-	Route::get('dashboard', 'Admin\HomeController@index')
+	Route::livewire('dashboard', 'admin.dashboard')
 							->middleware('auth')
 							->name('admin.dashboard');
 
