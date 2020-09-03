@@ -16,19 +16,24 @@ Route::get('/event', 'WelcomeController@events')
 										->name('events.all');
 
 /*Livewire*/
+Route::livewire('/speaker', 'user.speakers.index')
+						->name('user.speakers');
+
+Route::livewire('/speakers/{speaker}-{slug}-{last}', 'user.speakers.show')
+						->name('user.speakers.show');
 Route::livewire('/events/schedules', 'user.schedule')
-									 ->name('calender');
+									->name('calender');
 
 Route::livewire('/events/search', 'user.search')
-									 ->name('search.events');
+									->name('search.events');
 
 /** Booking */
 Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')
-												->name('booking.checkout');
+								->name('booking.checkout');
 Route::post('/events/{event_id}/book', "User\BookingController@checkout")
-												->name('event.book');
+								->name('event.book');
 Route::get('/events/book/thankyou/{booking}', 'User\BookingController@show')
-												->name('booking.thankyou');
+								->name('booking.thankyou');
 
 
 /** Login & Register */

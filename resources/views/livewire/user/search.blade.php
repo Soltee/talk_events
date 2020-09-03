@@ -25,6 +25,7 @@
         		
 
 	<form method="POST" >
+		@csrf
 		<div class="flex flex-col md:flex-row items-center w-full my-4">
 	        <select wire:model="category_id" id="categoriesSelect"  class=" appearance-none w-full md:w-1/3 px-3 py-3 md:py-5  border-t md:border-none md:border-l  rounded-t md:rounded-none md:rounded-l">
 	        	@forelse($categories as $c)

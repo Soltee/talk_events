@@ -35,7 +35,7 @@
 						</div>
                         	
 
-                        <input type="text" name="keyword" class="w-full md:w-2/4 px-4 border py-4 " value="" placeholder="Event...">
+                        <input type="text" name="keyword" class="w-full md:w-2/4 px-4 border-2 py-4 " value="" placeholder="Event...">
                         <button type="submit" class="w-full md:w-1/4 px-4 py-5  hover:opacity-75 text-white bg-blue-500 border-b md:border-none md:border-r  rounded-b md:rounded-none md:rounded-r uppercase">Find</button>      
                     </div>
 
@@ -51,7 +51,7 @@
 	    <div class="mt-24 recent_events w-full">
 	    	<div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Upcoming Events</h2>
-			    <a href="/event" class="{{ ($trending_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
+			    <a href="/event" class="{{ ($trending_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75 hover:underline">	
 			    	View all 
 			    </a>
 			</div>
@@ -62,18 +62,19 @@
 
 		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
 				            <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
-				            <div class="mt-2 flex ">
-						      	{{ date("F j, Y, g:i a", strtotime($event->start)) }}
+				            <div class="mt-2 flex flex-col">
+						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
+						      	</span>
+							    @if($event->price > 0)
+					      			<span class="text-xl text-blue-500 font-bold">
+						      			$ {{ $event->price }}
+						      		</span>	
+					      		@else
+					      			<span class="text-xl text-blue-500 font-bold">
+						      			Free
+						      		</span>	
+					      		@endif
 						    </div>
-						    @if($event->price > 0)
-				      			<span class="absolute top-0 right-0 text-xl text-blue-500 font-bold">
-					      			$ {{ $event->price }}
-					      		</span>	
-				      		@else
-				      			<span class="absolute top-0 right-0 text-xl text-blue-500 font-bold">
-					      			Free
-					      		</span>	
-				      		@endif
 				            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 			          	</div>
 			       
@@ -96,7 +97,7 @@
 	    <div class="mt-24 weekend_events w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Comming Weekends</h2>
-			    <a href="/event" class="{{ ($this_weekend_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
+			    <a href="/event" class="{{ ($this_weekend_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75 hover:underline">	
 			    	View all 
 			    </a>
 			</div>
@@ -131,13 +132,16 @@
 	    <div class="mt-24 speakers w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold"> Speakers</h2>
+			    <a href="/speaker" class="{{ ($speakers_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75 hover:underline">	
+			    	View all 
+			    </a>
 			</div>
 		    <div class="{{ ($speakers_total) ? 'swiper-container' : '' }} w-full">
 		        <div class="swiper-wrapper ">
 			        @forelse($speakers as $speaker)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}">
+					      <a href="{{ url('speakers', $speaker->id . '-' . $speaker->first_name . '-' . $speaker->last_name )}}">
 					      	<img data-src="{{ asset($speaker->avatar) }}" class="swiper-lazy w-32 h-32 rounded-full bg-center
 					      	bg-cover  rounded-lg">
 					      </a>
@@ -168,7 +172,7 @@
 	    <div class="mt-24 free_events w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Free Events</h2>
-			    <a href="/event?search=&type=free" class="{{ ($free_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
+			    <a href="/event?search=&type=free" class="{{ ($free_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75 hover:underline">	
 			    	View all
 			    </a>
 			</div>
