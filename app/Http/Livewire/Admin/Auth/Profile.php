@@ -83,6 +83,7 @@ class Profile extends Component
         $this->avatar    = '';
         $this->password  = '';
         $this->confrim   = '';
+
         $this->modal  = true;
         $this->status    = 'Your avatar is saved.';
 
@@ -107,6 +108,7 @@ class Profile extends Component
         $this->avatar    = '';
         $this->password  = '';
         $this->password_confirmation   = '';
+        
         $this->modal  = true;
         $this->status    = 'Your info is saved.';
 

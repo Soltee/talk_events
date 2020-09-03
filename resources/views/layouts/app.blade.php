@@ -177,13 +177,8 @@
                                 <a href="/home" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'home') ? 'underline font-semibold' : ''}}">Dashboard</a>
                                 <a href="/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'profile') ? 'underline font-semibold' : ''}}">Profile</a>
                                 
-                                <a href="{{ route('user.logout') }}"
-                                  class="no-underline hover:underline text-blue-600 text-sm md:text-md hover:font-semibold p-3"
-                                  onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="hidden">
-                                    {{ csrf_field() }}
-                                </form>
+                                <!-- Logout Component -->
+                                <livewire:user.auth.logout />
 
                             </div>
                           </div>

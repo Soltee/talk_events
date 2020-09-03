@@ -1,5 +1,10 @@
+@section('title', 'Profile')
+
 <div class="px-3 md:px-6 pb-6 mb-10">
-    {{-- @include('partials.user-nav') --}}
+	<div class="flex items-center">
+        @include('partials.admin-breadcrumb', ['url' => '/admin/users', 'link' => false, 'pageName' => 'Users', 'routeName' => Route::currentRouteName()])
+    </div>
+
     @if($modal)
 	    <div 
 			class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">

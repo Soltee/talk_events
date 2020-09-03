@@ -1,12 +1,28 @@
-@section('title')
-	{{ $auth->first_name . ' ' . $auth->last_name }}
-@endsection
+@section('title', 'Profile')
 
 @section('head')
 @endsection
 
 <div class="mb-10">
-    @include('partials.user-nav', ['event' => ''])
+    @include('partials.user-breadcrumb', ['event' => ''])
+
+    @if($modal)
+	    <div 
+			class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+			<div wire:click="setVisibility" class="h-full w-full bg-gray-300"></div>
+		    <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+		    	<div class=" flex flex-col items-center w-full">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check mb-3 h-32 w-32 text-green-600 font-semibold border p-1 border-green-600 rounded-full"><polyline points="20 6 9 17 4 12"></polyline></svg>
+					<p class=" bg-green-200 rounded  px-6 py-3 text-green-600">{{ $status }}</p>
+
+					<div class="mt-6 mb-3 flex justify-end w-full">
+		                <button wire:click="setVisibility" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Close</button>
+		            </div>
+
+				</div>
+			</div>
+		</div>
+ 	@endif
 
 	<div class="mt-5">
     	<div class="flex flex-col md:flex-row">
@@ -120,4 +136,5 @@
 
 	    </div>
 	</div>
+
 </div>

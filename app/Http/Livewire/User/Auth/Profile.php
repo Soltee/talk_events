@@ -23,6 +23,8 @@ class Profile extends Component
     public $email;
     public $password;
     public $password_confirmation;
+    public $modal;
+    public $status = '';
 
 	public function mount()
     {
@@ -44,6 +46,13 @@ class Profile extends Component
         		'oldAvatar' => $this->oldAvatar,
         		'auth'      => $this->auth
         	]);
+    }
+
+
+    /** Modal Visibility */
+    public function setVisibility(){
+        $this->modal  = !$this->modal;
+        $this->status = '';
     }
 
     /**Save Avatar */
@@ -71,14 +80,11 @@ class Profile extends Component
         	'avatar'      => $avatar
         ]);
 
-        $this->firstname = '';
-        $this->lastname  = '';
-        $this->email     = '';
-        $this->avatar    = '';
         $this->password  = '';
-        $this->confrim   = '';
+        $this->password_confirmation   = '';
 
-        session()->flash('done', 'Your avatar is saved.');
+        $this->modal     = true;
+        $this->status    = 'Your avatar is saved.';
     }
 
 
@@ -97,12 +103,12 @@ class Profile extends Component
         	'email'      => $this->email
         ]);
 
-        $this->avatar    = '';
-        $this->password  = '';
-        $this->password_confirmation   = '';
+        $this->firstname = '';
+        $this->lastname  = '';
+        $this->email     = '';
 
-        session()->flash('done', 'Your info is saved.');
-
+        $this->modal     = true;
+        $this->status    = 'Your info is saved.';
 
     }
 
@@ -118,14 +124,11 @@ class Profile extends Component
         	'password'      => bcrypt($this->password)
         ]);
 
-        $this->firstname = '';
-        $this->lastname  = '';
-        $this->email     = '';
-        $this->avatar    = '';
         $this->password  = '';
         $this->password_confirmation   = '';
 
-        session()->flash('done', 'Your password is saved.');
+        $this->modal    = true;
+        $this->status   = 'Your password is saved.';
 
     }
 

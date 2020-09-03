@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Auth;
+namespace App\Http\Livewire\User\Auth;
 
 use Livewire\Component;
 use App\User;
@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Logout extends Component
 {
-
     public function render()
     {
-        return view('livewire.admin.auth.logout');
+        return view('livewire.user.auth.logout');
     }
 
-    /* Logout Admin User */
+    /* Logout  User */
     public function invalidate(){
     	Auth::guard()->logout();
 
@@ -24,6 +23,6 @@ class Logout extends Component
 
     	session()->flash('success', 'Logged out!');
 
-        return redirect()->to('/admin/login');
+        return redirect()->to('/');
     }
 }
