@@ -65,7 +65,7 @@ class WelcomeController extends Controller
         // });
 
         $speakers      = Cache::remember('speakers', now()->addMinutes(3), function() {
-            return Speaker::latest()->take(10)->get();
+            return Speaker::latest()->take(20)->get();
         });
 
         $speakers_total   = Cache::remember('speakers_total', now()->addMinutes(3), function() use ($speakers) {

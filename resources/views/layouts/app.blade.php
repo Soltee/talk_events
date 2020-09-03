@@ -131,7 +131,7 @@
         .swiper-button-next, .swiper-button-prev{color:blue;}
     </style>
 </head>
-<body class="bg-gray-100 h-screen antialiased leading-none">
+<body class="antialiased leading-none">
     <div>
         @if(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
         @else
@@ -204,7 +204,7 @@
       @if(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
       @else
         <footer>
-            <div class="bg-gray-700">
+            <div class="bg-gray-700 py-6">
 
               <div class="max-w-screen-lg mx-auto px-6 py-8">
                   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative">

@@ -17,7 +17,7 @@
 
 	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black font-semibold mb-3">Broaden your Horizon</h1>
 	            <h1 class="text-lg md:text-2xl text-c-black ">Meet people that transform you</h1>
-	    		<img  src="/images/events.svg" class="lozad w-full sm:w2/3 md:hidden h-64 object-cover object-center w-full hero my-6" alt="">
+	    		<img  src="/images/events.svg" class="lozad w-full sm:w2/3 md:hidden h-64 object-contain w-full hero my-6" alt="">
 
 	            <form method="GET" action="/events/search">
 	            	<div class="flex flex-col md:flex-row items-center w-full mt-4 md:mt-10">
@@ -48,7 +48,7 @@
            
 	    </div>
 
-	    <div class="mt-16 recent_events w-full">
+	    <div class="mt-24 recent_events w-full">
 	    	<div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Upcoming Events</h2>
 			    <a href="/event" class="{{ ($trending_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
@@ -57,7 +57,7 @@
 			</div>
 
 			<div class="my-8 {{ $trending_total ? 'swiper-container' : ''  }} w-full relative">
-			    <div class="swiper-wrapper">
+			    <div class="swiper-wrapper ">
 			    	@forelse($trending as $event)
 
 		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
@@ -93,7 +93,7 @@
 		    
 	    </div>
 
-	    <div class="mt-16 weekend_events w-full">
+	    <div class="mt-24 weekend_events w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Comming Weekends</h2>
 			    <a href="/event" class="{{ ($this_weekend_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
@@ -102,10 +102,10 @@
 			</div>
 
 		    <div class="{{ ($this_weekend_total) ? 'swiper-container' : ''}} w-full">
-		        <div class="swiper-wrapper">
+		        <div class="swiper-wrapper ">
 			        @forelse($this_weekend as $event)
 						    <!-- Lazy image -->
-					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full">
+					    <div class="relative swiper-slide rounded-lg w-full">
 					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
 					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
@@ -128,12 +128,12 @@
 
 	
 	    <!-- Speakers -->
-	    <div class="mt-16 free_events w-full">
+	    <div class="mt-24 speakers w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold"> Speakers</h2>
 			</div>
 		    <div class="{{ ($speakers_total) ? 'swiper-container' : '' }} w-full">
-		        <div class="swiper-wrapper">
+		        <div class="swiper-wrapper ">
 			        @forelse($speakers as $speaker)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
@@ -165,7 +165,7 @@
 
 
 	    <!-- Free -->
-	    <div class="mt-16 free_events w-full">
+	    <div class="mt-24 free_events w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Free Events</h2>
 			    <a href="/event?search=&type=free" class="{{ ($free_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75">	
@@ -173,10 +173,10 @@
 			    </a>
 			</div>
 		    <div class="{{ ($free_total) ? 'swiper-container' : '' }} w-full">
-		        <div class="swiper-wrapper">
+		        <div class="swiper-wrapper ">
 			        @forelse($free as $event)
 						    <!-- Lazy image -->
-					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full">
+					    <div class="relative swiper-slide rounded-lg w-full">
 					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
 					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
@@ -196,16 +196,16 @@
 		    </div>
 	    </div>
 
-	    <div class="mt-16 categories w-full">
+	    <div class="mt-24 categories w-full">
 		    <div class="flex justify-between items-center mb-8">
 			    <h2 class="text-blue-900 text-lg font-bold">Categories</h2>
 			   
 			</div>
 		    <div class="swiper-container w-full">
-		        <div class="swiper-wrapper">
+		        <div class="swiper-wrapper ">
 			        @forelse($query_category as $category)
 						    <!-- Lazy image -->
-					    <div class="relative swiper-slide bg-gray-400 w-full flex flex-col items-center">
+					    <div class="relative swiper-slide w-full flex flex-col items-center">
 					      <a href="/event?category={{ $category->id }}&slug={{ $category->slug }}">
 					      	<img data-src="{{ asset($category->thumbnail) }}" class="swiper-lazy w-full  rounded-lg">
 					      </a>
@@ -233,7 +233,7 @@
     </div>
 @endsection
    {{--  @if($featured)
-		    <div class="mt-16 recent_events w-full flex flex-col md:flex-row">
+		    <div class="mt-24 recent_events w-full flex flex-col md:flex-row">
 		    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
 		    		<h5>{{ $featured->title }}</h5>
 		    	</div>
