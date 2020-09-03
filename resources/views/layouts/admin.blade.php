@@ -67,13 +67,8 @@
                               x-show.transition.70ms="open"
                                class="absolute top-0 right-0 mt-10 px-2 py-1 rounded flex  flex-col border-gray-200 border z-20  bg-gray-100">
                                 <a href="/admin/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'admin.profile') ? 'underline font-semibold' : ''}}">Profile</a>
-                                <a href="{{ route('admin.logout') }}"
-                                  class="no-underline hover:underline text-blue-600 text-sm md:text-md hover:font-semibold p-3"
-                                  onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
-                                    {{ csrf_field() }}
-                                </form>
+
+                                <livewire:admin.auth.logout />
 
                             </div>
                           </div>

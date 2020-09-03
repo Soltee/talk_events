@@ -69,11 +69,6 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 						->name('admin.login');
 
 	
-	/* After Authenctication*/
-	Route::post('logout', 'Admin\LoginController@logout')
-							->middleware('auth')
-							->name('admin.logout');
-
 	//Dashboard
 	Route::get('dashboard', 'Admin\HomeController@index')
 							->middleware('auth')
@@ -115,7 +110,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 	//Sponsers
 	Route::group(['middleware' => ['permission:add sponsers']], function () {
-		
+
 		Route::livewire('sponsers', 'admin.sponsers.index')
 								->name('sponsers');
 		Route::livewire('sponsers/{sponser}', 'admin.sponsers.show')
