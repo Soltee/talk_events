@@ -39,7 +39,7 @@
 	        		</div>
         			<div class="mt-3 w-full  flex flex-col items-start justify-between">
         				<div class="flex flex-row w-full items-center justify-between mb-5">
-        					<a class="" href="{{ url('sponsers', $sponser->full_name )}}">
+        					<a class="" href="{{ url('sponsers', $sponser->id . '-'. $sponser->full_name )}}">
         						<h5 class="text-lg font-bold text-gray-900 hover:opacity-75">{{ $sponser->full_name }}</h5>
         					</a>
         				</div>
