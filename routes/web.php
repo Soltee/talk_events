@@ -161,8 +161,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 	//Super Admin
 	Route::group(['middleware' => ['role:super-admin']], function () {
 		Route::livewire('/profile', 'admin.auth.profile')
-							->name('admin.profile')
-							->layout('layouts.admin');
+							->name('admin.profile');
 
 		//Booking
 		Route::livewire('/bookings', 'admin.bookings.index')

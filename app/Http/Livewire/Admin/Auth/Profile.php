@@ -21,10 +21,11 @@ class Profile extends Component
     public $email;
     public $password;
     public $password_confirmation;
+    public $modal;
+    public $status = '';
 
 	public function mount()
     {
-    	// return ($this->guard()->user() ? '' : redirect()->to('/login'));
         $this->auth      = $this->guard()->user();
         if(env('APP_ENV') === 'local'){
         	$this->oldAvatar = '/storage/admin/' . $this->auth->avatar;
@@ -42,6 +43,12 @@ class Profile extends Component
         		'oldAvatar' => $this->oldAvatar,
         		'auth'      => $this->auth
         	]);
+    }
+
+    /** Modal Visibility */
+    public function setVisibility(){
+        $this->modal  = !$this->modal;
+        $this->status = '';
     }
 
 
@@ -76,8 +83,9 @@ class Profile extends Component
         $this->avatar    = '';
         $this->password  = '';
         $this->confrim   = '';
+        $this->modal  = true;
+        $this->status    = 'Your avatar is saved.';
 
-        session()->flash('done', 'Your avatar is saved.');
     }
 
 
@@ -99,9 +107,8 @@ class Profile extends Component
         $this->avatar    = '';
         $this->password  = '';
         $this->password_confirmation   = '';
-
-        session()->flash('done', 'Your info is saved.');
-
+        $this->modal  = true;
+        $this->status    = 'Your info is saved.';
 
     }
 
@@ -124,7 +131,8 @@ class Profile extends Component
         $this->password  = '';
         $this->password_confirmation   = '';
 
-        session()->flash('done', 'Your password is saved.');
+        $this->modal  = true;
+        $this->status = 'Your password is saved.';
 
     }
 
