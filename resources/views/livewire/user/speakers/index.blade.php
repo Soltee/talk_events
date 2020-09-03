@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="flex justify-between items-center">
-    		<input type="text" wire:model="keyword" class=" px-6 py-3 rounded border border-blue-500" value="{{ $keyword }}">
+    		<input type="text" wire:model="keyword" class=" px-6 py-3 rounded border border-blue-500" value="{{ $keyword }}" placeholder="Name">
     	</div>
 
 
@@ -21,7 +21,7 @@
 
 	<div class="mt-4">
 		<!--- Speakers speakers -->
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 			@forelse($speakers as $speaker)
 				<div class="flex flex-col  items-center mb-6 plain-item  items-center
 	        		">

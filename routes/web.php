@@ -96,7 +96,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 	//Speakers
 	Route::group(['middleware' => ['permission:add speakers']], function () {
-		Route::get('speakers', 'Admin\SpeakerController@index')
+		Route::livewire('speakers', 'admin.speakers.index')
 											->name('speakers');
 		Route::get('speakers/create', 'Admin\SpeakerController@create')
 											->name('speaker.create');
