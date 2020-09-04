@@ -233,7 +233,7 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Booking::class, 80)->create();
         factory(App\Social::class, 100)->create();
-        factory(App\Activity::class, 100)->create();
-        factory(App\Reply::class, 100)->create();
+        factory(App\Activity::class, 300)->create();
+        factory(App\Reply::class, 300)->create();
     }
 }

@@ -30,6 +30,14 @@ class Event extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function activities(){
+        return $this->hasMany(Activity::class);
+    }
+
+    public function replies(){
+        return $this->hasMany(Reply::class);
+    }
+
     public function speakers(){
         return $this->belongsToMany(Speaker::class, 'event_speaker');
     }

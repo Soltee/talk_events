@@ -189,11 +189,20 @@
 		    	</div>
 		    </div>
 		 
+		 
+		    <div x-data="{ tab : 'details' }" class="flex flex-col">
+		    	<div class="flex items-center">
+		    		<h3 x-on:click="tab = 'details'" :class="{'font-bold' : tab === 'details' }" class="cursor-pointer">Details</h3>
+		    		<h3 x-on:click="tab = 'activity'" :class="{'font-bold' : tab === 'activity' }" class="ml-4 cursor-pointer">Discussion</h3>
+		    	</div>
+		    	<div class="flex flex-col">
+		    		<div x-show.transition.60ms="tab === 'details'">
+						<div class="mt-6 leading-6">{{ $event->description }}</div>
+		    		</div>
 
-		    <div class="flex flex-col md:flex-row">
-		    	<div class="flex-1">
-		    		<h3  class="">Details</h3>
-					<p class="mt-6">{{ $event->description }}</p>
+		    		{{-- <div x-show.transition.60ms="tab === 'activity'"> --}}
+				    	<livewire:user.events.activity :event="$event" />
+		    		{{-- </div> --}}
 		    	</div>
 		   
 		    </div>
@@ -207,13 +216,17 @@
 			        @forelse($similar as $event)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full flex flex-col">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug) }}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
+					      <a href="{{ url('events', $event->id . '-' . $event->slug) }}">
+					      	<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg">
+					      </a>
 					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
 
 					       <div class="flex justify-between items-center mt-3 w-full">
-					      		<span class="text-lg">
+					      		<a href="{{ url('events', $event->id . '-' . $event->slug) }}">
+					      			<span class="text-lg">
 					      			{{ $event->title }}
-					      		</span>	
+					      			</span>	
+					      		</a>
 					      		@if($event->is_paid)
 					      			<span class="text-lg text-blue-500 font-light">
 						      			Paid

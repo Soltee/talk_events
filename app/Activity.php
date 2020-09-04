@@ -18,6 +18,10 @@ class Activity extends Model
     	return $this->belongsTo(User::class);
     }
 
+    public function replies(){
+        return $this->hasMany(Reply::class);
+    }
+
     public function format_date($date){
         $date = Carbon::parse($date);
         return $date->translatedFormat('l jS F Y'); 
