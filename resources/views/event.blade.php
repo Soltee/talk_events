@@ -89,7 +89,7 @@
 			    </div>
 
 		    	<!--Book Btn on Desktop -->
-			    <div 
+			    {{-- <div 
 					class="hidden md:block flex justify-end items-center  py-4 md:py-0">
 				    	@if($event->price > 0)
 			      			<span class="text-lg font-bold text-blue-900">
@@ -100,16 +100,14 @@
 				      			Free
 				      		</span>	
 			      		@endif
-					    {{-- <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}" class="md:ml-3"> --}}
-					    	<button 
-					    		x-on:click="open = !open" 
-					    		type="submit" class="ml-3 text-white bg-blue-600 hover:bg-blue-500 px-10 md:px-6 py-5 md:py-3 rounded-lg">Book Now</button>
-				    	{{-- </a> --}}
-			    </div>
+					    <button 
+				    		x-on:click="open = !open" 
+				    		type="submit" class="ml-3 text-white bg-blue-600 hover:bg-blue-500 px-10 md:px-6 py-5 md:py-3 rounded-lg">Book Now</button>
+			    </div> --}}
 			</div>
 
 		    <!--Book Btn on Mobile -->
-			<div
+			{{-- <div
 				x-on:click="open = !open" 
 				class="bg-gray-300 z-20 md:hidden flex justify-between items-center fixed bottom-0 w-full left-0 px-6 py-4">
 				@if($event->price > 0)
@@ -121,13 +119,11 @@
 		      			Free
 		      		</span>	
 	      		@endif
-			    {{-- <a href="{{ url('events', $event->id . '-' . $event->slug . '/checkout') }}"> --}}
-			    	<button class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
-		    	{{-- </a> --}}
-		    </div>
+			    <button class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
+		    </div> --}}
 
 		    <!-- Booking Modal -->
-		    <div 
+		    {{-- <div 
 			    x-show.transition.50ms="open"
 			    class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
 			        <div 
@@ -136,7 +132,7 @@
 			        <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
 				    	<livewire:user.booking :event="$event" />
 				    </div>
-		    </div>
+		    </div> --}}
 
 		</div>
 
@@ -209,7 +205,7 @@
 		</div>
 
 		<!-- Similar Events-->
-		<div class="mt-12 weekend_events w-full">
+		{{-- <div class="mt-12 weekend_events w-full">
 		    <h2 class="text-blue-900 text-lg font-bold mb-8">You may be interested in</h2>
 		    <div class="{{ ($similar_count) ? 'swiper-container' : ''}} w-full">
 		        <div class="swiper-wrapper">
@@ -253,7 +249,7 @@
 			      <div class="swiper-button-prev"></div>
 		        @endif
 		    </div>
-	    </div>
+	    </div> --}}
 
     </div>
 

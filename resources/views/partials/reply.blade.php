@@ -1,4 +1,4 @@
-<div class="ml-16 md:ml-24 mt-4 mb-4">
+<div class="ml-8 mt-4 mb-4">
 	@if($auth)
 		<form wire:submit.prevent="post" accept-charset="utf-8">
 			@csrf
@@ -32,11 +32,8 @@
 	    @endforelse
 	</div>
 	<div class="my-6">
-		{{-- {{$next}}
-		@if($next)
+		{{-- @if($replies->nextPageUrl())
 			<span wire:click="next">Show More</span>
-		@else
-
 		@endif --}}
 	        {{-- {{ $replies->links('vendor.pagination.tailwind') }} --}}
 	</div>

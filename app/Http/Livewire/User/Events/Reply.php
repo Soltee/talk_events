@@ -13,8 +13,13 @@ class Reply extends Component
 {
 	use WithPagination;
 
+	protected $listeners = [
+        'reviewSectionRefresh' => '$refresh',
+    ];
+
 	public $activity;
 	public $auth;
+	public $message;
 
 	public function mount(Activity $activity)
     {
@@ -26,14 +31,40 @@ class Reply extends Component
 
     public function render()
     {
-        $replies = $this->activity
+        $query = $this->activity
     						->replies()
     						->latest()
     						->with(['user'])
-    						->paginate(1);
+    						->get();
+    						// ->paginate(1);
+  		// $replies = $query->items();
+    // 	$prev    = $query->previousPageUrl();
+    // 	$next    = $query->nextPageUrl();
         return view('livewire.user.events.reply', [
-        	'activity'       => $this->activity,
-        	'replies'     => $replies
+        	'activity'    => $this->activity,
+        	'replies'     => $query,
+        	// 'next'        => $next,
+        	// 'prev'        => $prev
         ]);
+    }
+
+    /**Post Message */
+    public function post(){
+    	if($this->auth){
+
+	    	$data = $this->validate([
+	    		'message' => 'required'
+	    	]);
+	    	// dd($this->activity->activities);
+	    	$this->activity->activities()->create([
+	    		'user_id' => $this->auth->id,
+	    		'message' => $this->message
+	    	]);
+
+	    	$this->goToPage(1);
+	    	$this->message = '';
+	    	// $this->$refresh;
+	        $this->emit('reviewSectionRefresh');
+    	}
     }
 }
