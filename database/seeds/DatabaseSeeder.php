@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
+use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        
         $users = factory(App\User::class, 40)->create();
         //Roles & Permisssons
         $user_role = Role::create(['name' => 'user']);
@@ -230,5 +233,7 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Booking::class, 80)->create();
         factory(App\Social::class, 100)->create();
+        factory(App\Activity::class, 100)->create();
+        factory(App\Reply::class, 100)->create();
     }
 }

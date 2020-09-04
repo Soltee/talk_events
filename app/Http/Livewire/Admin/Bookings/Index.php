@@ -23,9 +23,14 @@ class Index extends Component
     public function render()
     {
 
+        if($this->first_name || $this->last_name || $this->payment_type || $this->created_at){
+            $this->goToPage(1);
+        }
+
+
         $paginate            = Booking::latest()
                                 ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
-                                ->where('last_name' ,   'LIKE', '%'. $this->last_name .'%')
+                                ->orWhere('last_name' ,   'LIKE', '%'. $this->last_name .'%')
                                 ->where('payment_type' ,   'LIKE', '%'. $this->payment_type .'%')
                                 ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
                                 ->with(['user', 'event'])

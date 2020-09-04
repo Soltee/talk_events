@@ -39,8 +39,10 @@ class Search extends Component
 
     public function render()
     {
-    	// dd($this->categories);
-    	// if($thi)
+    	if($this->keyword || $this->category_id){
+            $this->goToPage(1);
+        }
+
     	$paginate       	 = Event::latest()
 		                		->where('category_id' , $this->category_id)
 		                		->where('title' ,   'LIKE', '%'. $this->keyword .'%')

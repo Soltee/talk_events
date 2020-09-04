@@ -17,20 +17,34 @@ Route::get('/event', 'WelcomeController@events')
 
 /*Livewire*/
 Route::livewire('/events/schedules', 'user.schedule')
-									 ->name('calender');
+									->name('calender');
 
 Route::livewire('/events/search', 'user.search')
-									 ->name('search.events');
+									->name('search.events');
 
 /** Booking */
 Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')
-												->name('booking.checkout');
+								->name('booking.checkout');
 Route::post('/events/{event_id}/book', "User\BookingController@checkout")
-												->name('event.book');
+								->name('event.book');
 Route::get('/events/book/thankyou/{booking}', 'User\BookingController@show')
-												->name('booking.thankyou');
+								->name('booking.thankyou');
+
+/*Speakers*/
+Route::livewire('/speaker', 'user.speakers.index')
+						->name('user.speakers');
+
+Route::livewire('/speakers/{speaker}-{slug}-{last}', 'user.speakers.show')
+						->name('user.speakers.show');
 
 
+/*Sponsers*/
+Route::livewire('/sponser', 'user.sponsers.index')
+						->name('user.sponsers');
+
+Route::livewire('/sponsers/{sponser}-{slug}', 'user.sponsers.show')
+						->name('user.sponsers.show');
+										
 /** Login & Register */
 Route::get('/login', 'AuthController@login')
 					->name('login');
@@ -64,13 +78,8 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 						->name('admin.login');
 
 	
-	/* After Authenctication*/
-	Route::post('logout', 'Admin\LoginController@logout')
-							->middleware('auth')
-							->name('admin.logout');
-
 	//Dashboard
-	Route::get('dashboard', 'Admin\HomeController@index')
+	Route::livewire('dashboard', 'admin.dashboard')
 							->middleware('auth')
 							->name('admin.dashboard');
 
@@ -91,30 +100,32 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 	//Speakers
 	Route::group(['middleware' => ['permission:add speakers']], function () {
-		Route::get('speakers', 'Admin\SpeakerController@index')
+		Route::livewire('speakers', 'admin.speakers.index')
 											->name('speakers');
+		Route::livewire('speakers/{speaker}', 'admin.speakers.show')
+											->name('speaker.show');
+
 		Route::get('speakers/create', 'Admin\SpeakerController@create')
 											->name('speaker.create');
-		Route::get('speakers/{speaker}', 'Admin\SpeakerController@show')
-											->name('speaker.show');
-		Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')
-											->name('speaker.edit');
+		// Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')
+		// 									->name('speaker.edit');
 		Route::post('speakers', 'Admin\SpeakerController@store')
 											->name('speaker.store');
-		Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
-											->name('speaker.update');
-		Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')
-											->name('speaker.destroy');
+		// Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
+		// 									->name('speaker.update');
+		// Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')
+		// 									->name('speaker.destroy');
 	});
 
 	//Sponsers
 	Route::group(['middleware' => ['permission:add sponsers']], function () {
-		Route::get('sponsers', 'Admin\SponserController@index')
+
+		Route::livewire('sponsers', 'admin.sponsers.index')
 								->name('sponsers');
+		Route::livewire('sponsers/{sponser}', 'admin.sponsers.show')
+								->name('sponser.show');
 		Route::get('sponsers/create', 'Admin\SponserController@create')	
 								->name('sponser.create');
-		Route::get('sponsers/{sponser}', 'Admin\SponserController@show')
-								->name('sponser.show');
 		Route::get('sponsers/{sponser}/edit', 'Admin\SponserController@edit')
 								->name('sponser.edit');
 		Route::post('sponsers', 'Admin\SponserController@store')
@@ -159,8 +170,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 	//Super Admin
 	Route::group(['middleware' => ['role:super-admin']], function () {
 		Route::livewire('/profile', 'admin.auth.profile')
-							->name('admin.profile')
-							->layout('layouts.admin');
+							->name('admin.profile');
 
 		//Booking
 		Route::livewire('/bookings', 'admin.bookings.index')

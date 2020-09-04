@@ -4,20 +4,12 @@
 @section('head')
 @endsection
 
-<div class="my-6">
+<div class="mb-6">
 
-	@include('partials.user-nav', ['event' => $event['title']])
-
-
-	<div class="flex justify-between items-center  mb-6">
-   		<div class="flex items-center">
-   		</div>
+	@include('partials.user-breadcrumb', ['event' => $event['title']])
 
 
-		
-	</div>
-
-	<div class="flex flex-col md:flex-row">
+	<div class="mt-3 flex flex-col md:flex-row">
 		<div class="w-full md:w-64">
 			<div class="flex items-center mb-3">
 	   			@if($status === 'Incoming')

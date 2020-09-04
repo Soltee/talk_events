@@ -157,9 +157,9 @@
 				    	<div class="mt-6 flex flex-row items-center">
 				    		@forelse($speakers as $speaker)
 				    			<div class="flex flex-col mb-5 items-center flex-wrap mr-4">
-				    				<img src="{{ $speaker->avatar }}" class="w-12 h-12  rounded-full" alt="">
-
-				    				<h5 class="text-md text-gray-700 mt-4">{{ $speaker->first_name }} </h5>
+				    				<a href="/speakers/{{ $speaker->id }}-{{ $speaker->first_name }}-{{ $speaker->last_name }}">
+				    					<img src="{{ $speaker->avatar }}" class="w-12 h-12 hover:border hover:border-blue-500  rounded-full" alt="">
+				    				</a>
 				    			</div>
 				    		@empty
 				    			<div class=" flex flex-col justify-center w-full items-center">
@@ -176,9 +176,9 @@
 				    	<div class="mt-6 flex flex-row items-center">
 				    		@forelse($sponsers as $sponser)
 				    			<div class="flex flex-col items-center mr-4">
-				    				<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
-
-				    				<h5 class="text-md text-gray-700 mt-4">{{ $sponser->full_name }} </h5>
+				    				<a href="/sponsers/{{ $sponser->id }}-{{ $sponser->first_name }}-{{ $sponser->last_name }}">
+				    					<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="">
+				    				</a>
 				    			</div>
 				    		@empty
 

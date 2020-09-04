@@ -18,6 +18,12 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+	$url  = str_replace(
+				'https://lorempixel.com/', 
+				'', 
+				$faker->imageUrl($width = 160, $height = 160)
+			);
+
     return [
     	'avatar' => $faker->imageUrl($width = 160, $height = 160),
         'first_name' => $faker->firstName,

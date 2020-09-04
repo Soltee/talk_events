@@ -54,11 +54,11 @@
     		<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">General Info</h5>
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Full Name</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $user->first_name . ' - ' . $user->last_name }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $user->first_name . ' - ' . $user->last_name }}</h4>
 	    	</div>
 	    	<div class="flex items-center mb-6">
 	    		<label for="" class=" border rounded px-4 py-3 w-40">Email</label>
-	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">$ {{ $user->email }}</h4>
+	    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ $user->email }}</h4>
 	    	</div>
 
 	    	<div class="flex items-center mb-6">

@@ -131,7 +131,7 @@
         .swiper-button-next, .swiper-button-prev{color:blue;}
     </style>
 </head>
-<body class="bg-gray-100 h-screen antialiased leading-none">
+<body class="antialiased leading-none">
     <div>
         @if(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
         @else
@@ -145,6 +145,7 @@
                     <div class="flex justify-end items-center">
                         <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'events.all' ? 'font-bold' : '' }}" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
                         <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'calender' ? 'font-bold' : '' }}" href="/events/schedules">{{ __('Calender') }}</a>
+                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'user.speakers' ? 'font-bold' : '' }}" href="/speaker">{{ __('Speakers') }}</a>
                         @guest
                             <a class="no-underline hover:underline text-blue-600 text-sm" href="{{ route('login') }}">{{ __('Login') }}</a>
                             
@@ -176,13 +177,8 @@
                                 <a href="/home" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'home') ? 'underline font-semibold' : ''}}">Dashboard</a>
                                 <a href="/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'profile') ? 'underline font-semibold' : ''}}">Profile</a>
                                 
-                                <a href="{{ route('user.logout') }}"
-                                  class="no-underline hover:underline text-blue-600 text-sm md:text-md hover:font-semibold p-3"
-                                  onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="hidden">
-                                    {{ csrf_field() }}
-                                </form>
+                                <!-- Logout Component -->
+                                <livewire:user.auth.logout />
 
                             </div>
                           </div>
@@ -204,7 +200,7 @@
       @if(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
       @else
         <footer>
-            <div class="bg-gray-700">
+            <div class="bg-gray-700 py-6">
 
               <div class="max-w-screen-lg mx-auto px-6 py-8">
                   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative">
