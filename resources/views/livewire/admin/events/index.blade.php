@@ -80,7 +80,7 @@
 							<tr>
 							   
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-	                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $event->cover }}" >
+	                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $event->cover }}" onerror="this.src='https://via.placeholder.com/300'">
 		                        </td> 
 
 							    

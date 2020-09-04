@@ -16,7 +16,7 @@
 		    <div class="mb-6">
 			    <div class="flex flex-row mb-3">
 			    	<div class="w-16">
-			    		<img src="{{ $activity->user->avatar }}" alt="" onerror="this.src='https://lorempixel.com/400'" class="rounded-full w-16 h-16 object-cover object-center">
+			    		<img src="{{ $activity->user->avatar }}" alt="" onerror="this.src='https://via.placeholder.com/300'" class="rounded-full w-16 h-16 object-cover object-center">
 			    	</div>
 				    <div class="flex-1 flex flex-col ml-3">
 				    	<div class="flex items-center mb-3">
@@ -39,7 +39,7 @@
 
 							    <div class="flex flex-row mb-3">
 							    	<div class="w-16">
-							    		<img src="{{ $reply->user->avatar }}" alt="" onerror="this.src='https://lorempixel.com/400'" class="rounded-full w-16 h-16 object-cover object-center">
+							    		<img src="{{ $reply->user->avatar }}" alt="" onerror="this.src='https://via.placeholder.com/300'" class="rounded-full w-16 h-16 object-cover object-center">
 							    	</div>
 								    <div class="flex-1 flex flex-col ml-3">
 								    	<div class="flex items-center mb-3">

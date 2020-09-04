@@ -61,7 +61,7 @@
 			    	@forelse($trending as $event)
 
 		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
-				            <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
+				            <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
 				            <div class="mt-2 flex flex-col">
 						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 						      	</span>
@@ -108,7 +108,7 @@
 			        @forelse($this_weekend as $event)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide rounded-lg w-full">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
+					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
 					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
@@ -144,7 +144,7 @@
 					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
 					      <a href="{{ url('speakers', $speaker->id . '-' . $speaker->first_name . '-' . $speaker->last_name )}}">
 					      	<img data-src="{{ asset($speaker->avatar) }}" class="swiper-lazy w-32 h-32 rounded-full bg-center
-					      	bg-cover  rounded-lg">
+					      	bg-cover  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
 					      </a>
 
 					      <a class="mt-3" href="">
@@ -182,7 +182,7 @@
 			        @forelse($free as $event)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide rounded-lg w-full">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg"></a>
+					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
 					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
@@ -212,7 +212,7 @@
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide w-full flex flex-col items-center">
 					      <a href="/event?category={{ $category->id }}&slug={{ $category->slug }}">
-					      	<img data-src="{{ asset($category->thumbnail) }}" class="swiper-lazy w-full  rounded-lg">
+					      	<img data-src="{{ asset($category->thumbnail) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
 					      </a>
 
 					      <div class="mt-2 flex">

@@ -65,7 +65,7 @@
                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                             @if($booking->user && $booking->user->avatar)
                                 <a class="text-blue-500 hover:underline" href="{{ route('user.show', $booking->user->id) }}">
-                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $booking->user->avatar }}" >
+                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $booking->user->avatar }}" onerror="this.src='https://via.placeholder.com/300'">
                                 </a>
                             @else
                                 <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center text-blue-600 hover:text-blue-500 rounded-full object-cover object-center">

@@ -51,7 +51,7 @@
 	        				<div class="relative py-3">
 		        				<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
 			        				
-			        				<img  class="w-full mb-5 rounded-lg hover:opacity-75" src="{{ asset($event->cover) }}" alt="">
+			        				<img  class="w-full mb-5 rounded-lg hover:opacity-75" src="{{ asset($event->cover) }}" alt="" onerror="this.src='https://via.placeholder.com/300'">
 			        			</a>
 			        		
 			        		</div>

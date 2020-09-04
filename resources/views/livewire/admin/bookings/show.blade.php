@@ -57,7 +57,7 @@
 	<div class="flex flex-col md:flex-row">
 		<div class="w-full md:w-64">
 			
-    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($event->cover) }}">
+    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($event->cover) }}" onerror="this.src='https://via.placeholder.com/300'">
     	</div>
     	<div class="flex-1 md:ml-6">
     		<h5 class="mb-4 text-md text-gray-800 px-2">General Info</h5>
