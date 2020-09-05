@@ -14,7 +14,6 @@ class Index extends Component
 
     protected $updatesQueryString = ['name', 'email', 'created_at'];
     public $name     = '';
-    public $last_name      = '';
     public $email          = '';
     public $created_at     = '';
     public $modal          = false;
@@ -22,7 +21,7 @@ class Index extends Component
 
     public function render()
     {
-        if($this->first_name || $this->last_name || $this->email || $this->created_at){
+        if($this->name || $this->email || $this->created_at){
             $this->goToPage(1);
         }
 

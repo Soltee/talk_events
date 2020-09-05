@@ -72,8 +72,14 @@
             </div>
 
             <div class="flex flex-wrap items-center">
-                <button type="submit" class="bg-blue-500 w-full  hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline">
-                    {{ __('Login') }}
+                <button type="submit" class="bg-blue-500 w-full  hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline flex justify-around items-center">
+
+                    <div wire:loading class="spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+                    <span wire:loading.remove class="font-semibold">{{ __('Login') }}</span>
                 </button>
 
                 @if (Route::has('register'))

@@ -4,7 +4,7 @@
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">
-            @include('partials.admin-breadcrumb', ['url' => '/admin/bookings', 'link' => false, 'pageName' => 'Bookings', 'routeName' => Route::currentRouteName()])
+            @include('partials.admin-breadcrumb', ['url' => '/admin/bookings', 'link' => true, 'pageName' => 'Bookings', 'routeName' => Route::currentRouteName()])
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf

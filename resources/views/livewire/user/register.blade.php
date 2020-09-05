@@ -90,8 +90,14 @@
             	{{-- <div wire:loading wire:target="register">
 			        Processing . ..
 			    </div> --}}
-                <button  wire:loading.attr="disabled" type="submit" class="inline-block w-full align-middle text-center select-none border font-bold whitespace-no-wrap py-3 px-4 rounded text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700">
-                    {{ __('Sign Up') }}
+                <button type="submit" class="bg-blue-500 w-full  hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline flex justify-around items-center">
+
+                    <div wire:loading class="spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+                    <span wire:loading.remove class="font-semibold">{{ __('Sign Up') }}</span>
                 </button>
 
                 <p class="w-full text-xs text-center text-gray-700 mt-8 -mb-4">

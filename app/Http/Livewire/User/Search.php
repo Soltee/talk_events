@@ -23,9 +23,9 @@ class Search extends Component
     public $onpage           = false;
 
 	public function mount(){
-		if(!request()->keyword){
-			return redirect()->to('/event');
-		}
+		// if(!request()->keyword){
+		// 	return redirect()->to('/event');
+		// }
 
 		$this->keyword       = request()->keyword;
 		$this->category_id   = request()->category;

@@ -41,11 +41,11 @@ class WelcomeController extends Controller
         });
 
         $today_events   = Cache::remember('today_events', now()->addMinutes(3), function() use ($query_events) {
-            return $query_events->where('start', '>', now())->take(30)->get();
+            return $query_events->where('start', '>', now())->take(10)->get();
         });
 
         $free   = Cache::remember('free', now()->addMinutes(3), function() use ($query_events) {
-            return $query_events->where('is_paid', false)->take(30)->get();
+            return $query_events->where('price', '<', 1)->take(10)->get();
         });
 
         $free_total   = Cache::remember('free_total', now()->addMinutes(3), function() use ($free) {
@@ -53,10 +53,10 @@ class WelcomeController extends Controller
         });
 
         $this_weekend  = Cache::remember('this_weekend', now()->addMinutes(3), function() use ($query_events) {
-            return $query_events->where('start', '>', now()->addDays(70))->take(8)->get();
+            return $query_events->where('start', '<', now()->addDays(70))->take(8)->get();
         });
 
-        $this_weekend_total   = Cache::remember('free_total', now()->addMinutes(3), function() use ($this_weekend) {
+        $this_weekend_total   = Cache::remember('weekend_total', now()->addMinutes(3), function() use ($this_weekend) {
             return $this_weekend->count();
         });
 
@@ -139,7 +139,6 @@ class WelcomeController extends Controller
         $categories   =   Category::latest()->get();
         $events       =   $query->paginate(10);
         $count        =   $events->total();
-        // abort_if($events->isEmpty(), 204);
 
         
         return view('events', compact('categories', 'events', 'count', 'category'));
@@ -168,7 +167,6 @@ class WelcomeController extends Controller
         });
 
 
-        // dd(count($sponsers));
         return view('event', compact('venue', 'cat', 'event', 'speakers', 'sponsers', 'similar', 'similar_count'));
     }
 }

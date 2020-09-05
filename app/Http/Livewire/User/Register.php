@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Register extends Component
 {
-	public $first_name = '';
-	public $last_name  = '';
-	public $email      = '';
-	public $password   = '';
-	public $password_confirmation = '';
+	public $first_name = 'Test';
+	public $last_name  = 'test';
+	public $email      = 'test@example.com';
+	public $password   = 'test3456';
+	public $password_confirmation = 'test3456';
 
     public function render()
     {

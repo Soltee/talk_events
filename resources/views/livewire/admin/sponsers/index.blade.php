@@ -10,7 +10,7 @@
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">
-            @include('partials.admin-breadcrumb', ['url' => '/admin/sponsers', 'link' => false, 'pageName' => 'Sponsers', 'routeName' => Route::currentRouteName()])
+            @include('partials.admin-breadcrumb', ['url' => '/admin/sponsers', 'link' => true, 'pageName' => 'Sponsers', 'routeName' => Route::currentRouteName()])
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf

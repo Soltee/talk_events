@@ -64,9 +64,8 @@ Route::group(['middleware' => ['role:user']], function () {
 /** Admin Dashboard */
 Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 	/* Before Authenctication*/
-	Route::get('login', 'Admin\LoginController@index')
-						->name('admin.login.view');
-	Route::post('login', 'Admin\LoginController@login')
+	Route::livewire('login', 'admin.login')
+						->section('login-content')
 						->name('admin.login');
 
 	
@@ -105,8 +104,6 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 											->name('speaker.store');
 		// Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
 		// 									->name('speaker.update');
-		// Route::delete('speakers/{speaker}', 'Admin\SpeakerController@destroy')
-		// 									->name('speaker.destroy');
 	});
 
 	//Sponsers
@@ -124,8 +121,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 								->name('sponser.store');
 		Route::patch('sponsers/{sponser}', 'Admin\SponserController@update')
 								->name('sponser.update');
-		Route::delete('sponsers/{sponser}', 'Admin\SponserController@destroy')
-								->name('sponser.destroy');
+		
 	});
 
 
@@ -136,11 +132,8 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 									->name('events');
 		Route::livewire('/events/{event}', 'admin.events.show')
 									->name('event.show');
-
-		// Route::get('events', 'Admin\EventController@index')
-		// 								->name('events');
-		// Route::get('events/create', 'Admin\EventController@create')
-		// 								->name('event.create');
+		Route::get('events/create', 'Admin\EventController@create')
+										->name('event.create');
 		// Route::post('events', 'Admin\EventController@store')
 		// 								->name('event.store');
 		// Route::get('events/{event}', 'Admin\EventController@show')

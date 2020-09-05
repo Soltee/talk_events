@@ -17,12 +17,52 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('head')
     <livewire:styles />
+    <style>
+
+       
+
+          .spinner > div {
+            width: 18px;
+            height: 18px;
+            background-color: #fff;
+
+            border-radius: 100%;
+            display: inline-block;
+            -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+          }
+
+          .spinner .bounce1 {
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+          }
+
+          .spinner .bounce2 {
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+          }
+
+          @-webkit-keyframes sk-bouncedelay {
+            0%, 80%, 100% { -webkit-transform: scale(0) }
+            40% { -webkit-transform: scale(1.0) }
+          }
+
+          @keyframes sk-bouncedelay {
+            0%, 80%, 100% { 
+              -webkit-transform: scale(0);
+              transform: scale(0);
+            } 40% { 
+              -webkit-transform: scale(1.0);
+              transform: scale(1.0);
+            }
+          }
+    </style>
 
 </head>
 <body class="relative bg-gray-100 antialiased leading-none">
     @include('sweetalert::alert')
 
-    <div class="">
+    <div class="w-full overflow-hidden">
         <div class="w-full flex 
             ">
 
@@ -47,7 +87,7 @@
                             x-data="{ open : false}">
                             <div class="flex items-center">
                               @if(auth()->user()->avatar)
-                                <img  src="/storage/{{ auth()->user()->avatar }}" class="w-8 h-8 rounded-full object-cover object-center">
+                                <img  src="/storage/{{ auth()->user()->avatar }}" class="w-8 h-8 rounded-full object-cover object-center" onerror="this.src='https://via.placeholder.com/200'">
                                 <svg
                                   x-on:click="open = !open;"
                                   class="ml-2 h-8 w-8 text-blue-600 cursor-pointer hover:text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

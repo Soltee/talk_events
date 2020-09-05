@@ -6,8 +6,7 @@
 	    <a href="/{{ $url }} ">
 	    	<h4 class="text-sm md:text-md  hover:font-semibold font-light text-c-pink mr-2 {{ $routeName === Route::currentRouteName() ? 'font-bold' : '' }}">{{ $pageName }}</h4>
 	    </a>
-    @else
-    	<h4 class="text-sm md:text-md  font-light text-c-pink mr-2 {{ $routeName === Route::currentRouteName() ? 'font-bold' : '' }}">{{ $pageName }}</h4>
+   
     @endif
     
 </div>

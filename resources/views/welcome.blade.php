@@ -60,9 +60,10 @@
 			    <div class="swiper-wrapper ">
 			    	@forelse($trending as $event)
 
-		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
+		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center ">
+
 				            <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
-				            <div class="mt-2 flex flex-col">
+				            <div class="mt-4 flex flex-col">
 						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 						      	</span>
 							    @if($event->price > 0)
@@ -107,9 +108,14 @@
 		        <div class="swiper-wrapper ">
 			        @forelse($this_weekend as $event)
 						    <!-- Lazy image -->
-					    <div class="relative swiper-slide rounded-lg w-full">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
-					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
+					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
+					      	<a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
+					        <div class="mt-4 flex flex-col">
+						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
+						      	</span>
+
+						    </div>
+					      	<div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
 				    @empty
@@ -181,9 +187,14 @@
 		        <div class="swiper-wrapper ">
 			        @forelse($free as $event)
 						    <!-- Lazy image -->
-					    <div class="relative swiper-slide rounded-lg w-full">
-					      <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
-					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
+					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
+					        <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
+					        <div class="mt-4 flex flex-col">
+						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
+						      	</span>
+
+						    </div>
+					        <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
 
 				    @empty
