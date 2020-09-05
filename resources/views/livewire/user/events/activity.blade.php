@@ -59,38 +59,38 @@
 						</div>
 					@endif
 
-					@if($show)
-			    		@if($auth)
-				    		<div 
-								class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-						        <div class="h-full w-full bg-gray-300" wire:click="toggle">
-							            
-							    </div>
-							    <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
-							    	
-							        <div class="text-right">
-							            <button wire:click="toggle" type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
-							                <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75">
-							                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-							                </svg>
-							            </button>
+			    	@if($auth)
+						@if($show)
+					    		<div 
+									class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+							        <div class="h-full w-full bg-gray-300" wire:click="toggle">
+								            
+								    </div>
+								    <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
+								    	
+								        <div class="text-right">
+								            <button wire:click="toggle" type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+								                <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" class="hover:opacity-75">
+								                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+								                </svg>
+								            </button>
 
-							        </div>
-									<form  accept-charset="utf-8">
-										@csrf
-										<div class="flex flex-col md:flex-row w-full">
-											<input wire:ignore type="text" wire:model="reply" class="w-full md:w-2/3 px-4 border py-2 rounded-t md:rounded-none md:rounded-l" value="" placeholder="">
-											<button wire:click.prevent="reply({{ $activity->id }})" class="w-full md:w-1/4 px-4 py-3  hover:opacity-75 text-white bg-blue-500 border-b md:border-none md:border-r  rounded-b md:rounded-none md:rounded-r uppercase">Reply</button> 
-										</div>
-									</form>
+								        </div>
+										<form  accept-charset="utf-8">
+											@csrf
+											<div class="flex flex-col md:flex-row w-full">
+												<input wire:ignore type="text" wire:model="reply" class="w-full md:w-2/3 px-4 border py-2 rounded-t md:rounded-none md:rounded-l" value="" placeholder="">
+												<button wire:click.prevent="reply({{ $activity->id }})" class="w-full md:w-1/4 px-4 py-3  hover:opacity-75 text-white bg-blue-500 border-b md:border-none md:border-r  rounded-b md:rounded-none md:rounded-r uppercase">Reply</button> 
+											</div>
+										</form>
+									</div>
 								</div>
-							</div>
-						@endif
-			    	@else
-			    		<div class="ml-12 mt-6">
-				    		<span wire:click="toggle" class=" text-white bg-blue-600 hover:bg-blue-500 px-3 py-3 rounded">Reply</span>
-				    	</div>
-			    	@endif
+				    	@else
+				    		<div class="ml-12 mt-6">
+					    		<span wire:click="toggle" class=" text-white bg-blue-600 hover:bg-blue-500 px-3 py-3 rounded">Reply</span>
+					    	</div>
+				    	@endif
+					@endif
 						
 				</div>
 			    

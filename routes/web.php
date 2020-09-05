@@ -3,13 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WelcomeController@index')
-				->name('welcome');
-
-Route::get('/clear', function() {
-    Artisan::call('cache:clear');
-    return "Cache is cleared";
-})->middleware('role:super-admin');
-
+				                        ->name('welcome');
 Route::get('/events/{event}-{slug}', 'WelcomeController@event')
 										->name('event');
 Route::get('/event', 'WelcomeController@events')
@@ -171,6 +165,11 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 	Route::group(['middleware' => ['role:super-admin']], function () {
 		Route::livewire('/profile', 'admin.auth.profile')
 							->name('admin.profile');
+		//Cache
+		Route::get('/clear', function() {
+								    Artisan::call('cache:clear');
+								    return "Cache is cleared";
+								});
 
 		//Booking
 		Route::livewire('/bookings', 'admin.bookings.index')
