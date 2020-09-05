@@ -1,3 +1,7 @@
+@section('title' , 'Dashboard')
+@section('head')
+@endsection
+
 <div class="w-full">
     @include('partials.user-breadcrumb', ['event' => ''])
 

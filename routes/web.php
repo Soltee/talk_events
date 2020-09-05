@@ -40,18 +40,16 @@ Route::livewire('/sponsers/{sponser}-{slug}', 'user.sponsers.show')
 						->name('user.sponsers.show');
 										
 /** Login & Register */
-Route::get('/login', 'AuthController@login')
+Route::livewire('/login', 'user.login')
 					->name('login');
-Route::get('/register', 'AuthController@register')
+Route::livewire('/register', 'user.register')
 					->name('register');
 
 /** User */
-Auth::routes();
+// Auth::routes();
 Route::group(['middleware' => ['role:user']], function () {
-    Route::get('/home', 'User\HomeController@index')
+    Route::livewire('/home', 'user.auth.dashboard')
     					->name('home');
-	Route::post('logout', 'User\HomeController@logout')
-						->name('user.logout');
 
 	//Profile
 	Route::livewire('/profile', 'user.auth.profile')

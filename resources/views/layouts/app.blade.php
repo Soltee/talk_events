@@ -147,7 +147,7 @@
                         <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'calender' ? 'font-bold' : '' }}" href="/events/schedules">{{ __('Calender') }}</a>
                         <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'user.speakers' ? 'font-bold' : '' }}" href="/speaker">{{ __('Speakers') }}</a>
                         @guest
-                            <a class="no-underline hover:underline text-blue-600 text-sm" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="no-underline hover:underline text-blue-600 text-sm" href="/login">{{ __('Login') }}</a>
                             
                         @else
                             
