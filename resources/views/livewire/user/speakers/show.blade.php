@@ -39,14 +39,16 @@
 		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($speaker->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
 	    		</div>
 
+	    		@if($recent_event)
 	    		<div class="flex  mt-3 mb-6">
 		    		<label for="" class=" border rounded px-4 py-3 w-32 font-semibold">Recent Event</label>
 		    		<div class="flex flex-col border p-2">
 			    		<h4 class=" rounded px-4 py-3 font-bold text-gray-800">{{ $recent_event->title }}</h4>
-			    		<span class="mt-3  rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($speaker->created_at)->translatedFormat('l jS F Y g:i a') }}</span>
+			    		<span class="mt-3  rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($recent_event->created_at)->translatedFormat('l jS F Y g:i a') }}</span>
 			    	</div>
 
 		    	</div>
+		    	@endif
 
     		</div>
     	</div>

@@ -39,6 +39,7 @@
 		    		<h4 class="border rounded px-4 py-3 font-bold text-gray-800">{{ \Carbon\Carbon::parse($sponser->created_at)->translatedFormat('l jS F Y g:i a') }}</h4>
 	    		</div>
 
+	    		@if($recent_event)
 	    		<div class="flex  mt-3 mb-6">
 		    		<label for="" class=" border rounded px-4 py-3 w-32 font-semibold">Recent Event</label>
 		    		<div class="flex flex-col border p-2">
@@ -49,6 +50,7 @@
 			    	</div>
 
 		    	</div>
+		    	@endif
 
     		</div>
     	</div>
