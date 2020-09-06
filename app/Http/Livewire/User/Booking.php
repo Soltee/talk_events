@@ -14,6 +14,7 @@ class Booking extends Component
 {
 	public $event;
 	public $auth;
+    protected $listeners = ['setNextStep' => 'validate_and_next_step'];
 
     public $intent;
 	public $first_name    = '';
@@ -25,7 +26,7 @@ class Booking extends Component
     public $tax;
     public $total;
 
-    public $step;
+    public $step = false;
 
 	public function mount(Event $event)
     {
@@ -33,7 +34,12 @@ class Booking extends Component
         $this->step  = false;
         $this->event = $event;
         $this->auth  = Auth::guard()->user();
+        if($this->auth){
 
+            $this->first_name = $this->auth['first_name'];
+            $this->last_name  = $this->auth['last_name'];
+            $this->email      = $this->auth['email'];
+        }
         $this->price  = $event->price;
         $this->tax    = (12/100) * $this->price;
         $this->total  = $this->price + $this->tax;
@@ -44,23 +50,34 @@ class Booking extends Component
         return view('livewire.user.booking');
     }
 
-    public function changeStep(){
+    public function validate_and_next_step(){
+        $this->validateData();
+
         $this->step = true;
     }
 
+    //*Validate*/
+    public function validateData(){
+
+        $this->validate([
+            'first_name'    =>  'required|string|min:2',
+            'last_name'     =>  'required|string|min:2',
+            'email'         =>  'required|email'
+        ]);
+
+        if($this->price > 0){
+            $this->validate([
+                'stripeToken'   =>  'required|string'
+            ]);
+        }
+    }
+
+    //*Book Event*/
     public function book()
     {
         
         if($this->price > 0){
-        	
-            $this->validate([
-                'first_name'    =>  'required|string|min:2',
-                'last_name'     =>  'required|string|min:2',
-                'email'         =>  'required|email',
-                'stripeToken'   =>  'required|string'
-            ]);
 
-            if($this->step){
                 try {
                     // dd($data);
                     $gateway = Omnipay::create('Stripe');               
@@ -86,24 +103,27 @@ class Booking extends Component
                         $this->stripeToken = '';
 
                     } else {
-                        session()->flash('error', 'Sorry! Your booking was cancelled.');
+                        session()->flash('error', 'Oops! Your booking was cancelled.');
+                        $this->step    = false;
+                        $this->first_name    = '';
+                        $this->last_name     = '';
+                        $this->email         = '';
+                        $this->stripeToken   = '';
                     }
                    
                     
                 } catch (CardErrorException $e) {
+                    $this->step    = false;
+                    $this->first_name    = '';
+                    $this->last_name     = '';
+                    $this->email         = '';
+                    $this->stripeToken   = '';
                     session()->flash('error', $e->getMessage());
                 }
                 
-            }
 
         } else {
-            $this->validate([
-                'first_name'    =>  'required|string|min:2',
-                'last_name'     =>  'required|string|min:2',
-                'email'         =>  'required|email'
-            ]);
-
-            if($this->step){
+                $this->validateData();
                 $booking = $this->store();
 
                 session()->flash('success', $this->event->title.' is booked.');
@@ -111,7 +131,7 @@ class Booking extends Component
                 $this->last_name   = '';
                 $this->email       = '';
                 $this->stripeToken = '';
-            }
+            // }
         }
 
 

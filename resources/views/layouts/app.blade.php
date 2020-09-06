@@ -77,7 +77,7 @@
           height: auto;
         }
 
-        .swiper-button-next, .swiper-button-prev{color:blue;}
+        .swiper-button-next, .swiper-button-prev{color:#fff;}
     </style>
 </head>
 <body class="antialiased leading-none">

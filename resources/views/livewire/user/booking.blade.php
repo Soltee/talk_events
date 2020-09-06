@@ -1,11 +1,11 @@
 <div>
 	@if (session()->has('error'))
-		<div class=" flex flex-col justify-center items-center w-full">
+		<div class="my-4  flex flex-col justify-center items-center w-full">
 	  		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
 	  		<p class="mt-3 text-red-500">{{ session('error') }}</p>
 		</div>
-	@endif
 
+	@else
 
     @if (session()->has('success'))
 
@@ -21,15 +21,15 @@
 	    	method="POST"
 	    	>   
 			@csrf
-					
+				{{-- @if(!$step) --}}
 	    		<div class="flex flex-col border border-lighter-black rounded-lg p-3 mb-4">
 	    	
 	    			<div class="mt-5 mb-3">
-		    			<div class="flex flex-col md:flex-row items-center mb-4">
-			    			<div wire:ignore class="w-full md:w-1/2 md:mr-2 flex flex-col">
+		    			<div class="flex flex-col items-center mb-4">
+			    			<div  class="w-full flex flex-col mb-4">
 			    				<label for="first_name" class="mb-2 text-c-lighter-black text-sm">First name</label>
-			    				<input type="text" wire:model.lazy="first_name" value="{{ old('first_name') ?? ($auth ? $auth->first_name : '') }}" class="px-6 py-3 rounded-md border border-gray-300" placeholder="Shraddha">
-			    				<div class="mt-2 md:hidden">
+			    				<input type="text" wire:model="first_name" value="{{ old('first_name') ?? ($auth ? $auth->first_name : '') }}" class="px-6 py-3 rounded-md border border-gray-300" placeholder="Shraddha">
+			    				<div class="mt-2 ">
 			    					@error('first_name')
 					                    <p class="text-red-500 text-xs italic mt-4">
 					                        {{ $message }}
@@ -37,10 +37,10 @@
 					                @enderror
 			    				</div>
 			    			</div>
-			    			<div wire:ignore class="w-full md:w-1/2  md:ml-2 flex flex-col">
+			    			<div  class="w-full flex flex-col mb-3">
 			    				<label for="last_name" class="text-c-lighter-black text-sm mb-2">Last name</label>
-			    				<input type="text" wire:model.lazy="last_name" value="{{ old('last_name') ?? ($auth ? $auth->last_name : '') }}" class="px-6 py-3 rounded-lg border border-gray-300" placeholder="Shrestha">
-			    				<div class="mt-2 md:hidden">
+			    				<input type="text" wire:model="last_name" value="{{ old('last_name') ?? ($auth ? $auth->last_name : '') }}" class="px-6 py-3 rounded-lg border border-gray-300" placeholder="Shrestha">
+			    				<div class="mt-2">
 			    					@error('last_name')
 					                    <p class="text-red-500 text-xs italic mt-4">
 					                        {{ $message }}
@@ -50,35 +50,26 @@
 			    			</div>
 		    			</div>
 
-		    			<div class="hidden md:block grid mt-3 md:grid-cols-2 mb-3 w-full justify-between items-center">
-			    			<div class="md:w-1/2 md:mr-2 flex flex-col">
-			    				@error('first_name')
-				                    <p class="text-red-500 text-xs italic mt-4">
-				                        {{ $message }}
-				                    </p>
-				                @enderror
-			    			</div>
-			    			<div class="md:w-1/2  md:ml-2 flex flex-col">
-			    				@error('last_name')
-				                    <p class="text-red-500 text-xs italic mt-4">
-				                        {{ $message }}
-				                    </p>
-				                @enderror
-			    			</div>
-		    			</div>
-
-		    			<div wire:ignore class="flex flex-col mb-4">
+		    	
+		    			<div  class="flex flex-col mb-4">
 			    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Email</label>
-			    				<input type="email" wire:model.lazy="email" value="{{ old('email') ?? ($auth ? $auth->email : '') }}" class="px-6 py-3 rounded-lg border border-gray-300" placeholder="shrastha@gmail.com">
+			    				<input type="email" wire:model="email" value="{{ old('email') ?? ($auth ? $auth->email : '') }}" class="px-6 py-3 rounded-lg border border-gray-300" placeholder="shrastha@gmail.com">
 			    		</div>
 
 			    		@error('email')
-		                    <p class="text-red-500 text-xs italic mt-4">
+		                    <p class="text-red-500 text-xs italic my-4">
 		                        {{ $message }}
 		                    </p>
 		                @enderror
-		                @if($event->price > 0)
-		                <div wire:ignore class="flex flex-col mb-4">
+	    			</div>		    			
+	    		</div>
+	    		{{-- @endif --}}
+
+	    		
+	    		@if($event->price > 0)
+	    			
+		    			<div class="flex flex-col border border-lighter-black rounded-lg p-3 mb-4">
+		    			<div wire:ignore class="flex flex-col">
 		    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Card</label>
 		    				<div 
 				    			>
@@ -93,43 +84,55 @@
 						            <div id="card-errors" role="alert"></div>
 						        </div>
 						    </div>
-					    </div>
-					    @endif
-	    			</div>		    			
-	    		</div>
-
-	    		
-	    		@if($event->price > 0)
+						</div>
+					</div>
 		    		@if($step)
-						<div class="conBtn  flex w-full justify-end mb-4">
-							
 
-							<div class="flex flex-col">
+						<div  class="flex w-full justify-end mb-4 cursor-pointer">
+		    				<div wire:click.prevent="book" class="bg-blue-500 w-full  hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline flex justify-around items-center">
 
-									<span 
-										wire:click="book"
-										class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Confirm</span>
-
-							</div>
+		                    	<div wire:loading class="spinner">
+								  <div class="bounce1"></div>
+								  <div class="bounce2"></div>
+								  <div class="bounce3"></div>
+								</div>
+		                    	<span wire:loading.remove class="font-semibold">{{ __('Confirm') }} {{ $event->price ? '$'. $event->price : '' }}</span>
+		                    </div>
 						</div>
 		    		@else
-		    			<div id="payBtn"  class="flex w-full justify-end mb-4">
-							<span type="span" wire:click="changeStep" class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Pay Now</span>
+		    			<div id="payBtn" class="flex w-full justify-end mb-4 cursor-pointer">
+		    				<div wire:click="validateData" class="bg-blue-500 w-full  hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline flex justify-around items-center">
+
+		                    	<div wire:loading class="spinner">
+								  <div class="bounce1"></div>
+								  <div class="bounce2"></div>
+								  <div class="bounce3"></div>
+								</div>
+		                    	<span wire:loading.remove class="font-semibold">{{ __('Pay Now') }} {{ $event->price ? '$'. $event->price : '' }}</span>
+		                    </div>
 						</div>
 					@endif
 				@else
-	    			<div id="payBtn"  class="flex w-full justify-end mb-4">
-						<span 
-							wire:click="book"
-							class="px-10 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg cursor-pointer">Pay Now</span>
+	    			<div id=""  class="flex w-full justify-end mb-4">
+						<button wire:click.prevent="book" class="bg-blue-500 w-full  hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline flex justify-around items-center">
+
+	                    	<div wire:loading class="spinner">
+							  <div class="bounce1"></div>
+							  <div class="bounce2"></div>
+							  <div class="bounce3"></div>
+							</div>
+	                    	<span wire:loading.remove class="font-semibold">{{ __('Pay Now') }}</span>
+	                    </button>
 					</div>
 				@endif
 		</form>
 
 	@endif
+
+	@endif
+
 </div>
 
-<script src="https://js.stripe.com/v3/"></script>
 <script>
     window.addEventListener('DOMContentLoaded', function(){
 	//Get the Tabs
@@ -140,7 +143,7 @@
 
 	    //Stripe Confrimation 
 	       	// stripeTab.addEventListener('click', () => {
-	       		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
+	       		const key = '{{ env('STRIPE_KEY') }}';
 	            var stripe = Stripe(`${key}`);
 	            // console.log(key, stripe);
 	            // Create an instance of Elements.
@@ -183,7 +186,6 @@
 
 	            // Handle form submission.
 	            document.getElementById('payBtn').addEventListener('click', function(){
-
 	            	stripe.createToken(card).then(function(result) {
 		                if (result.error) {
 		                  // Inform the user if there was an error.
@@ -214,6 +216,9 @@
 	           // Submit the form with the token ID.
 	            function stripeTokenHandler(token) {
 	            	@this.set('stripeToken', token.id);
+	            	// @this.set('step', true);
+	            	window.livewire.emit('setNextStep');
+
 	            	// document.getElementById('payBtn').style.display="none";
 	            	// document.querySelector('.conBtn').classList.remove('hidden');
 

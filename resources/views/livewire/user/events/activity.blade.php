@@ -7,6 +7,8 @@
 				<button type="submit" class="w-full md:w-1/4 px-4 py-3  hover:opacity-75 text-white bg-blue-500 border-b md:border-none md:border-r  rounded-b md:rounded-none md:rounded-r uppercase">Post</button> 
 			</div>
 		</form>
+	@else
+		<a href="/login" class=" text-blue-600  hover:text-blue-500 border-l pl-4 border-transparent hover:border-blue-500  py-3  w-auto">Login to Reply</a>
 	@endif
 
 	<div class="mt-5">
@@ -21,7 +23,7 @@
 				    <div class="flex-1 flex flex-col ml-3">
 				    	<div class="flex items-center mb-3">
 				    		
-				    		<h5 class="text-sm mr-3">{{ ucfirst($activity->user->first_name . ' ' . $activity->user->last_name) }}</h5>
+				    		<h5 class="font-semibold mr-3">{{ ucfirst($activity->user->first_name . ' ' . $activity->user->last_name) }}</h5>
 				    		<span>{{ date("F j, Y, g:i a", strtotime($activity->creaed_at)) }}</span>
 				    	</div>
 				    	<div class="leading-6">
@@ -44,7 +46,7 @@
 								    <div class="flex-1 flex flex-col ml-3">
 								    	<div class="flex items-center mb-3">
 								    		
-								    		<h5 class="text-sm mr-3">{{ ucfirst($reply->user->first_name . ' ' . $reply->user->last_name) }}</h5>
+								    		<h5 class="font-semibold mr-3">{{ ucfirst($reply->user->first_name . ' ' . $reply->user->last_name) }}</h5>
 								    		<span>{{ date("F j, Y, g:i a", strtotime($reply->created_at)) }}</span>
 								    	</div>
 								    	<div class="leading-6">

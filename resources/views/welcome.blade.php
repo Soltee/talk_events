@@ -60,21 +60,32 @@
 			    <div class="swiper-wrapper ">
 			    	@forelse($trending as $event)
 
-		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center ">
-
-				            <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
-				            <div class="mt-4 flex flex-col">
+		      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col">
+		      				<div class="relative">
+		      					
+				            	<a href="{{ url('events', $event->id . '-' . $event->slug)}}">
+				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+				            	</a>
+				            	<div class="absolute right-0 top-0 p-2 bg-white rounded-bl">
+				            		@if($event->price > 0)
+						      			<span class="text-xl text-blue-500 font-bold">
+							      			Paid
+							      		</span>	
+						      		@else
+						      			<span class="text-xl text-blue-500 font-bold">
+							      			Free
+							      		</span>	
+					      		@endif
+				            	</div>
+		      				</div>
+				            <div class="mt-4 flex flex-col items-start">
+				            	<a class="mb-3" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+				            		<span class="font-semibold">{{ $event->title }}
+						      		</span>
+						      	</a>
 						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 						      	</span>
-							    @if($event->price > 0)
-					      			<span class="text-xl text-blue-500 font-bold">
-						      			$ {{ $event->price }}
-						      		</span>	
-					      		@else
-					      			<span class="text-xl text-blue-500 font-bold">
-						      			Free
-						      		</span>	
-					      		@endif
+							    
 						    </div>
 				            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 			          	</div>
@@ -109,11 +120,31 @@
 			        @forelse($this_weekend as $event)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
-					      	<a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
-					        <div class="mt-4 flex flex-col">
+					      	<div class="relative">
+		      					
+				            	<a href="{{ url('events', $event->id . '-' . $event->slug)}}">
+				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+				            	</a>
+				            	<div class="absolute right-0 top-0 p-2 bg-white rounded-bl">
+				            		@if($event->price > 0)
+						      			<span class="text-xl text-blue-500 font-bold">
+							      			Paid
+							      		</span>	
+						      		@else
+						      			<span class="text-xl text-blue-500 font-bold">
+							      			Free
+							      		</span>	
+					      		@endif
+				            	</div>
+		      				</div>
+				            <div class="mt-4 flex flex-col items-start">
+				            	<a class="mb-3" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+				            		<span class="font-semibold">{{ $event->title }}
+						      		</span>
+						      	</a>
 						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 						      	</span>
-
+							    
 						    </div>
 					      	<div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
@@ -188,11 +219,31 @@
 			        @forelse($free as $event)
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
-					        <a href="{{ url('events', $event->id . '-' . $event->slug)}}"><img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
-					        <div class="mt-4 flex flex-col">
+					        <div class="relative">
+		      					
+				            	<a href="{{ url('events', $event->id . '-' . $event->slug)}}">
+				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+				            	</a>
+				            	<div class="absolute right-0 top-0 p-2 bg-white rounded-bl">
+				            		@if($event->price > 0)
+						      			<span class="text-xl text-blue-500 font-bold">
+							      			Paid
+							      		</span>	
+						      		@else
+						      			<span class="text-xl text-blue-500 font-bold">
+							      			Free
+							      		</span>	
+					      		@endif
+				            	</div>
+		      				</div>
+				            <div class="mt-4 flex flex-col items-start">
+				            	<a class="mb-3" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+				            		<span class="font-semibold">{{ $event->title }}
+						      		</span>
+						      	</a>
 						      	<span class="mb-2">{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 						      	</span>
-
+							    
 						    </div>
 					        <div class="flex justify-center items-center swiper-lazy-preloader"></div>
 					    </div>
@@ -248,20 +299,7 @@
 
     </div>
 @endsection
-   {{--  @if($featured)
-		    <div class="mt-24 recent_events w-full flex flex-col md:flex-row">
-		    	<div class="w-full md:w-1/2 mb-3 md:mb-0">
-		    		<h5>{{ $featured->title }}</h5>
-		    	</div>
 
-		    	<div class="w-full md:w-1/2">
-		    		<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
-		    			<img src="{{ asset($featured->cover) }}" class="swiper-lazy w-full  rounded-lg">
-		    		</a>
-		    	</div>
-		    </div>
-		@endif
- --}}
 @push('scripts')
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

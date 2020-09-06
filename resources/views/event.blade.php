@@ -6,6 +6,7 @@
 
 @section('head')
 	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>    
+<script src="https://js.stripe.com/v3/"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -89,7 +90,7 @@
 			    </div>
 
 		    	<!--Book Btn on Desktop -->
-			    {{-- <div 
+			    <div 
 					class="hidden md:block flex justify-end items-center  py-4 md:py-0">
 				    	@if($event->price > 0)
 			      			<span class="text-lg font-bold text-blue-900">
@@ -103,11 +104,11 @@
 					    <button 
 				    		x-on:click="open = !open" 
 				    		type="submit" class="ml-3 text-white bg-blue-600 hover:bg-blue-500 px-10 md:px-6 py-5 md:py-3 rounded-lg">Book Now</button>
-			    </div> --}}
+			    </div>
 			</div>
 
 		    <!--Book Btn on Mobile -->
-			{{-- <div
+			<div
 				x-on:click="open = !open" 
 				class="bg-gray-300 z-20 md:hidden flex justify-between items-center fixed bottom-0 w-full left-0 px-6 py-4">
 				@if($event->price > 0)
@@ -120,11 +121,11 @@
 		      		</span>	
 	      		@endif
 			    <button class="text-white bg-blue-600 hover:bg-blue-500 px-6 py-4 rounded-lg">Book Now</button>
-		    </div> --}}
+		    </div>
 
 		    <!-- Booking Modal -->
-		    {{-- <div 
-			    x-show.transition.50ms="open"
+		    <div 
+			    {{-- x-show.transition.50ms="open" --}}
 			    class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
 			        <div 
 			        	x-on:click="open = false;" class="h-full w-full bg-gray-300 opacity-50">
@@ -132,7 +133,7 @@
 			        <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
 				    	<livewire:user.booking :event="$event" />
 				    </div>
-		    </div> --}}
+		    </div>
 
 		</div>
 
@@ -147,10 +148,17 @@
 		      			{{ date("F j, Y, g:i a", strtotime($event->start)) }}
 		      		</span>	
 		      	
+    				<div class="mt-3 flex items-center mb-3">
+    					<h4 class="mr-3 p-2 rounded font-semibold w-24">Place</h4>
+        				<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
+        						<h5 class="text-lg font-bold text-gray-900 hover:opacity-75">{{ $event->venue_name }}</h5>
+        				</a>
+    				</div>
+
 					<div 
 				    	class="flex flex-col my-5">
 		    			<h3  class="  w-40">Speakers</h3>
-				    	<div class="mt-6 flex flex-row items-center">
+				    	<div class="mt-4 flex flex-row items-center">
 				    		@forelse($speakers as $speaker)
 				    			<div class="flex flex-col mb-5 items-center flex-wrap mr-4">
 				    				<a href="/speakers/{{ $speaker->id }}-{{ $speaker->first_name }}-{{ $speaker->last_name }}">
@@ -196,9 +204,9 @@
 						<div class="mt-6 leading-6">{{ $event->description }}</div>
 		    		</div>
 
-		    		{{-- <div x-show.transition.60ms="tab === 'activity'"> --}}
+		    		<div x-show.transition.60ms="tab === 'activity'">
 				    	<livewire:user.events.activity :event="$event" />
-		    		{{-- </div> --}}
+		    		</div>
 		    	</div>
 		   
 		    </div>

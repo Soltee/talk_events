@@ -137,7 +137,7 @@ class WelcomeController extends Controller
         // });
 
         $categories   =   Category::latest()->get();
-        $events       =   $query->paginate(10);
+        $events       =   $query->paginate(10)->appends(request()->query());
         $count        =   $events->total();
 
         
