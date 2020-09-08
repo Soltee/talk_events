@@ -125,7 +125,7 @@
 
 		    <!-- Booking Modal -->
 		    <div 
-			    {{-- x-show.transition.50ms="open" --}}
+			    x-show.transition.50ms="open"
 			    class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
 			        <div 
 			        	x-on:click="open = false;" class="h-full w-full bg-gray-300 opacity-50">
@@ -141,7 +141,7 @@
 		<div class="flex flex-col mt-8">
 			<div class="flex flex-col md:flex-row mb-6">
 		    	<div class="flex-1 mb-4 md:mb-0 md:mr-6">
-				    <img src="{{ $event->cover }}" class="w-full h-40 md:h-full rounded-lg object-cover object-center" alt="" onerror="this.src='https://via.placeholder.com/300'">
+				    <img src="{{ $event->cover }}" class="w-full h-40 md:h-full rounded-lg object-cover object-center" alt="" onerror="this.src='/images/placeholder.png'">
 		    	</div>
 		    	<div class="w-full md:w-64">
 	      			<span class="text-xl text-blue-500 font-bold">
@@ -162,7 +162,7 @@
 				    		@forelse($speakers as $speaker)
 				    			<div class="flex flex-col mb-5 items-center flex-wrap mr-4">
 				    				<a href="/speakers/{{ $speaker->id }}-{{ $speaker->first_name }}-{{ $speaker->last_name }}">
-				    					<img src="{{ $speaker->avatar }}" class="w-12 h-12 hover:border hover:border-blue-500  rounded-full" alt="" onerror="this.src='https://via.placeholder.com/300'">
+				    					<img src="{{ $speaker->avatar }}" class="w-12 h-12 hover:border hover:border-blue-500  rounded-full" alt="" onerror="this.src='/images/placeholder.png'">
 				    				</a>
 				    			</div>
 				    		@empty
@@ -181,7 +181,7 @@
 				    		@forelse($sponsers as $sponser)
 				    			<div class="flex flex-col items-center mr-4">
 				    				<a href="/sponsers/{{ $sponser->id }}-{{ $sponser->first_name }}-{{ $sponser->last_name }}">
-				    					<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="" onerror="this.src='https://via.placeholder.com/300'">
+				    					<img src="{{ $sponser->avatar }}" class="w-12  h-12 rounded-full" alt="" onerror="this.src='/images/placeholder.png'">
 				    				</a>
 				    			</div>
 				    		@empty
@@ -213,7 +213,7 @@
 		</div>
 
 		<!-- Similar Events-->
-		{{-- <div class="mt-12 weekend_events w-full">
+		<div class="mt-12 weekend_events w-full">
 		    <h2 class="text-blue-900 text-lg font-bold mb-8">You may be interested in</h2>
 		    <div class="{{ ($similar_count) ? 'swiper-container' : ''}} w-full">
 		        <div class="swiper-wrapper">
@@ -221,7 +221,7 @@
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide bg-gray-400 rounded-lg w-full flex flex-col">
 					      <a href="{{ url('events', $event->id . '-' . $event->slug) }}">
-					      	<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+					      	<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/images/placeholder.png'">
 					      </a>
 					      <div class="absolute inset-0 flex justify-center items-center swiper-lazy-preloader"></div>
 
@@ -257,7 +257,7 @@
 			      <div class="swiper-button-prev"></div>
 		        @endif
 		    </div>
-	    </div> --}}
+	    </div>
 
     </div>
 

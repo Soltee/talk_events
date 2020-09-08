@@ -1,48 +1,32 @@
 @extends('layouts.admin')
 
 @section('head')
-	{{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/css/tail.datetime-default.css"> --}}
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
+     <link rel="stylesheet" type="text/css" href="{{ asset('css/trix.min.css') }}">
+  	<script src="{{ asset('js/trix.min.js') }}"></script>
 @endsection
 
 @section('content')
     <div class="px-3 md:px-6 pb-6 pt-4">
 
-    	
-        <p class="my-2 text-red-600">{{ session('success') }}</p>
-        <p class="my-2 text-red-600">{{ session('error') }}</p>
-        @if ($errors->any())
-		    <div class="alert alert-danger">
-		        <ul>
-		            @foreach ($errors->all() as $error)
-		                <li>{{ $error }}</li>
-		            @endforeach
-		        </ul>
-		    </div>
-		@endif
-
-		<form class="mb-4" method="POST" action="{{ route('event.destroy', $event->id) }}">
-			@csrf
-			@method('DELETE')
-			<button type="submit" class="px-6 py-3 bg-red-600 hover:opacity-75 text-white rounded">DROP {{$event->title }}</button>
-		</form>
         <form method="POST" action="{{ route('event.update', $event->id) }}" enctype="multipart/form-data">
         	@csrf
         	@method('PATCH')
-	       	<div class="flex justify-between items-center  mb-6">
-	       		<div class="flex items-center">
-	       			<a href="{{ route('events') }}" class=" text-md font-md text-gray-900   mr-5  hover:opacity-75">Back</a>
-	       			<h3 class="text-gray-900 text-lg ">Edit {{ $event->title }}</h3>
-	       		</div>
+        	<div class="flex justify-between items-center  mb-6">
 
-				<button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
-	    			Save
-	    		</button>	
+		        <div class="flex items-center">
+		            @include('partials.admin-breadcrumb', ['url' => '/admin/events', 'link' => true, 'pageName' => 'Events', 'routeName' => Route::currentRouteName()])
+		            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+				    <h4 class="text-sm md:text-md  hover:font-semibold font-light text-c-pink mr-2 font-semibold">Edit {{ $event->title }}</h4>
+		        </div>
 
-	    	
-	    	</div>
+		        <button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
+		    			Save
+		    	</button>
+			
+			</div>
 
 		 
 		 	<div class="flex justify-between flex-col md:flex-row">

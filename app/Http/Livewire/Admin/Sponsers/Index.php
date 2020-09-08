@@ -16,8 +16,8 @@ class Index extends Component
     public $name           = '';
     public $email          = '';
     public $created_at     = '';
-    public $modal          = false;
-    public $status         = false;
+    public $message      = '';
+    public $status       = false;
 
     public function render()
     {
@@ -49,17 +49,18 @@ class Index extends Component
     }
 
 
-    /* Set Model Visiibility*/
-    public function setVisibility(){
-    	$this->modal  = !$this->modal;
-        $this->status = '';
+    /**Close*/
+    public function close(){
+        $this->status  = false;
+        $this->message = '';
     }
 
-    /* Remove the User */
-    public function drop($speaker){
-    	// dd($speaker);
-    	// $speaker = Speaker::findOrfail($speaker);
-    	// $speaker->delete();
-        $this->status = 'Success';
+    /* Remove the Sponser */
+    public function drop($sponser){
+    	// dd($sponser);
+    	$sponser = Sponser::findOrfail($sponser);
+    	$sponser->delete();
+        $this->status = true;
+        $this->message = $sponser->full .' deleted.';
     }
 }

@@ -1,18 +1,26 @@
-@extends('layouts.admin')
-
+@section('title', 'Events')
 @section('head')
- <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
-     <link rel="stylesheet" type="text/css" href="{{ asset('css/trix.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/trix.min.css') }}">
   	<script src="{{ asset('js/trix.min.js') }}"></script>
 @endsection
 
-@section('content')
-    <div class="px-3 md:px-6 pb-6 pt-4">
+<div class="px-3 md:px-6 pb-6">
+	@if($modal)
+	<div 	
+		>
+    	@include('partials.modal', [
+    		'key' => '', 
+    		'modal' => $modal,
+    		'status' => $status 
+    		])
+    </div>
+    @endif
 
-        <form method="POST" action="{{ route('event.store') }}" enctype="multipart/form-data">
-        	@csrf
-	       	<div class="flex justify-between items-center  mb-6">
+		<form wire:submit.prevent="store" enctype="multipart/form-data">
+	        @csrf
+			<div class="flex justify-between items-center  mb-6">
 
 		        <div class="flex items-center">
 		            @include('partials.admin-breadcrumb', ['url' => '/admin/events', 'link' => true, 'pageName' => 'Events', 'routeName' => Route::currentRouteName()])
@@ -25,8 +33,7 @@
 		    	</button>
 			
 			</div>
-
-		 
+			 
 		 	<div class="flex justify-between flex-col md:flex-row">
 	    			<div class="flex flex-col md:mr-4 w-full md:w-1/2">
 
@@ -36,7 +43,7 @@
 	                            {{ __('Title') }}
 	                        </label>
 
-	                        <input id="title" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('title') border-red-500 @enderror " name="title" value="{{ old('title') }}"  autofocus placeholder="">
+	                        <input id="title" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('title') border-red-500 @enderror " wire:model="title" value="{{ $title }}"  autofocus placeholder="">
 
 	                        @error('title')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -49,7 +56,7 @@
 	                            {{ __('Sub Title') }}
 	                        </label>
 
-	                        <input id="subtitle" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('sub_title') border-red-500 @enderror " name="sub_title" value="{{ old('sub_title') }}"  autofocus placeholder="">
+	                        <input id="subtitle" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('sub_title') border-red-500 @enderror " wire:model="sub_title" value="{{ $sub_title }}"  autofocus placeholder="">
 
 	                        @error('sub_title')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -63,7 +70,7 @@
 	                            {{ __('Price') }}
 	                        </label>
 
-	                        <input id="price" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('price') border-red-500 @enderror " name="price" value="{{ old('price') }}"  autofocus placeholder="">
+	                        <input id="price" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('price') border-red-500 @enderror " wire:model="price" value="{{ $price }}"  autofocus placeholder="">
 
 	                        @error('price')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -73,13 +80,13 @@
 	                    </div>
 
 	    				<h4 class="text-md mb-3 ">2. Datetime & Ticket</h4>
-	                    <div class="flex justify-between items-center">
+	                    <div class="flex flex-col">
 		                    <div class="flex flex-wrap mb-6">
 		                        <label for="start" class="block text-gray-700 text-sm font-bold mb-2">
 		                            {{ __('Start') }}
 		                        </label>
 
-		                        <input id="start" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('start') border-red-500 @enderror " name="start" value="{{ old('start') }}"  autofocus placeholder="">
+		                        <input id="start" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('start') border-red-500 @enderror " wire:model="start" value="{{ $start }}"  autofocus placeholder="">
 
 		                        @error('start')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -87,12 +94,12 @@
 		                            </p>
 		                        @enderror
 		                    </div>
-		                    <div class="flex flex-wrap mb-6">
+		                    <div class="flex flex-col mb-6">
 		                        <label for="time" class="block text-gray-700 text-sm font-bold mb-2">
 		                            {{ __('Time') }}
 		                        </label>
 
-		                        <input id="time" type="time"  class="datetime-field shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('time') border-red-500 @enderror " name="time" value="{{ old('time') }}"  autofocus placeholder="">
+		                        <input id="time" type="time"  class="datetime-field shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('time') border-red-500 @enderror " wire:model="time" value="{{ $time }}"  autofocus placeholder="">
 
 		                        @error('time')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -105,7 +112,7 @@
 		                            {{ __('Finish') }}
 		                        </label>
 
-		                        <input id="end" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('end') border-red-500 @enderror " name="end" value="{{ old('end') }}"  autofocus placeholder="">
+		                        <input id="end" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('end') border-red-500 @enderror " wire:model="end" value="{{ $end }}"  autofocus placeholder="">
 
 		                        @error('end')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -116,12 +123,12 @@
 	                    </div>
 	                    
 	                    <div class="flex justify-between items-center">
-		                    <div class="flex flex-wrap mb-6">
+		                    <div class="flex flex-col mb-6">
 		                        <label for="book_before" class="block text-gray-700 text-sm font-bold mb-2">
 		                            {{ __('Book Before') }}
 		                        </label>
 
-		                        <input id="book_before" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('book_before') border-red-500 @enderror " name="book_before" value="{{ old('book_before') }}"  autofocus placeholder="">
+		                        <input id="book_before" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('book_before') border-red-500 @enderror " wire:model="book_before" value="{{ $book_before }}"  autofocus placeholder="">
 
 		                        @error('book_before')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -134,7 +141,7 @@
 		                            {{ __('Ticket') }}
 		                        </label>
 
-		                        <input id="ticket" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('ticket') border-red-500 @enderror " name="ticket" value="{{ old('ticket') }}"  autofocus placeholder="">
+		                        <input id="ticket" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('ticket') border-red-500 @enderror " wire:model="ticket" value="{{ $ticket }}"  autofocus placeholder="">
 
 		                        @error('ticket')
 		                            <p class="text-red-500 text-xs italic mt-4">
@@ -143,24 +150,20 @@
 		                        @enderror
 		                    </div>
 	                    </div>
-	                    <div class="flex flex-wrap mb-8">
-	                        <label for="description" class="block text-gray-700 text-sm font-bold mb-2">
-	                            {{ __('Description') }}
-	                        </label>
-
-	                        <input id="description" value="{{ old('description') }}" type="hidden" name="description">
-  							<trix-editor input="description"></trix-editor>
-	                        {{-- <textarea id="description" type="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('description') border-red-500 -40 @enderror " name="description" value=""  rows="10"> --}}
-	                        	{{-- 
-	                        		{{ old('description') }}
-	                        	</textarea> --}}
-
-	                        @error('description')
-	                            <p class="text-red-500 text-xs italic mt-4">
-	                                {{ $message }}
-	                            </p>
-	                        @enderror
-	                    </div>
+	                    <div class="mb-8" >
+					        <label class="block text-gray-700 text-sm text-xl font-bold mb-2" for="order">
+					            Description
+					        </label>
+					        <textarea id="body" wire:model="description"  wire:ignore >
+					        	{{ $description }}
+					        </textarea>
+					        {{-- <trix-editor input="body"></trix-editor> --}}
+					        @error('description')
+					        <p class="text-red-700 font-semibold mt-2">
+					            {{$message}}
+					        </p>
+					        @enderror
+					    </div>
 
 	    				<h4 class="text-md mb-3 ">3. Place Info</h4>
 	                    <div class="flex flex-wrap mb-6">
@@ -168,7 +171,7 @@
 	                            {{ __('Venue') }}
 	                        </label>
 
-	                        <input id="venue_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_name') border-red-500 @enderror " name="venue_name" value="{{ old('venue_name') }}"  autofocus placeholder="">
+	                        <input id="venue_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_name') border-red-500 @enderror " wire:model="venue_name" value="{{ $venue_name }}"  autofocus placeholder="">
 
 	                        @error('venue_name')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -182,7 +185,7 @@
 	                            {{ __('Venue Address') }}
 	                        </label>
 
-	                        <input id="venue_full_address" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_full_address') border-red-500 @enderror " name="venue_full_address" value="{{ old('venue_full_address') }}"  autofocus placeholder="">
+	                        <input id="venue_full_address" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('venue_full_address') border-red-500 @enderror " wire:model="venue_full_address" value="{{ $venue_full_address }}"  autofocus placeholder="">
 
 	                        @error('venue_full_address')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -200,7 +203,7 @@
 	                            {{ __('4. Event Cover') }}
 	                        </label>
 
-	                        <input id="cover" type="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('cover') border-red-500 @enderror " name="cover" value="{{ old('cover') }}"  autofocus placeholder="">
+	                        <input id="cover" type="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('cover') border-red-500 @enderror " wire:model="cover" value="{{ $cover }}"  autofocus placeholder="">
 
 	                        @error('cover')
 	                            <p class="text-red-500 text-xs italic mt-4">
@@ -216,7 +219,7 @@
 	                            {{ __('Category') }}
 	                        </label>
 	                        <div class="inline-block relative w-full">
-							  <select name="category" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+							  <select wire:model="category" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
 							  	@forelse($categories as $category)
 							    	<option value="{{ $category->id }}">{{ $category->name }}</option>
 							    @empty
@@ -243,18 +246,14 @@
 	                        @enderror
 	                      
 	                        <div class="inline-block relative w-full">
-	                            <select 
-	                                id="slim-speakers" 
-	                                multiple 
-	                                name="speakers[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-	                                >
-	                                    <option data-placeholder="true"></option>
-	                                    @forelse($speakers as $speaker)
+	                           
+	                            <select id="slim-speakers" multiple wire:model="speakers" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+								  	@forelse($new_speakers as $speaker)
+								  	{{$speaker->first_name}}
 	                                        <option value="{{ $speaker->id }}">{{ $speaker->first_name }} {{ $speaker->last_name }}</option>
-	                                    @empty
-	                                    @endforelse
-
-	                            </select>
+	                                @empty
+	                                @endforelse
+								</select>
 	                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 	                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
 	                            </div>
@@ -271,13 +270,14 @@
 	                        @enderror
 	                      
 	                        <div class="inline-block relative w-full">
+	                        		{{-- {{  $sponsers }} --}}
 	                            <select 
 	                                id="slim-sponsers" 
 	                                multiple 
-	                                name="sponsers[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+	                                wire:model="sponsers" class="block appearance-none w-full border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
 	                                >
 	                                    <option data-placeholder="true"></option>
-	                                    @forelse($sponsers as $sponser)
+	                                    @forelse($new_sponsers as $sponser)
 	                                        <option value="{{ $sponser->id }}">{{ $sponser->full_name }} </option>
 	                                    @empty
 	                                    @endforelse
@@ -294,54 +294,16 @@
 	    	</div>
 
 		</form>
-    </div>
-@endsection
+
+</div>
+
 
 @push('scripts')
 
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/js/tail.datetime.min.js"></script>
 	<script>
 
         document.addEventListener("DOMContentLoaded", function(){
 
-        	var speakers =  new SlimSelect({
-              select: '#slim-speakers',
-                placeholder: 'Select Speakers'
-            });
-
-            var sponsers =  new SlimSelect({
-              select: '#slim-sponsers',
-                placeholder: 'Select Sponsers'
-            });
-
-        	document.querySelector("#time").addEventListener("input", function(e) {
-
-
-			  const reTime = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
-			  const time = this.value;
-			  if (reTime.exec(time)) {
-			    const minute = Number(time.substring(3,5));
-			    const hour = Number(time.substring(0,2)) % 12 + (minute / 60);
-			    // this.style.backgroundImage = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='20' cy='20' r='18.5' fill='none' stroke='%23222' stroke-width='3' /><path d='M20,4 20,8 M4,20 8,20 M36,20 32,20 M20,36 20,32' stroke='%23bbb' stroke-width='1' /><circle cx='20' cy='20' r='2' fill='%23222' stroke='%23222' stroke-width='2' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,4 20.5,4 21.5,24.5 Z' fill='%23222' style='transform:rotate(${360 * minute / 60}deg); transform-origin: 50% 50%;' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,8.5 20.5,8.5 21.5,24.5 Z' style='transform:rotate(${360 * hour / 12}deg); transform-origin: 50% 50%;' /></svg>")`;
-			  }
-			});
-            
-			let readImage = document.getElementById('coverImage');
-
-			var file = document.querySelector('input[type=file]');
-			file.addEventListener('change', function(e){
-
-				var reader = new FileReader(); // Creating reader instance from FileReader() API
-
-				reader.addEventListener("load", function () { // Setting up base64 URL on image
-				    readImage.classList.add('h-40');
-	            	readImage.src = reader.result;
-
-				}, false);
-
-				reader.readAsDataURL(e.target.files[0]);
-				console.log(readImage);
-			});  // File refrence
 
 		});		
 		

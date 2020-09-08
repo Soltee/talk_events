@@ -18,12 +18,12 @@ class Index extends Component
     public $venue_name   = '';
     public $created_at   = '';
     public $start        = '';
-    public $modal;
-    public $status;
+    public $message      = '';
+    public $status       = false;
 
     public function render()
     {	
-        if($this->title || $this->price || $this->venue_name || $this->created_at){
+        if($this->title || $this->price || $this->venue_name || $this->start || $this->created_at){
             $this->goToPage(1);
         }
 
@@ -31,7 +31,7 @@ class Index extends Component
                                 ->where('title' ,   'LIKE', '%'. $this->title .'%')
                                 ->where('price' ,   'LIKE', '%'. $this->price .'%')
                                 ->where('venue_name' ,   'LIKE', '%'. $this->venue_name .'%')
-                                ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+                                ->where('start' ,   'LIKE', '%'. $this->start .'%')
                                 ->where('start' ,   'LIKE', '%'. $this->created_at .'%')
                                 ->with(['user', 'bookings'])
                                 ->paginate(10)
@@ -46,16 +46,17 @@ class Index extends Component
 
     }
 
-    /* Set Model Visiibility*/
-    public function setVisibility(){
-        $this->modal  = !$this->modal;
-        $this->status = '';
+    /**Close*/
+    public function close(){
+        $this->status  = false;
+        $this->message = '';
     }
 
     /* Remove the Event */
     public function drop($event){
-        // $event = Event::findOrfail($event);
-        // $booking->delete();
-        $this->status = 'Success';
+        $event = Event::findOrfail($event);
+        $event->delete();
+        $this->status = true;
+        $this->message = $event->id .' deleted.';
     }
 }

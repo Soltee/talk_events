@@ -16,14 +16,6 @@ Route::livewire('/events/schedules', 'user.schedule')
 Route::livewire('/events/search', 'user.search')
 									->name('search.events');
 
-/** Booking */
-Route::get('/events/{event}-{slug}/checkout', 'User\BookingController@index')
-								->name('booking.checkout');
-Route::post('/events/{event_id}/book', "User\BookingController@checkout")
-								->name('event.book');
-Route::get('/events/book/thankyou/{booking}', 'User\BookingController@show')
-								->name('booking.thankyou');
-
 /*Speakers*/
 Route::livewire('/speaker', 'user.speakers.index')
 						->name('user.speakers');
@@ -96,14 +88,14 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 		Route::livewire('speakers/{speaker}', 'admin.speakers.show')
 											->name('speaker.show');
 
-		Route::get('speakers/create', 'Admin\SpeakerController@create')
+		Route::get('speaker/create', 'Admin\SpeakerController@create')
 											->name('speaker.create');
-		// Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')
-		// 									->name('speaker.edit');
-		Route::post('speakers', 'Admin\SpeakerController@store')
+		Route::get('speakers/{speaker}/edit', 'Admin\SpeakerController@edit')
+											->name('speaker.edit');
+		Route::post('speaker', 'Admin\SpeakerController@store')
 											->name('speaker.store');
-		// Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
-		// 									->name('speaker.update');
+		Route::patch('speakers/{speaker}', 'Admin\SpeakerController@update')
+											->name('speaker.update');
 	});
 
 	//Sponsers
@@ -113,7 +105,7 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 								->name('sponsers');
 		Route::livewire('sponsers/{sponser}', 'admin.sponsers.show')
 								->name('sponser.show');
-		Route::get('sponsers/create', 'Admin\SponserController@create')	
+		Route::get('sponsers/new', 'Admin\SponserController@create')	
 								->name('sponser.create');
 		Route::get('sponsers/{sponser}/edit', 'Admin\SponserController@edit')
 								->name('sponser.edit');
@@ -128,23 +120,18 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 	//Events (Event    manager)
 	Route::group(['middleware' => ['permission:add events']], function () {
 
-		Route::livewire('/events', 'admin.events.index')
+		Route::livewire('events', 'admin.events.index')
 									->name('events');
-		Route::livewire('/events/{event}', 'admin.events.show')
+		Route::livewire('events/{event}', 'admin.events.show')
 									->name('event.show');
-		Route::get('events/create', 'Admin\EventController@create')
+		Route::get('event/create', 'Admin\EventController@create')
 										->name('event.create');
-		// Route::post('events', 'Admin\EventController@store')
-		// 								->name('event.store');
-		// Route::get('events/{event}', 'Admin\EventController@show')
-		// 								->name('event.show');
-		// Route::get('events/{event}/edit', 'Admin\EventController@edit')
-		// 								->name('event.edit');
-		// Route::patch('events/{event}', 'Admin\EventController@update')
-		// 								->name('event.update');
-		// Route::delete('events/{event}', 'Admin\EventController@destroy')
-		// 								->name('event.destroy');
-
+		Route::post('events', 'Admin\EventController@store')
+										->name('event.store');
+		Route::get('events/{event}/edit', 'Admin\EventController@edit')
+										->name('event.edit');
+		Route::patch('events/{event}', 'Admin\EventController@update')
+										->name('event.update');
 
 		//Api
 		Route::get('api/events', 'Admin\Api\EventController@index');
@@ -158,16 +145,17 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 							->name('admin.profile');
 		//Cache
 		Route::get('/clear', function() {
-								    Artisan::call('cache:clear');
-								    return "Cache is cleared";
-								});
+						    Artisan::call('cache:clear');
+						    return "Cache is cleared";
+						});
 
 		//Booking
 		Route::livewire('/bookings', 'admin.bookings.index')
 									->name('bookings');
 		Route::livewire('/bookings/{booking}', 'admin.bookings.show')
 									->name('booking.show');
-
+		
+																
 		//Role
 		Route::post('roles', 'Admin\RoleController@store');
 		Route::delete('roles/{role}', 'Admin\RoleController@destroy');
@@ -187,6 +175,10 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 							->name('user.store');
 		Route::livewire('users/{user}', 'admin.users.show')
 							->name('user.show');
+		Route::get('users/{user}/edit', 'Admin\UserController@edit')
+										->name('user.edit');
+		Route::patch('users/{user}', 'Admin\UserController@update')
+										->name('user.update');
 
 	});
 

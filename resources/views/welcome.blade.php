@@ -64,7 +64,7 @@
 		      				<div class="relative">
 		      					
 				            	<a href="{{ url('events', $event->id . '-' . $event->slug)}}">
-				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/images/placeholder.png'">
 				            	</a>
 				            	<div class="absolute right-0 top-0 p-2 bg-white rounded-bl">
 				            		@if($event->price > 0)
@@ -123,7 +123,7 @@
 					      	<div class="relative">
 		      					
 				            	<a href="{{ url('events', $event->id . '-' . $event->slug)}}">
-				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/images/placeholder.png'">
 				            	</a>
 				            	<div class="absolute right-0 top-0 p-2 bg-white rounded-bl">
 				            		@if($event->price > 0)
@@ -181,7 +181,7 @@
 					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
 					      <a href="{{ url('speakers', $speaker->id . '-' . $speaker->first_name . '-' . $speaker->last_name )}}">
 					      	<img data-src="{{ asset($speaker->avatar) }}" class="swiper-lazy w-32 h-32 rounded-full bg-center
-					      	bg-cover  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+					      	bg-cover  rounded-lg" onerror="this.src='/images/placeholder.png'">
 					      </a>
 
 					      <a class="mt-3" href="">
@@ -222,7 +222,7 @@
 					        <div class="relative">
 		      					
 				            	<a href="{{ url('events', $event->id . '-' . $event->slug)}}">
-				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+				            		<img data-src="{{ asset($event->cover) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/images/placeholder.png'">
 				            	</a>
 				            	<div class="absolute right-0 top-0 p-2 bg-white rounded-bl">
 				            		@if($event->price > 0)
@@ -274,7 +274,7 @@
 						    <!-- Lazy image -->
 					    <div class="relative swiper-slide w-full flex flex-col items-center">
 					      <a href="/event?category={{ $category->id }}&slug={{ $category->slug }}">
-					      	<img data-src="{{ asset($category->thumbnail) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+					      	<img data-src="{{ asset($category->thumbnail) }}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/images/placeholder.png'">
 					      </a>
 
 					      <div class="mt-2 flex">

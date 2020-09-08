@@ -32,7 +32,7 @@
         				<div class="relative">
 		        			<a href="{{ url('sponsers', $sponser->id . '-' . $sponser->full_name )}}">
 					      		<img src="{{ asset($sponser->avatar) }}" class="w-full  hover:opacity-75  bg-center
-					      	bg-cover  rounded-lg" onerror="this.src='https://via.placeholder.com/300'">
+					      	bg-cover  rounded-lg" onerror="this.src='/images/placeholder.png'">
 					        </a>
 		        		
 		        		</div>

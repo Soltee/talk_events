@@ -45,7 +45,7 @@
 	<div class="flex flex-col md:flex-row mb-5">
 		<div class="w-full md:w-64">
 			
-    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($speaker->avatar) }}" onerror="this.src='https://via.placeholder.com/300'">
+    		<img class="h-48 rounded w-full md:w-64 object-cover mt-3  mb-6"  src="{{ asset($speaker->avatar) }}" onerror="this.src='/images/placeholder.png'">
     	</div>
     	<div class="flex-1 md:ml-6">
     		<h5 class="mb-4 text-md font-semibold text-gray-800 px-2">General Info</h5>

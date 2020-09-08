@@ -15,7 +15,6 @@
 	            </div>
 				<div class="mt-3 mb-3 flex flex-row items-center">
 	  		
-			  		<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-600 font-semibold w-1/3"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
 			  		<p class="pl-3 leading-7 w-2/3 text-green-600 font-semibold ">{{ $message }}</p>
 			  	</div>
 

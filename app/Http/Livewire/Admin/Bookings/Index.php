@@ -12,30 +12,36 @@ class Index extends Component
 {
     use WithPagination;
 
-    protected $updatesQueryString = ['first_name', 'last_name', 'payment_type', 'created_at'];
-    public $first_name     = '';
+    protected $updatesQueryString = ['name',  'payment_type', 'created_at'];
+    public $name           = '';
     public $last_name      = '';
     public $payment_type   = '';
     public $created_at     = '';
-    public $modal          = false;
-    public $status         = false;
+    public $message      = '';
+    public $status       = false;
 
     public function render()
     {
 
-        if($this->first_name || $this->last_name || $this->payment_type || $this->created_at){
+        $query       = Booking::latest();
+
+        if($this->name || $this->payment_type || $this->created_at){
             $this->goToPage(1);
         }
 
+        if($this->name) {
+            $query = $query
+                        ->where('first_name' ,   'LIKE', '%'. $this->name .'%')
+                        ->orWhere('last_name' ,   'LIKE', '%'. $this->name .'%');
+        }
 
-        $paginate            = Booking::latest()
-                                ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
-                                ->orWhere('last_name' ,   'LIKE', '%'. $this->last_name .'%')
-                                ->where('payment_type' ,   'LIKE', '%'. $this->payment_type .'%')
-                                ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
-                                ->with(['user', 'event'])
-                                ->paginate(10)
-                                ->appends(request()->query());
+
+        $paginate       = $query
+                            ->where('payment_type' ,   'LIKE', '%'. $this->payment_type .'%')
+                            ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+                            ->with(['user', 'event'])
+                            ->paginate(10)
+                            ->appends(request()->query());
 
         return view('livewire.admin.bookings.index', [
             'bookings'     => $paginate,
@@ -46,16 +52,17 @@ class Index extends Component
 
     }
 
-    /* Set Model Visiibility*/
-    public function setVisibility(){
-        $this->modal  = !$this->modal;
-        $this->status = '';
+    /**Close*/
+    public function close(){
+        $this->status  = false;
+        $this->message = '';
     }
 
     /* Remove the Booking */
     public function drop($booking){
-        // $booking = Booking::findOrfail($booking);
-        // $booking->delete();
-        $this->status = 'Success';
+        $booking = Booking::findOrfail($booking);
+        $booking->delete();
+        $this->status = true;
+        $this->message = $booking->first_name .' booking deleted.';;
     }
 }

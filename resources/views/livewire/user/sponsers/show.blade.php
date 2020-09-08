@@ -19,7 +19,7 @@
 
     <div class="mt-3 flex flex-col ">
     	<div class="mb-4 flex flex-col sm:flex-row">
-    		<img  class="w-full sm:w-64 bg-cover bg-center mb-5 rounded-lg " src="{{ asset($sponser->avatar) }}" alt="" onerror="this.src='https://via.placeholder.com/300'">
+    		<img  class="w-full sm:w-64 bg-cover bg-center mb-5 rounded-lg " src="{{ asset($sponser->avatar) }}" alt="" onerror="this.src='/images/placeholder.png'">
 
     		<div class="flex flex-col sm:ml-4">
     			{{-- {{ $sponser }} --}}
@@ -65,7 +65,7 @@
         				<div class="relative py-3">
 	        				<a class="" href="{{ url('events', $event->id . '-' . $event->slug)}}">
 		        				
-		        				<img  class="w-full mb-5 rounded-lg hover:opacity-75" src="{{ asset($event->cover) }}" alt="" onerror="this.src='https://via.placeholder.com/300'">
+		        				<img  class="w-full mb-5 rounded-lg hover:opacity-75" src="{{ asset($event->cover) }}" alt="" onerror="this.src='/images/placeholder.png'">
 		        			</a>
 		        		
 		        		</div>

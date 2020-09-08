@@ -9,32 +9,21 @@
 @section('content')
     <div class="px-3 md:px-6 pb-6">
 
-        <p class="my-2 text-red-600">{{ session('success') }}</p>
-        <p class="my-2 text-red-600">{{ session('error') }}</p>
-
-         @if ($errors->any())
-		    <div class="alert alert-danger">
-		        <ul>
-		            @foreach ($errors->all() as $error)
-		                <li>{{ $error }}</li>
-		            @endforeach
-		        </ul>
-		    </div>
-		@endif
         <form method="POST" action="{{ route('sponser.store') }}" enctype="multipart/form-data">
         	@csrf
 	       	<div class="flex justify-between items-center  mb-6">
-	       		<div class="flex items-center">
-	       			<a href="{{ route('sponsers') }}" class=" text-md font-md text-gray-900   mr-5  hover:opacity-75">Back</a>
-	       			<h3 class="text-gray-900 text-lg ">Add Sponser</h3>
-	       		</div>
 
-				<button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
-	    			Publish
-	    		</button>	
+                <div class="flex items-center">
+                    @include('partials.admin-breadcrumb', ['url' => '/admin/sponsers', 'link' => true, 'pageName' => 'Sponsers', 'routeName' => Route::currentRouteName()])
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <h4 class="text-sm md:text-md  hover:font-semibold font-light text-c-pink mr-2 font-semibold">Add Sponser</h4>
+                </div>
 
-	    	
-	    	</div>
+                <button type="submit" class="px-6 py-3  rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">
+                        Publish
+                </button>
+            
+            </div>
 
 		 
 		 	<div class="flex justify-between flex-col md:flex-row">

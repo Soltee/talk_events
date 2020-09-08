@@ -55,8 +55,8 @@ class Show extends Component
 
     /* Remove the User */
     public function drop($event){
-    	// $event = Event::findOrfail($event);
-    	// $event->delete();
+    	$event = Event::findOrfail($event);
+    	$event->delete();
     	
     	session()->flash('success', 'Event dropped');
     	return redirect()->to('/admin/events');

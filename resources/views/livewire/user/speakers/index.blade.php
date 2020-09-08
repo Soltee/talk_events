@@ -27,7 +27,7 @@
 	        		">
         			<div class="img-hover-zoom w-full">
         				<div class="relative">
-		        			<a href="{{ url('speakers', $speaker->id . '-' . $speaker->first_name . '-' . $speaker->last_name )}}" onerror="this.src='https://via.placeholder.com/300'">
+		        			<a href="{{ url('speakers', $speaker->id . '-' . $speaker->first_name . '-' . $speaker->last_name )}}" onerror="this.src='/images/placeholder.png'">
 					      		<img src="{{ asset($speaker->avatar) }}" class="w-full  hover:opacity-75  bg-center
 					      	bg-cover  rounded-lg">
 					        </a>

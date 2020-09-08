@@ -106,9 +106,6 @@ class UserController extends Controller
 
 	        foreach($permissons_arr as $permission){
 	        	$user->givePermissionTo($permission);
-	        	// echo "<pre>";
-	        	// print_r($permission);
-	        	// echo "</pre>";
 	        }
     	}
         //Send Login Credentials
@@ -120,17 +117,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  numeric  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        abort_if(!auth()->user()->can('show users'), 403);
-        // return view('admin.users.show', compact('user'));
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -141,7 +127,17 @@ class UserController extends Controller
     public function edit(User $user)
     {
         abort_if(!auth()->user()->can('update users'), 403);
-        return view('admin.users.edit', compact('event'));
+
+
+        $user_role  = $user->roles->pluck('name')[0];
+        $user_perms = $user->permissions;
+
+        $roles = Role::latest()
+                    ->where('name', '!=', 'super-admin')
+                    ->get();
+        $perms = Permission::latest()->get();
+        // dd($user_perms->count());
+        return view('admin.users.edit', compact('user', 'roles', 'perms', 'user_role', 'user_perms'));
     }
 
     /**
@@ -161,8 +157,8 @@ class UserController extends Controller
             'last_name'           => 'required|string', 
             'email'               => 'required|string|email|unique:users', 
             'password'            => 'required|string|min:8|confirmed', 
-            'role'                => 'nullable|string', 
-            'permission_name'     => 'nullable|string', 
+            'role'                => 'nullable|array', 
+            'permission_name'     => 'nullable|array', 
         ]);
 
         // dd($request->all());
@@ -185,10 +181,6 @@ class UserController extends Controller
             $permissons_arr = explode(',',  $data['permission_name']);
             $user->syncPermissions($permissons_arr);
 
-            // foreach($permissons_arr as $permission){
-            //     $user->givePermissionTo($permission);
-                
-            // }
         }
         //Send Login Credentials
         // Notification::route('mail', $user->email)->notify(new UserAdded($user->email, $data['password']));

@@ -12,7 +12,6 @@ use Livewire\WithPagination;
 class Index extends Component
 {	
 	use WithPagination;
-    // protected $listeners = ['deleteType'];
 
     protected $updatesQueryString = ['first_name', 'last_name', 'email', 'role', 'created_at'];
     public $first_name     = '';
@@ -20,12 +19,11 @@ class Index extends Component
     public $email          = '';
     public $role           = '';
     public $created_at     = '';
-    public $modal          = false;
-    public $status         = false;
+    public $message      = '';
+    public $status       = false;
 
     public function render()
     {
-        // echo (Auth::user()->hasRole('super-admin')) ? 'Yes' : 'Hah!';
         $role      = $this->role;
         $query     = User::latest()
         		   		->where('email', '!=' , 'admin@example.com');
@@ -54,18 +52,19 @@ class Index extends Component
 
     }
 
-    /* Set Model Visiibility*/
-    public function setVisibility(){
-    	$this->modal  = !$this->modal;
-        $this->status = '';
+    /**Close*/
+    public function close(){
+        $this->status  = false;
+        $this->message = '';
     }
 
     /* Remove the User */
     public function drop($user){
     	// dd($user);
-    	// $user = User::findOrfail($user);
-    	// $user->delete();
-        $this->status = 'Success';
+    	$user = User::findOrfail($user);
+    	$user->delete();
+        $this->status = true;
+        $this->message = $user->first_name .' deleted.';
     }
 
 }

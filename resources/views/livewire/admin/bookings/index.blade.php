@@ -10,8 +10,7 @@
 			@csrf
 			<div class="flex items-center justify-between">
 
-				<input type="text" wire:model="first_name" class="mr-4 px-3 py-3  rounded-lg border "  placeholder="Firstname">
-                <input type="text" wire:model="last_name" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Lastname">
+				<input type="text" wire:model="name" class="mr-4 px-3 py-3  rounded-lg border "  placeholder="Name">
                 <input type="text" wire:model="payment_type" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Payment Type">
 				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Date">
 			
@@ -20,7 +19,17 @@
 
 	
 	</div>
+    @if($status)
+        <div class="flex flex-row justify-around items-center w-full bg-green-400 px-4 py-2 rounded">
+            <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check h-8 w-8 text-white border-2 border-white font-semibold text-white rounded-full"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <p class="ml-4 rounded text-white ">{{ $message }}</p>
+            </div>
 
+            <button wire:click="close" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg">Close</button>
+
+        </div>
+    @endif
 	<div  class=" overflow-x-auto">
         <div  class="inline-block min-w-full  rounded-lg overflow-hidden">
             <table class="min-w-full leading-normal">
@@ -29,10 +38,6 @@
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
                             User
-                        </th>
-                        <th
-                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
-                            Event
                         </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
@@ -65,7 +70,7 @@
                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                             @if($booking->user && $booking->user->avatar)
                                 <a class="text-blue-500 hover:underline" href="{{ route('user.show', $booking->user->id) }}">
-                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $booking->user->avatar }}" onerror="this.src='https://via.placeholder.com/300'">
+                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $booking->user->avatar }}" onerror="this.src='/images/placeholder.png'">
                                 </a>
                             @else
                                 <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center text-blue-600 hover:text-blue-500 rounded-full object-cover object-center">
@@ -74,9 +79,6 @@
                                 </svg>
                             @endif
                         </td> 
-                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-                            <a href="/events/{{ $booking->event->id }}-{{ $booking->event->slug }}" class="text-blue-500 hover:font-bold whitespace-no-wrap">{{ $booking->event->title }}</p>
-                        </td>
                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap"> {{ $booking->first_name . ' ' . $booking->last_name }}</p>
                         </td>
@@ -99,24 +101,15 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 </a>
 
+                             
+
                                 <div 
-                                    wire:click="setVisibility"
+                                    wire:click="drop({{$booking->id}})"
                                     class="flex items-center px-3 py-3 hover:opacity-50 text-md font-bold text-white rounded cursor-pointer">
                                              
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete text-red-600 hover:text-red-500 ml-3"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                                 </div>
 
-                                @if($modal)
-                                    <div    
-                                        >
-                                        @include('partials.modal', [
-                                            'key' => $booking->id, 
-                                            'modal' => $modal,
-                                            'status' => $status 
-                                        ])
-                                    </div>
-                                @endif
-           
                             </div>
                         </td>
                     </tr>
