@@ -7,7 +7,15 @@ Route::get('/', 'WelcomeController@index')
 Route::get('/events/{event}-{slug}', 'WelcomeController@event')
 										->name('event');
 Route::get('/event', 'WelcomeController@events')
-										->name('events.all');
+										->name('events.all');				
+
+/*Livewire*/
+Route::livewire('/events/schedules', 'user.schedule')
+									->name('calender');
+
+Route::livewire('/events/search', 'user.search')
+									->name('search.events');
+
 
 /*About Site*/
 Route::get('/help/cookie-policy', 'AboutController@cookiePolicy')
@@ -18,16 +26,8 @@ Route::get('/help/faqs', 'AboutController@faqs')
 									->name('faqs');		
 Route::get('/help/contact-us', 'AboutController@contactUs')
 									->name('contact-us');
-									
 Route::get('/help/terms-conditions', 'AboutController@termsConditions')
-									->name('terms-conditions');																
-
-/*Livewire*/
-Route::livewire('/events/schedules', 'user.schedule')
-									->name('calender');
-
-Route::livewire('/events/search', 'user.search')
-									->name('search.events');
+									->name('terms-conditions');	
 
 /*Speakers*/
 Route::livewire('/speaker', 'user.speakers.index')
@@ -112,12 +112,12 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 								->name('sponsers');
 		Route::livewire('sponsers/{sponser}', 'admin.sponsers.show')
 								->name('sponser.show');
-		Route::get('sponsers/new', 'Admin\SponserController@create')	
-								->name('sponser.create');
-		Route::get('sponsers/{sponser}/edit', 'Admin\SponserController@edit')
-								->name('sponser.edit');
+		Route::get('sponser/create', 'Admin\SponserController@create')
+										->name('sponser.new');
 		Route::post('sponsers', 'Admin\SponserController@store')
 								->name('sponser.store');
+		Route::get('sponsers/{sponser}/edit', 'Admin\SponserController@edit')
+								->name('sponser.edit');
 		Route::patch('sponsers/{sponser}', 'Admin\SponserController@update')
 								->name('sponser.update');
 		

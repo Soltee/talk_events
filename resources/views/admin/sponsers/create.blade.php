@@ -7,8 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="px-3 md:px-6 pb-6">
-
+    <div class="">
         <form method="POST" action="{{ route('sponser.store') }}" enctype="multipart/form-data">
         	@csrf
 	       	<div class="flex justify-between items-center  mb-6">

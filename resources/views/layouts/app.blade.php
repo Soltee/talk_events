@@ -84,7 +84,7 @@
     <div>
         @if(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
         @else
-            <nav class="px-6  py-8 max-w-screen-lg mx-auto">
+            <nav class="px-6  py-8 max-w-screen-xl mx-auto">
                 <div class="flex items-center justify-between">
                     <div class="mr-6">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-blue-900 no-underline">
@@ -92,11 +92,11 @@
                         </a>
                     </div>
                     <div class="flex justify-end items-center">
-                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'events.all' ? 'font-bold' : '' }}" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
-                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'calender' ? 'font-bold' : '' }}" href="/events/schedules">{{ __('Calender') }}</a>
-                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-4 {{ Route::currentRouteName() == 'user.speakers' ? 'font-bold' : '' }}" href="/speaker">{{ __('Speakers') }}</a>
+                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-6 {{ Route::currentRouteName() == 'events.all' ? 'font-bold' : '' }}" href="{{ route('events.all') }}">{{ __('Browse') }}</a>
+                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-6 {{ Route::currentRouteName() == 'calender' ? 'font-bold' : '' }}" href="/events/schedules">{{ __('Calender') }}</a>
+                        <a class="no-underline   text-blue-600 text-sm py-3 hover:opacity-75 rounded-lg mr-6 {{ Route::currentRouteName() == 'user.speakers' ? 'font-bold' : '' }}" href="/speaker">{{ __('Speakers') }}</a>
                         @guest
-                            <a class="no-underline hover:underline text-blue-600 text-sm" href="/login">{{ __('Login') }}</a>
+                            <a class="no-underline bg-blue-600 text-white rounded px-4 py-3 hover:bg-blue-500 text-sm" href="/login">{{ __('Login') }}</a>
                             
                         @else
                             
@@ -127,7 +127,7 @@
                                 <a href="/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'profile') ? 'underline font-semibold' : ''}}">Profile</a>
                                 
                                 <!-- Logout Component -->
-                                {{-- <livewire:user.auth.logout /> --}}
+                                <livewire:user.auth.logout />
 
                             </div>
                           </div>
@@ -139,7 +139,7 @@
         @endif
 
         @include('sweetalert::alert')
-        <div class="max-w-screen-lg mx-auto px-6  py-2 overflow-hidden">
+        <div class="max-w-screen-xl mx-auto px-6  py-2 overflow-hidden">
 
 
           @yield('content')
@@ -151,7 +151,7 @@
         <footer>
             <div class="bg-gray-700 py-6">
 
-              <div class="max-w-screen-lg mx-auto px-6 py-8">
+              <div class="max-w-screen-xl mx-auto px-6 py-8">
                   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 relative">
                         
                       <livewire:user.newsletter/>

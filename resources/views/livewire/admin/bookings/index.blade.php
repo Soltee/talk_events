@@ -1,18 +1,18 @@
 @section('title', 'Bookings')
 
 <div class="">
-	<div class="flex justify-between items-center  mb-6">
+	<div class="flex flex-wrap justify-between items-center  mb-6">
 
         <div class="flex items-center">
             @include('partials.admin-breadcrumb', ['url' => '/admin/bookings', 'link' => true, 'pageName' => 'Bookings', 'routeName' => Route::currentRouteName()])
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf
-			<div class="flex items-center justify-between">
+			<div class="flex flex-wrap items-center justify-between">
 
-				<input type="text" wire:model="name" class="mr-4 px-3 py-3  rounded-lg border "  placeholder="Name">
-                <input type="text" wire:model="payment_type" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Payment Type">
-				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Date">
+				<input type="text" wire:model="name" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0"  placeholder="Name">
+                <input type="text" wire:model="payment_type" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Payment Type">
+				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Date">
 			
 			</div>
 		</form>
@@ -70,7 +70,7 @@
                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                             @if($booking->user && $booking->user->avatar)
                                 <a class="text-blue-500 hover:underline" href="{{ route('user.show', $booking->user->id) }}">
-                                        <img class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $booking->user->avatar }}" onerror="this.src='/images/placeholder.png'">
+                                        <img class="w-12 h-12 md:w-24 md:h-24 hover:opacity-75 rounded-lg object-cover object-center" src="{{ $booking->user->avatar }}" onerror="this.src='/images/placeholder.png'">
                                 </a>
                             @else
                                 <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-24 h-24 hover:opacity-75 rounded-lg object-cover object-center text-blue-600 hover:text-blue-500 rounded-full object-cover object-center">
@@ -127,10 +127,10 @@
                 </tbody>
             </table>
 
-            <div class="my-6">
-                {{ $bookings->links('vendor.pagination.tailwind') }}
-            </div>
         </div>
+    </div>
+    <div class="my-6">
+        {{ $bookings->links('vendor.pagination.tailwind') }}
     </div>
 
 </div>

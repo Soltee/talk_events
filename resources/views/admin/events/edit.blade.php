@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="px-3 md:px-6 pb-6 pt-4">
+    <div class="">
 
         <form method="POST" action="{{ route('event.update', $event->id) }}" enctype="multipart/form-data">
         	@csrf

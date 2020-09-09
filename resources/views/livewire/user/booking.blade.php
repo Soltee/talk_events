@@ -143,7 +143,7 @@
 
 	    //Stripe Confrimation 
 	       	// stripeTab.addEventListener('click', () => {
-	       		const key = '{{ env('STRIPE_KEY') }}';
+	       		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
 	            var stripe = Stripe(`${key}`);
 	            // console.log(key, stripe);
 	            // Create an instance of Elements.

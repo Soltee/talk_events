@@ -4,21 +4,21 @@
 
 	<!-- Add User Icon -->
 	@can('add sponsers')
-		<a href="{{ route('sponser.create') }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
+		<a href="{{ route('sponser.new') }}" class="z-10 fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
 	@endcan
     	
-	<div class="flex justify-between items-center  mb-6">
+	<div class="flex flex-col justify-between   mb-6">
 
         <div class="flex items-center">
             @include('partials.admin-breadcrumb', ['url' => '/admin/sponsers', 'link' => true, 'pageName' => 'Sponsers', 'routeName' => Route::currentRouteName()])
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf
-			<div class="flex items-center justify-between">
+			<div class="flex flex-wrap items-center">
 
-				<input type="text" wire:model="name" class="mr-4 px-3 py-3  rounded-lg border "  placeholder="Name">
-                <input type="text" wire:model="email" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Email">
-				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Date">
+				<input type="text" wire:model="name" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0"  placeholder="Name">
+                <input type="text" wire:model="email" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Email">
+				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Date">
 			
 			</div>
 		</form>
@@ -144,10 +144,10 @@
                 </tbody>
             </table>
 
-            <div class="my-6">
-                {{ $sponsers->links('vendor.pagination.tailwind') }}
-            </div>
         </div>
+    </div>
+    <div class="my-6">
+        {{ $sponsers->links('vendor.pagination.tailwind') }}
     </div>
 
 </div>

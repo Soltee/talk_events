@@ -57,9 +57,9 @@
 		</form>
 	</div>
 
-	<div  class="">
-        <div class=" mt-6">
-           {{--  <table class="w-full table-auto">
+	<div  class=" overflow-x-auto">
+        <div  class="inline-block min-w-full  rounded-lg overflow-hidden">
+            <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
                         <th
@@ -114,11 +114,6 @@
 							    </td>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200">
 							        <div class="flex justify-between items-center">
-							            <a 
-							                class="hover:font-semibold" 
-							                href="/admin/categorys/{{ $category->id }}" >
-							                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-900 hover:opacity-75"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-							            </a>
 
 							            <a 
 							                class="hover:font-semibold" 
@@ -152,11 +147,11 @@
                     @endforelse
                 </tbody>
             </table>
- --}}
-            <div class="my-6">
-                {{ $categories->links('vendor.pagination.tailwind') }}
-            </div>
+
         </div>
+    </div>
+    <div class="my-6">
+        {{ $categories->links('vendor.pagination.tailwind') }}
     </div>
 
 </div>

@@ -9,7 +9,7 @@
                 <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
     		<a href="/"
-    			class="flex items-center    border-r-2 border-transparent text-white hover:border-white ">
+    			class="flex items-center    border-r-2 border-transparent text-white hover:opacity-75 ">
     			<span class="text-lg">Home</span>
     		</a>
     	</li>
@@ -19,6 +19,14 @@
                 class="flex items-center  px-3 py-3  border-r-2 border-transparent text-white hover:border-white {{ (Route::currentRouteName() == 'admin.dashboard') ? '  font-bold border-white' : 'border-transparent' }}">
 
                 <span class="text-lg">Dashboard</span>
+            </a>
+        </li>
+        <li class="list-none rounded-lg ">
+            <a 
+                class="flex items-center px-3 py-3 border-r-2 border-transparent text-white hover:border-white border-r-2{{ (Route::currentRouteName() == 'bookings' || Route::currentRouteName() == 'booking.show') ? '  font-bold border-white' : 'border-transparent' }}"
+                href="{{ route('bookings') }}">
+
+                <span class="text-lg">Bookings</span>
             </a>
         </li>
     	@can('add categories')
@@ -42,14 +50,7 @@
         </li>
         @endcan
 
-        <li class="list-none rounded-lg ">
-            <a 
-                class="flex items-center px-3 py-3 border-r-2 border-transparent text-white hover:border-white border-r-2{{ (Route::currentRouteName() == 'bookings' || Route::currentRouteName() == 'booking.show') ? '  font-bold border-white' : 'border-transparent' }}"
-                href="{{ route('bookings') }}">
-
-                <span class="text-lg">Bookings</span>
-            </a>
-        </li>
+        
 
     	@can('add speakers')
     	<li class="list-none rounded-lg">

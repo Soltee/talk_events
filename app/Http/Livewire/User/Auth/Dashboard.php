@@ -14,12 +14,17 @@ class Dashboard extends Component
 
     public function render()
     {
-    	$bookings = Auth::guard()->user()->bookings()->with([
-                                    'event' => function($query)
-                                        {
-                                            $query->select('id', 'title');
-                                         }
-                                    ])->paginate(2);
+    	$bookings = Auth::guard()
+                            ->user()
+                            ->bookings()
+                            ->latest()
+                            ->with([
+                                'event' => function($query)
+                                    {
+                                        $query->select('id', 'title');
+                                     }
+                                ])
+                            ->paginate(2);
 
         $first    = $bookings->firstItem();
         $last     = $bookings->lastItem();

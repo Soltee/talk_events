@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <div class="px-3 md:px-6 pb-6 pt-4">
+    <div class="">
 
     	
         <form method="POST" action="{{ route('user.update', $user->id) }}" enctype="multipart/form-data">
@@ -36,7 +36,7 @@
             
             </div>
 
-		 	
+{{-- 		 	
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -45,7 +45,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif --}}
 		 	<div class="flex justify-between flex-col md:flex-row">
 	    			<div class="flex flex-col md:mr-4 w-full md:w-1/2">
 

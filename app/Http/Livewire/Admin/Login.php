@@ -15,6 +15,14 @@ class Login extends Component
 	public $error      = false;
 	public $message    = '';
 
+    public function mount(){
+
+        if($this->guard()->user()){
+            return redirect()->to('/admin/dashboard');
+        }
+
+    }
+
     public function render()
     {
         return view('livewire.admin.login');

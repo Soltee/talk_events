@@ -10,7 +10,7 @@
 			@include('partials.admin-breadcrumb', ['url' => 'admin/users/', 'link' => true, 'pageName' => 'Users', 'routeName' => Route::currentRouteName()])
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 
-		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $user->email }}</h4>
+		    <h4 class="hidden md:block text-sm md:text-md font-bold text-c-pink opacity-75">{{ $user->email }}</h4>
 
 		    <span class="ml-4 px-3 py-2 text-md font-bold text-white rounded bg-green-600">
 	   			{{ $roles }}
