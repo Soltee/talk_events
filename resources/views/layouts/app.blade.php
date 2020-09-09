@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') </title>
-    <link rel="icon" href="{{ asset('/img/logo.svg') }}">
+    <link rel="icon" href="{{ asset('/images/logo.svg') }}">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
     <!-- Styles -->
@@ -88,7 +88,10 @@
                 <div class="flex items-center justify-between">
                     <div class="mr-6">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-blue-900 no-underline">
-                            {{ config('app.name', 'Laravel') }}
+                            <svg  viewBox="0 0 16 16" class="bi bi-calendar-event text-blue-600 w-12 h-12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                              <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                            </svg>
                         </a>
                     </div>
                     <div class="flex justify-end items-center">

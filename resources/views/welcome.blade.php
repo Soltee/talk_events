@@ -15,8 +15,8 @@
 	    <div class="mt-6 md:mt-8 hero w-full flex flex-col md:flex-row justify-between items-center">
 	    	<div class="flex flex-col w-full md:w-1/2">
 
-	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black font-semibold mb-3">Broaden your Horizon</h1>
-	            <h1 class="text-lg md:text-2xl text-c-black ">Meet people that transform you</h1>
+	            <h1 class="text-4xl md:text-5xl lg:text-6xl text-c-black font-semibold mb-3 text-gray-900">Broaden your Horizon</h1>
+	            <h1 class="text-lg md:text-2xl text-gray-800 ">Meet people that transform you</h1>
 	    		<img  src="/images/events.svg" class="lozad w-full sm:w2/3 md:hidden h-64 object-contain w-full hero my-6" alt="">
 
 	            <form method="GET" action="/events/search">

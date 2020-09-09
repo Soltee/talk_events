@@ -14,6 +14,8 @@
 
     
     <!-- Styles -->
+    <link rel="icon" href="{{ asset('/images/logo.svg') }}">
+
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('head')
     <livewire:styles />
