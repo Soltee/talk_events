@@ -1,6 +1,6 @@
 @section('title', 'Profile')
 
-<div class="px-3 md:px-6 pb-6 mb-10">
+<div class="">
 	<div class="flex items-center">
         @include('partials.admin-breadcrumb', ['url' => '/admin/users', 'link' => false, 'pageName' => 'Users', 'routeName' => Route::currentRouteName()])
     </div>

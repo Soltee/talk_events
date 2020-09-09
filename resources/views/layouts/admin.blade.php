@@ -67,15 +67,15 @@
             ">
 
             @auth
-            <div id="sidebar" class="w-40 px-4 py-3 h-screen flex justify-center  ">
+            <div id="sidebar" class="fixed hidden left-0 top-0 bottom-0 px-3 py-3 h-screen flex justify-center bg-blue-600 text-white">
                 @include('admin.inc.sidenav')
             </div>
           
-            <div id="content" class="flex-1 lex flex-col">
-                <nav class=" py-3 md:py-6 px-3 md:px-6">
+            <div id="content" class="py-5 md:py-6 px-6 md:px-6 w-full">
+                <nav class="">
                     <div class="flex items-center justify-between">
                         <div class="mr-6">
-                            <svg id="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 hover:opacity-75 text-gray-900 cursor-pointer hover:opacity-75">
+                            <svg id="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="hamburger w-8 h-8 hover:opacity-75 text-gray-900 cursor-pointer hover:opacity-75">
                                 <line x1="3" y1="12" x2="21" y2="12"></line>
                                 <line x1="3" y1="6" x2="21" y2="6"></line>
                                 <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -117,8 +117,10 @@
                     </div>
                 </nav>
 
-                @yield('content')
-            </div>
+                <div class="mt-4">
+                  @yield('content')
+                </div>
+            </div> 
             @endauth
 
         </div>
@@ -131,11 +133,21 @@
     <script>
       document.addEventListener('DOMContentLoaded', function(){
           
+        // let hamburger = document.querySelectorAll('hamburger');
         let hamburger = document.getElementById('hamburger');
+        let hamburger2 = document.getElementById('hamburger2');
         let sidebar = document.getElementById('sidebar');
         let content = document.getElementById('content');
 
         hamburger.addEventListener("click", function(){
+            if(sidebar.classList.contains('hidden')){
+              sidebar.classList.remove('hidden');
+            } else {
+              sidebar.classList.add('hidden');
+            }
+        });
+
+        hamburger2.addEventListener("click", function(){
             if(sidebar.classList.contains('hidden')){
               sidebar.classList.remove('hidden');
             } else {

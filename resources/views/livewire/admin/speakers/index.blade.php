@@ -1,6 +1,6 @@
 @section('title', 'Speakers')
 
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 
 	<!-- Add User Icon -->
 	@can('add speakers')

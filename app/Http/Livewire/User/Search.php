@@ -14,47 +14,44 @@ use Spatie\QueryBuilder\AllowedFilter;
 class Search extends Component
 {
 	use WithPagination;
-    protected $updatesQueryString = ['category_id'];
 
 	public $keyword          = '';
-	public $category_id      = '';
 	public $category         = '';
 	public $categories       = [];
-    public $onpage           = false;
 
 	public function mount(){
-		// if(!request()->keyword){
-		// 	return redirect()->to('/event');
-		// }
-
 		$this->keyword       = request()->keyword;
-		$this->category_id   = request()->category;
-		if($this->category_id){
-    		$this->category      = Category::findOrfail($this->category_id);
-    	}
-
+		$this->category   = request()->category;
 		$this->categories    = Category::latest()->take(10)->get();
 	}
 
 
     public function render()
     {
-    	if($this->keyword || $this->category_id){
+        $query               = Event::latest();
+        if($this->category){
+        	$query  = $query
+	            		->where('category_id' , $this->category);
             $this->goToPage(1);
         }
 
-    	$paginate       	 = Event::latest()
-		                		->where('category_id' , $this->category_id)
-		                		->where('title' ,   'LIKE', '%'. $this->keyword .'%')
-		                		->with('category')
-				                ->paginate(2)
-				                ->appends(request()->query());
+        if($this->keyword){
+        	$query  = $query
+        				->where('title' ,   'LIKE', '%'. $this->keyword .'%');
+            $this->goToPage(1);
+        }
+    	$paginate   = $query	            		
+	            		->with('category')
+	            		->get();
+		                // ->paginate(4)
+		                // ->appends(request()->query());
 
         return view('livewire.user.search', [
         	'events'         => $paginate,
-        	'total'          => $paginate->total(),
-        	'first'          => $paginate->firstItem(),
-        	'last'           => $paginate->lastItem(),
+        	'total'       => $paginate->count(),
+        	// 'total'          => $paginate->total(),
+        	// 'first'          => $paginate->firstItem(),
+        	// 'last'           => $paginate->lastItem(),
         	'categories'     => $this->categories,
         	'category'       => $this->category,
         ]);

@@ -6,7 +6,7 @@
   	<script src="{{ asset('js/trix.min.js') }}"></script>
 @endsection
 
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 	@if($modal)
 	<div 	
 		>

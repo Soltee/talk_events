@@ -2,7 +2,7 @@
 	{{ $sponser->full_name  }}
 @endsection
 
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 	
 	<div class="flex justify-between items-center  mb-6">
 

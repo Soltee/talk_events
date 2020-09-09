@@ -1,9 +1,9 @@
 @section('title', 'Categories')
 
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 
 	<!-- Add categorys Icon -->
-	<div class="flex justify-between items-center  mb-6">
+	<div class="flex flex-wrap justify-between items-center  mb-6">
 
         <div class="flex items-center">
             @include('partials.admin-breadcrumb', ['url' => '/admin/categories', 'link' => true, 'pageName' => 'Categories', 'routeName' => Route::currentRouteName()])
@@ -35,7 +35,7 @@
 
 	<div class="my-3">
 		<form wire:submit.prevent="store">
-			<div class="flex flex-wrap w-full justify-around">
+			<div class="grid grid-cols-1 md:grid-cols-3 w-full justify-around">
 	    		<div class="flex flex-col mb-3">
 				    <input type="file" class="px-3 py-3 rounded" wire:model="cover">
 				    @error('cover') 
@@ -57,9 +57,9 @@
 		</form>
 	</div>
 
-	<div  class=" overflow-x-auto">
-        <div  class="inline-block min-w-full  rounded-lg overflow-hidden">
-            <table class="min-w-full leading-normal">
+	<div  class="">
+        <div class=" mt-6">
+           {{--  <table class="w-full table-auto">
                 <thead>
                     <tr>
                         <th
@@ -100,7 +100,6 @@
 		                        </td> 
 		                        <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 		                        	<p>{{ $category->user->first_name . ' ' . $category->user->last_name }}</p>
-		                        	{{-- {{$category}} --}}
 		                        </td> 
 		                       
 							    
@@ -153,7 +152,7 @@
                     @endforelse
                 </tbody>
             </table>
-
+ --}}
             <div class="my-6">
                 {{ $categories->links('vendor.pagination.tailwind') }}
             </div>

@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 @endsection
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">

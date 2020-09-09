@@ -3,15 +3,15 @@
 	{{ $event->title }}
 @endsection
 
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 	
 	<div class="flex justify-between items-center  mb-6">
 
         <div class="flex items-center">
-			@include('partials.admin-breadcrumb', ['url' => 'admin/events/', 'link' => true, 'pageName' => 'Events', 'routeName' => Route::currentRouteName()])
+			@include('partials.admin-breadcrumb', ['url' => '/admin/events/', 'link' => true, 'pageName' => 'Events', 'routeName' => Route::currentRouteName()])
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mr-2 text-c-light-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
 
-		    <h4 class="text-sm md:text-md font-bold text-c-pink opacity-75">{{ $event->title }}</h4>
+		    <h4 class="hidden md:block text-sm md:text-md font-bold text-c-pink opacity-75">{{ $event->title }}</h4>
 
 		    <!----Status -->
 		    <div class="ml-3 flex items-center">

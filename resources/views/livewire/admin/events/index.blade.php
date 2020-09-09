@@ -1,20 +1,20 @@
 @section('title', 'Events')
 
-<div class="px-3 md:px-6 pb-6">
+<div class="">
 
 	<!-- Add Events Icon -->
 	@can('add events')
 		<a href="{{ route('event.create') }}" class="z-10 fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
 	@endcan
     	
-	<div class="flex justify-between items-center  mb-6">
+	<div class="flex flex-col md:flex-row justify-between  mb-6">
 
         <div class="flex items-center">
             @include('partials.admin-breadcrumb', ['url' => '/admin/events', 'link' => true, 'pageName' => 'Events', 'routeName' => Route::currentRouteName()])
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf
-			<div class="flex items-center justify-between">
+			<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center justify-between">
 
 				<input type="text" wire:model="title" class="mr-4 px-3 py-3  rounded-lg border "  placeholder="Title">
                 <input type="text" wire:model="price" class="mr-4 px-3 py-3  rounded-lg border " placeholder="price">
@@ -149,10 +149,10 @@
                 </tbody>
             </table>
 
-            <div class="my-6">
-                {{ $events->links('vendor.pagination.tailwind') }}
-            </div>
         </div>
+    </div>
+    <div class="my-6">
+        {{ $events->links('vendor.pagination.tailwind') }}
     </div>
 
 </div>
