@@ -10,9 +10,12 @@ Use Alert;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Image;
+use Livewire\WithFileUploads;
 
 class Profile extends Component
 {
+    use WithFileUploads;
+    
 	public $auth;
     public $avatar;
     public $oldAvatar;
@@ -74,7 +77,7 @@ class Profile extends Component
         // $img->save();
 
         $this->guard()->user()->update([
-        	'avatar'      => $avatar
+        	'avatar'      => '/storage/' .$avatar
         ]);
 
         $this->firstname = '';

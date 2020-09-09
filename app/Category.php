@@ -11,8 +11,13 @@ class Category extends Model
         'user_id', 'name', 'slug', 'image_url', 'thumbnail'
     ];
 
+    public function user(){
+    	return $this->belongsTo(User::class);
+    }
+
     public function events(){
     	return $this->hasMany(Event::class);
     }
+
 
 }

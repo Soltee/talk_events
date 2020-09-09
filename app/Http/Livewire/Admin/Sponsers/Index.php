@@ -58,7 +58,13 @@ class Index extends Component
     /* Remove the Sponser */
     public function drop($sponser){
     	// dd($sponser);
+        abort_if(!auth()->user()->can('delete sponsers'), 403);
     	$sponser = Sponser::findOrfail($sponser);
+        if($sponser->avatar){
+            File::delete([
+                public_path($sponser->avatar)
+            ]);
+        }
     	$sponser->delete();
         $this->status = true;
         $this->message = $sponser->full .' deleted.';

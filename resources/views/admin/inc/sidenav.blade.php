@@ -12,16 +12,26 @@
     			<span class="text-lg">Dashboard</span>
     		</a>
     	</li>
-    	@can('add events')
+    	@can('add categories')
     	<li class="list-none rounded-lg ">
     		<a 
-    			class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'events' || Route::currentRouteName() == 'event.create' || Route::currentRouteName() == 'event.show' || Route::currentRouteName() == 'event.edit') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
-    			href="{{ route('events') }}">
+    			class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'categories' ) ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
+    			href="{{ route('categories') }}">
 
-    			<span class="text-lg">Events</span>
+    			<span class="text-lg">Categories</span>
     		</a>
     	</li>
     	@endcan
+        @can('add events')
+        <li class="list-none rounded-lg ">
+            <a 
+                class="flex items-center px-3 py-3 border-r-2 hover:bg-gray-900 hover:text-white {{ (Route::currentRouteName() == 'events' || Route::currentRouteName() == 'event.create' || Route::currentRouteName() == 'event.show' || Route::currentRouteName() == 'event.edit') ? 'border-r-2 border-gray-900 font-semibold' : '' }}"
+                href="{{ route('events') }}">
+
+                <span class="text-lg">Events</span>
+            </a>
+        </li>
+        @endcan
 
         <li class="list-none rounded-lg ">
             <a 

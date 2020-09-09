@@ -109,7 +109,7 @@
                                 <a href="/admin/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'admin.profile') ? 'underline font-semibold' : ''}}">Profile</a>
                                 
                                 <!-- Logout Component -->
-                                <livewire:admin.auth.logout />
+                                {{-- <livewire:admin.auth.logout /> --}}
 
                             </div>
                           </div>

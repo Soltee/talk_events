@@ -26,41 +26,12 @@ class SpeakerController extends Controller
     	$this->middleware('auth');
     }
 
-    /**
-		* Speakers Lists
-    */
-    public function index()
-    {
-        abort_if(auth()->user()->hasRole('user'), 403);
-        $query = Speaker::withCount('events');
-
-        $query = QueryBuilder::for($query)
-                ->latest()
-                ->allowedFilters(
-                    [
-                        'first_name',
-                        'last_name', 
-                        'email'
-                    ])
-                ->allowedSorts(['first_name', 'email', 'created_at'])
-                ->paginate(10)
-                ->appends(request()->query());
-
-        $speakers     = $query->items();
-        $total        = $query->total();
-        $first        = $query->firstItem();
-        $last         = $query->lastItem();
-        $previous     = $query->previousPageUrl();
-        $next         = $query->nextPageUrl();
-        return view('admin.speakers.index', compact('speakers', 'total', 'first', 'last', 'previous', 'next'));
-    }
-
-
     /*
         * Create Speaker view
     */
     public function create()
     {
+        abort_if(!auth()->user()->can('add speakers'), 403);
         $events = Event::latest()->get();
         return view('admin.speakers.create', compact('events'));
     }
@@ -130,28 +101,14 @@ class SpeakerController extends Controller
         // dd($events);
         // $new  = Speaker::findOrfail($speaker->id);
         // dd($speaker->events);
-         (new SpeakerAdded($speaker->events))
-                ->toMail($speaker->email);
+         // (new SpeakerAdded($speaker->events))
+                // ->toMail($speaker->email);
         // Notification::send($speaker, new SpeakerAdded($speaker->events));
 
         return back()->with('success', 'Speaker created.');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Speaker $speaker)
-    {
-        abort_if(!auth()->user()->can('view speakers'), 403);
-        $events        = $speaker->events;
-        $count_events  = $events->count();
-        // dd($events);
-        return view('admin.speakers.show', compact('speaker', 'events', 'count_events'));
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -252,25 +209,4 @@ class SpeakerController extends Controller
         return redirect()->back()->with('success', 'Speaker updated.');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Speaker $speaker)
-    {
-        abort_if(!auth()->user()->can('delete speakers'), 403);
-
-        if($speaker->avatar){
-            File::delete([
-                public_path($speaker->avatar)
-            ]);
-        }
-        // $speaker->events()->detach();
-
-        $speaker->delete();
-        return redirect()->back()->with('success', 'Speaker deleted.');
-    }
 }

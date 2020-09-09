@@ -77,7 +77,7 @@ class Profile extends Component
         // $img->save();
 
         $this->guard()->user()->update([
-        	'avatar'      => $avatar
+        	'avatar'      => '/storage/' .$avatar
         ]);
 
         $this->password  = '';

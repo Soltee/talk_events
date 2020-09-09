@@ -26,46 +26,12 @@ class SponserController extends Controller
     	$this->middleware('auth');
     }
 
-    /**
-        * sponsers Lists
-    */
-    public function index()
-    {
-        abort_if(auth()->user()->hasRole('user'), 403);
-
-        $query = Sponser::withCount('events');
-        $query = QueryBuilder::for($query)
-                ->latest()
-                ->allowedFilters(
-                    [
-                        'full_name',
-                        'email',
-                        'company_name'
-                    ])
-                ->allowedIncludes([
-                    'events', 
-                    AllowedInclude::count('eventsCount'), // only allows include the number of `friends()` related models
-                ])
-                ->allowedSorts(['full_name', 'email', 'company_name', 'created_at'])
-                ->paginate(8)
-                ->appends(request()->query());
-
-        
-        \Debugbar::info($query);
-        $sponsers   = $query->items();
-        $total      = $query->total();
-        $first      = $query->firstItem();
-        $last       = $query->lastItem();
-        $previous     = $query->previousPageUrl();
-        $next       = $query->nextPageUrl();
-        return view('admin.sponsers.index', compact('sponsers', 'total', 'first', 'last', 'previous', 'next'));
-    }
-
     /*
         * Create Sponsers view
     */
     public function create()
     {
+        abort_if(!auth()->user()->can('add sponsers'), 403);
         $events = Event::latest()->get();
         return view('admin.sponsers.create', compact('events'));
     }
@@ -126,20 +92,6 @@ class SponserController extends Controller
 
         return back()->with('success', 'Sponser created.');
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sponser $sponser)
-    {
-        abort_if(!auth()->user()->can('view sponsers'), 403);
-        $events        = $sponser->events;
-        $count_events  = count($events);
-        return view('admin.sponsers.show', compact('sponser', 'events', 'count_events'));
     }
 
     /**
@@ -235,26 +187,4 @@ class SponserController extends Controller
         return redirect()->back()->with('success', 'Sponser updated.');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sponser $sponser)
-    {
-        abort_if(!auth()->user()->can('delete sponsers'), 403);
-
-        if($sponser->avatar){
-            File::delete([
-                public_path($sponser->avatar)
-            ]);
-        }
-
-        // $sponser->events()->detach();
-
-        $sponser->delete();
-        return redirect()->back()->with('success', 'Sponser deleted.');
-    }
 }

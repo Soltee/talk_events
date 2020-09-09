@@ -69,14 +69,8 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 	//Category
 	Route::group(['middleware' => ['permission:add categories']], function () {
-		Route::get('categories', 'Admin\CategoryController@index')
+		Route::livewire('categories', 'admin.categories.index')
 												->name('categories');
-		Route::post('categories', 'Admin\CategoryController@store')
-												->name('category.store');
-		Route::patch('categories/{category}', 'Admin\CategoryController@update')
-												->name('category.update');
-		Route::delete('categories/{category}', 'Admin\CategoryController@destroy')
-												->name('category.destroy');
 	});
 
 	
@@ -168,13 +162,13 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 		//User
 		Route::livewire('users', 'admin.users.index')
-							->name('users');
+							            ->name('users');
 		Route::get('users/create', 'Admin\UserController@create')
-							->name('user.create');
+							            ->name('user.create');
 		Route::post('users', 'Admin\UserController@store')
-							->name('user.store');
+							            ->name('user.store');
 		Route::livewire('users/{user}', 'admin.users.show')
-							->name('user.show');
+							            ->name('user.show');
 		Route::get('users/{user}/edit', 'Admin\UserController@edit')
 										->name('user.edit');
 		Route::patch('users/{user}', 'Admin\UserController@update')

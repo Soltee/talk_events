@@ -12,9 +12,7 @@ class EventController extends Controller
     {
     	abort_if(!auth()->user()->can('add speakers'), 403);
         $query = Event::latest()
-                    // ->filter(Request::only('search', 'role', 'trashed'))
                     ->paginate(10)
-                    // ->only(['id', 'title']);
                     ->transform(function ($event) {
                         return [
                             'id'      => $event->id,
@@ -23,8 +21,6 @@ class EventController extends Controller
                     });
     	return response()->json([
     		'events' => $query
-    		// 'next'   => $query->nextPageUrl(),
-    		// 'prev'   => $query->previousPageUrl()
     	], 200);
     }
 }

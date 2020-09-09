@@ -30,39 +30,7 @@ class EventController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the company dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        abort_if(auth()->user()->hasRole('user'), 403);
-
-        $query = QueryBuilder::for(Event::class)
-                ->latest()
-                ->allowedFilters(
-                    [
-                        'title',
-                        'venue_name', 
-                        // AllowedFilter::exact('title'),  
-                        AllowedFilter::scope('starts_at')
-                    ])
-                ->allowedFields(['id', 'cover', 'title', 'price', 'start', 'venue_name'])
-                ->allowedSorts(['title', 'created_at'])
-                ->paginate(10)
-                ->appends(request()->query());
-     
-        \Debugbar::info($query);
-        $events   = $query->items();
-        $total    = $query->total();
-        $first    = $query->firstItem();
-        $last     = $query->lastItem();
-        $previous     = $query->previousPageUrl();
-        $next     = $query->nextPageUrl();
-        
-        return view('admin.events.index', compact('events', 'total', 'first', 'last', 'previous', 'next'));
-    }
+    
 
     /** Create Page */
     public function create(Request $request)
@@ -156,23 +124,6 @@ class EventController extends Controller
 
         return back()->with(['success', ' created.', 'id' => $event->id, 'title' => $event->title]);
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  numeric  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event)
-    {
-        abort_if(!auth()->user()->can('view events'), 403);
-        $cat                = $event->category;
-        $speakers           = $event->speakers;
-        $speakers_count     = count($speakers);
-        $sponsers           = $event->sponsers;
-        $sponsers_count     = count($sponsers);
-        return view('admin.events.show', compact('event', 'cat', 'speakers', 'speakers_count', 'sponsers', 'sponsers_count'));
     }
 
     /**
@@ -311,29 +262,4 @@ class EventController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  numeric  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Event $event)
-    {
-        abort_if(!auth()->user()->can('delete events'), 403);
-
-        if($event->cover){
-            File::delete([
-                public_path($event->cover)
-            ]);
-        };
-
-        if($event->thumbnail){
-            File::delete([
-                public_path($event->thumbnail)
-            ]);
-        }
-
-        $event->delete();
-        return redirect()->route('events')->with('success', 'Event deleted.');
-    }
 }
