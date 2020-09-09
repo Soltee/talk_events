@@ -29,36 +29,6 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the company dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        abort_if(auth()->user()->hasRole('user'), 403);
-
-        $search = request()->keyw;
-
-        $query = User::latest()->where('email', '!=' , 'admin@example.com');
-
-        if($search){
-            $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('email', 'LIKE', '%'.$search.'%')
-                            ->whereDate('created_at', '=', Carbon::today()->toDateString()); 
-        }
-
-        $paginate     = $query->paginate(9);
-        $users        =   $paginate->items();
-        $total        = $paginate->total();
-        $first        = $paginate->firstItem();
-        $last         = $paginate->lastItem();
-        $previous     = $paginate->appends(request()->input())->previousPageUrl();
-        $next         = $paginate->appends(request()->input())->nextPageUrl();
-        return view('admin.users.index', compact('users', 'total', 'first', 'last', 'previous', 'next'));
-    }
-
     /** Create Page */
     public function create(Request $request)
     {
@@ -90,7 +60,7 @@ class UserController extends Controller
             'first_name'          => $data['first_name'],
             'last_name'           => $data['last_name'],
             'email'               => $data['email'],
-            'password'            => $data['password']
+            'password'            => bcrypt($data['password'])
         ], 
             $coverArr ?? []
         ));
@@ -140,6 +110,7 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user', 'roles', 'perms', 'user_role', 'user_perms'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -149,83 +120,48 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // dd($request->all());
         abort_if(!auth()->user()->can('update users'), 403);
+        // dd($request->all());
 
          $data = $request->validate([
             'first_name'          => 'required|string|min:2',
             'last_name'           => 'required|string', 
-            'email'               => 'required|string|email|unique:users', 
+            'email'               => 'required|string|email', 
             'password'            => 'required|string|min:8|confirmed', 
-            'role'                => 'nullable|array', 
+            'role'                => 'nullable', 
             'permission_name'     => 'nullable|array', 
         ]);
 
-        // dd($request->all());
-        $user = $user->update(array_merge([
+        // dd($data);
+        $user->update(array_merge([
             'first_name'          => $data['first_name'],
             'last_name'           => $data['last_name'],
             'email'               => $data['email'],
-            'password'            => $data['password']
+            'password'            => bcrypt($data['password'])
         ], 
             $coverArr ?? []
         ));
 
         //Give Role and permissons
+        // dd($user);
         if($data['role']){
             $user->syncRoles([$data['role']]);
         }
 
         //Give Permiision If given
         if($data['permission_name']){
-            $permissons_arr = explode(',',  $data['permission_name']);
-            $user->syncPermissions($permissons_arr);
-
+            $user->syncPermissions($data['permission_name']);
         }
+
         //Send Login Credentials
         // Notification::route('mail', $user->email)->notify(new UserAdded($user->email, $data['password']));
 
-        $admin = User::where('email', 'admin@example.com')->get();
+        // $admin = User::where('email', 'admin@example.com')->get();
 
-		Notification::send($admin, new UserUpdated($user->email, $user->first_name, $user->last_name));
+		// Notification::send($admin, new UserUpdated($user->email, $user->first_name, $user->last_name));
 
         return redirect()->back()->with('success', 'User updated.');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  numeric  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-
-        abort_if(!auth()->user()->can('delete users'), 403);
-
-        $deleted_user = $user; 
-        //REmove role
-        // dd($user->getRoleNames());
-        if($user->getRoleNames()){
-	        foreach($user->getRoleNames() as $role){
-	        	$user->removeRole($role);
-	        }
-	    }
-
-        if($user->cover){
-            File::delete([
-                public_path($user->cover)
-            ]);
-        };
-
-        $user->delete();
-
-        $admin = User::where('email', 'admin@example.com')->get();
-
-		// Notification::send($admin, new UserDeleted($deleted_user->email, $deleted_user->first_name, $deleted_user->last_name));
-
-        return redirect()->route('users')->with('success', 'User deleted.');
-    }
 }
 

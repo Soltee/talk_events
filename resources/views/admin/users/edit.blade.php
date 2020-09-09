@@ -1,16 +1,18 @@
 @extends('layouts.admin')
 
 @section('head')
-<style>
-    .custom_checkbox input:checked + .checkbox_btn{
-		font-size: bold;
-	}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
+	<style>
+	    .custom_checkbox input:checked + .checkbox_btn{
+			font-size: bold;
+		}
 
 
-	./*custom_radio2 input['checkbox']:checked + .checkbox_btn2{
-		border: 2px solid blue;
-	}*/
-</style>
+		./*custom_radio2 input['checkbox']:checked + .checkbox_btn2{
+			border: 2px solid blue;
+		}*/
+	</style>
 @endsection
 
 @section('content')
@@ -34,7 +36,16 @@
             
             </div>
 
-		 
+		 	
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 		 	<div class="flex justify-between flex-col md:flex-row">
 	    			<div class="flex flex-col md:mr-4 w-full md:w-1/2">
 
@@ -146,19 +157,35 @@
 		    			{{-- {{$user_perms}} --}}
 		    			@if($user_perms->count() > 0)
 		    			<div class="flex flex-col mb-8">
-		    	
-		    				<div id="userPermissions" class="flex flex-col mb-3">
-		    					<select multiple
-		    					   	name="permission_name">
+		    				<div class="inline-block relative w-full">
+	                            <select 
+	                                id="slim-permissions" 
+	                                multiple 
+	                                name="permission_name[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+	                                >
+	                                    <option data-placeholder="true"></option>
+	                                    @forelse($user_perms as $perm)
+	                                        <option selected value="{{ $perm->id }}">{{ $perm->name }} </option>
+	                                    @empty
+	                                    @endforelse
+	                                    @forelse($perms as $permission)
+	                                        <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+	                                    @empty
+	                                    @endforelse
+
+	                            </select>
+	                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+	                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+	                            </div>
+	                        </div>
+		    				<div  class="flex flex-col mb-3">
+		    					{{-- <select 
+		    						id="slim-permissions"
+		    						multiple 
+		    					   	name="permission_name[]">
+	                                <option data-placeholder="true"></option>
 		    						@forelse($perms as $permission)
 		    						<div class="flex justify-between items-center mb-2">
-		    							{{-- @forelse($user_perms as $perm)
-		    								@if($perm->name === $permission->name)
-		    									<option class="permissionName  mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold" selected="">{{ $permission->name }}</option>
-		    								@endif
-		    							@empty
-
-		    							@endforelse --}}
 										<option value="{{ $permission->id }}" class="permissionName  mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold"
 											>
 											{{ strtoupper($permission->name) }}
@@ -169,7 +196,7 @@
 		    					@empty
 		    						<option>No permission yet.</option>
 		    					@endforelse
-		    					</select>
+		    					</select> --}}
 								
 		    				</div>
 
@@ -204,6 +231,12 @@
 			    passwordConfirm.value = retVal;
 			    // console.log(document.getElementById('password'));
         	});
+
+        	//Select Permissions
+        	var permissions_select =  new SlimSelect({
+              select: '#slim-permissions',
+                placeholder: 'Select Permissions'
+            });
 
 
         	//Permissions

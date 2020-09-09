@@ -6,10 +6,6 @@
 		font-size: bold;
 	}
 
-
-	./*custom_radio2 input['checkbox']:checked + .checkbox_btn2{
-		border: 2px solid blue;
-	}*/
 </style>
 @endsection
 
@@ -113,9 +109,9 @@
 	    				</div>
 	    				
 	    				<div class="flex flex-col mb-8">
-	    					<div id="RoleTab" class="flex justify-between items-center w-full mb-6">
-				       			<input id="new_role" type="text" class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  autofocus placeholder="">
-				       			<span id="roleSubmit" class="px-6 py-2  rounded bg-green-600 cursor-pointer hover:bg-green-500 text-white">
+	    					<div id="RoleTab" class="flex justify-between w-full mb-6">
+				       			<input id="new_role" type="text" class=" appearance-none border rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  autofocus placeholder="">
+				       			<span id="roleSubmit" class="px-6 py-3  rounded-r bg-green-600 cursor-pointer hover:bg-green-500 text-white">
 					    			Create
 					    		</span>
 					    	</div>
@@ -150,9 +146,9 @@
 		    			</div>
 
 		    			<div class="flex flex-col mb-8">
-		    				<div id="PermissionTab" class="flex justify-between items-center w-full mb-6">
-				       			<input id="new_permission" type="text" class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  autofocus placeholder="">
-				       			<span id="permissionSubmit" class="px-6 py-2  rounded bg-green-600 cursor-pointer hover:bg-green-500 text-white">
+		    				<div id="PermissionTab" class="flex justify-between w-full mb-6">
+				       			<input id="new_permission" type="text" class=" appearance-none border rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  autofocus placeholder="">
+				       			<span id="permissionSubmit" class="px-6 py-3  rounded-r bg-green-600 cursor-pointer hover:bg-green-500 text-white">
 					    			Create
 					    		</span>
 					    	</div>

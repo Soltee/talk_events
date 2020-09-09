@@ -1,4 +1,3 @@
-
 @section('title' , 'Dashboard Login')
 @section('head')
 @endsection
@@ -11,15 +10,21 @@
                 {{ __('Dashboard Login') }}
             </div>
 
-        	@if($error)
-
-        		<p class=" bg-red-200 rounded  px-6 py-3 my-3 text-red-600">{{ $message }}!</p>
-
-        	@endif
             <form wire:submit.prevent="login" class="w-full p-6">
                 @csrf
 
-                <div class="flex flex-col mb-6">
+              
+                @if (session()->has('error'))
+
+                    <div class="px-2 py-3 mb-3  rounded text-red-500 bg-red-100">
+
+                        {{ session('error') }}
+
+                    </div>
+
+                @endif
+
+                <div wire:ignore class="flex flex-col mb-6">
                     <label for="email" class="block text-gray-600 text-sm font-bold mb-2">
                         {{ __('Email') }}:
                     </label>
@@ -33,7 +38,7 @@
 	                @enderror
                 </div>
 
-                <div class="flex flex-col mb-6">
+                <div wire:ignor class="flex flex-col mb-6">
                     <label for="password" class="block text-gray-600 text-sm font-bold mb-2">
                         {{ __('Password') }}:
                     </label>
@@ -63,7 +68,7 @@
 						  <div class="bounce2"></div>
 						  <div class="bounce3"></div>
 						</div>
-                    	<span wire:loading.remove class="font-semibold">{{ __('Login') }}</span>
+                    	<span class="font-semibold">{{ __('Login') }}</span>
                     </button>
 
                 </div>

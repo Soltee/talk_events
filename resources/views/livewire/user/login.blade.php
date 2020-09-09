@@ -38,7 +38,7 @@
 
             <div class="flex flex-wrap mb-6">
                 <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ __('E-Mail Address') }}:
+                    {{ __('E-Mail') }}:
                 </label>
 
                 <input id="email" type="email" class="form-input w-full" wire:model="email" value="{{ old('email') }}"  autocomplete="email" >
