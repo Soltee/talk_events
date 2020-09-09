@@ -10,7 +10,6 @@ Use Alert;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Image;
-use Livewire\WithFileUploads;
 
 class Profile extends Component
 {

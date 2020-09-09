@@ -9,6 +9,19 @@ Route::get('/events/{event}-{slug}', 'WelcomeController@event')
 Route::get('/event', 'WelcomeController@events')
 										->name('events.all');
 
+/*About Site*/
+Route::get('/help/cookie-policy', 'AboutController@cookiePolicy')
+									->name('cookie-policy');
+Route::get('/help/privacy-policy', 'AboutController@privacyPolicy')
+									->name('privacy-policy');
+Route::get('/help/faqs', 'AboutController@faqs')
+									->name('faqs');		
+Route::get('/help/contact-us', 'AboutController@contactUs')
+									->name('contact-us');
+									
+Route::get('/help/terms-conditions', 'AboutController@termsConditions')
+									->name('terms-conditions');																
+
 /*Livewire*/
 Route::livewire('/events/schedules', 'user.schedule')
 									->name('calender');

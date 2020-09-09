@@ -127,7 +127,7 @@
                                 <a href="/profile" class="no-underline hover:underline text-blue-600 text-sm  md:text-md hover:font-semibold p-3 {{ (Route::currentRouteName() == 'profile') ? 'underline font-semibold' : ''}}">Profile</a>
                                 
                                 <!-- Logout Component -->
-                                <livewire:user.auth.logout />
+                                {{-- <livewire:user.auth.logout /> --}}
 
                             </div>
                           </div>
@@ -160,24 +160,30 @@
                           <h3 class="text-white hover:opacity-75 mb-8 text-md  pr-3">Useful Links</h3>
                           
                           <div class="flex flex-col items-right md:justify-end w-full mt-4">
-                              <li class="list-none mb-4 md:mb-2">
-                                  <a href="/shoes" class="text-white hover:opacity-75">
-                                      Events
+                            
+                              <li class="list-none mb-4 ">
+                                  <a href="{{ route('contact-us') }}" class="text-white hover:opacity-75 {{ Route::currentRouteName() == 'contact-us' ? 'font-bold' : ''}}">
+                                      Contact Us
                                   </a>
                               </li>
-                              <li class="list-none mb-4 md:mb-2">
-                                  <a href="/#" class="text-white hover:opacity-75">
+                              <li class="list-none mb-4 ">
+                                  <a href="{{ route('privacy-policy') }}" class="text-white hover:opacity-75 {{ Route::currentRouteName() == 'privacy-policy' ? 'font-bold' : ''}}">
                                       Privacy Policy
                                   </a>
                               </li>
-                              <li class="list-none mb-4 md:mb-2">
-                                  <a href="/#" class="text-white hover:opacity-75">
+                              <li class="list-none mb-4 ">
+                                  <a href="{{ route('terms-conditions') }}" class="text-white hover:opacity-75 {{ Route::currentRouteName() == 'terms-conditions' ? 'font-bold' : ''}}">
                                       Terms & Conditions
                                   </a>
                               </li>
-                              <li class="list-none mb-4 md:mb-2">
-                                  <a href="/#" class="text-white hover:opacity-75">
-                                      How it Works
+                              <li class="list-none mb-4 ">
+                                  <a href="{{ route('cookie-policy') }}" class="text-white hover:opacity-75 {{ Route::currentRouteName() == 'cookie-policy' ? 'font-bold' : ''}}">
+                                      Cookie Policy
+                                  </a>
+                              </li>
+                              <li class="list-none mb-4 ">
+                                  <a href="{{ route('faqs') }}" class="text-white hover:opacity-75 {{ Route::currentRouteName() == 'faqs' ? 'font-bold' : ''}}">
+                                      F.A.Qs
                                   </a>
                               </li>
                           </div>
