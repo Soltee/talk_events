@@ -19,6 +19,5 @@ mix
     .tailwind('./tailwind.config.js');
 
 if (mix.inProduction()) {
-    mix
-        .version();
+    mix.version();
 }
