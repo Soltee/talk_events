@@ -19,7 +19,7 @@
 				<input type="text" wire:model="title" class="mr-4 px-3 py-3  rounded-lg border "  placeholder="Title">
                 <input type="text" wire:model="price" class="mr-4 px-3 py-3  rounded-lg border " placeholder="price">
                 <input type="text" wire:model="venue_name" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Venue">
-				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Date">
+				<input type="date" wire:model="start" class="mr-4 px-3 py-3  rounded-lg border " placeholder="Date">
 			
 			</div>
 		</form>

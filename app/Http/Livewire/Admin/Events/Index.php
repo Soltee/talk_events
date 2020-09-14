@@ -23,28 +23,88 @@ class Index extends Component
 
     public function render()
     {	
-        if($this->title || $this->price || $this->venue_name || $this->start || $this->created_at){
-            $this->goToPage(1);
+        if($this->title){
+
+            $paginate    = Event::latest()
+                            ->where('title' ,   'LIKE', '%'. $this->title .'%')
+                            ->with(['user', 'bookings'])
+                            ->paginate(10)
+                            ->appends(request()->query());
+        } elseif($this->price) {
+
+            $paginate    = Event::latest()
+                            ->where('price' ,   'LIKE', '%'. $this->price .'%')
+                            ->with(['user', 'bookings'])
+                            ->paginate(10)
+                            ->appends(request()->query());
+        } elseif($this->venue_name) {
+
+            $paginate    = Event::latest()
+                            ->where('venue_name' ,   'LIKE', '%'. $this->venue_name .'%')
+                            ->with(['user', 'bookings'])
+                            ->paginate(10)
+                            ->appends(request()->query());
+        } elseif($this->start) {
+
+            $paginate    = Event::latest()
+                            ->where('start' ,   'LIKE', '%'. $this->start .'%')
+                            ->with(['user', 'bookings'])
+                            ->paginate(10)
+                            ->appends(request()->query());
+        } else {
+
+    	   $paginate    = Event::latest()
+                            ->with(['user', 'bookings'])
+                            ->paginate(10)
+                            ->appends(request()->query());
         }
 
-    	$paginate            = Event::latest()
-                                ->where('title' ,   'LIKE', '%'. $this->title .'%')
-                                ->where('price' ,   'LIKE', '%'. $this->price .'%')
-                                ->where('venue_name' ,   'LIKE', '%'. $this->venue_name .'%')
-                                ->where('start' ,   'LIKE', '%'. $this->start .'%')
-                                ->where('start' ,   'LIKE', '%'. $this->created_at .'%')
-                                ->with(['user', 'bookings'])
-                                ->paginate(10)
-                                ->appends(request()->query());
-
         return view('livewire.admin.events.index', [
-            'events'       => $paginate,
-            'first'        => $paginate->firstItem(),
-            'last'         => $paginate->lastItem(),
-            'total'        => $paginate->total()
+            'events'       => $paginate
         ]);
 
     }
+
+    public function updatedTitle()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->title) {
+            $this->title = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedPrice()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->price) {
+            $this->price = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedVenue_name()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->venue_name) {
+            $this->venue_name = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedStart()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->start) {
+            $this->start = null;
+        }
+
+        $this->gotoPage(1);
+    }
+    
 
     /**Close*/
     public function close(){

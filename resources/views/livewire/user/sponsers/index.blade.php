@@ -14,9 +14,7 @@
 
 		<div class="flex justify-between items-center">
     		<input type="text" wire:model="keyword" class=" px-6 py-3 rounded border border-blue-500" value="{{ $keyword }}" placeholder="Name">
-    		<button wire:click="$refresh" class="px-3 py-3 bg-blue-600 hover:bg-blue-500 text-white">
-    			Refresh
-    		</button>
+
     	</div>
 
 

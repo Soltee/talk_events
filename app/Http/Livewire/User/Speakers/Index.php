@@ -17,30 +17,61 @@ class Index extends Component
 
     public function render()
     {
+        // $this->renderSpeakerList();
         if($this->keyword){
-            $this->goToPage(1);
-        }
+            $speakers = Speaker::latest()
+                        ->where('first_name', 'LIKE', '%'. $this->keyword . '%')
+                        ->orWhere('last_name', 'LIKE', '%'. $this->keyword . '%')
+                        ->with([
+                                'events' => function($query)
+                                    {
+                                        $query->select('title', 'price');
+                                     }
+                                ])
+                            ->paginate(8);
+        } else {
         
-    	$speakers = Speaker::latest()
-    							->where('first_name', 'LIKE', '%'. $this->keyword . '%')
-    							->orWhere('last_name', 'LIKE', '%'. $this->keyword . '%')
-    							->with([
-                                    'events' => function($query)
-                                        {
-                                            $query->select('title', 'price');
-                                         }
-                                  	])
-    							->paginate(8);
+            $speakers   = Speaker::latest()->with([
+                                'events' => function($query)
+                                    {
+                                        $query->select('title', 'price');
+                                     }
+                                ])
+                            ->paginate(8);
 
-        $first    = $speakers->firstItem();
-        $last     = $speakers->lastItem();
-        $total    = $speakers->total();
+        }
+
+        $this->totalPages = $speakers->lastPage();
 
         return view('livewire.user.speakers.index', [
-        		'speakers'     => $speakers,
-        		'first'        => $first,
-        		'last'         => $last,
-        		'total'        => $total
-        	]);
+                'speakers'     => $speakers
+            ]);
+    }
+
+
+
+    public function updatedKeyword()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->keyword) {
+            $this->keyword = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    /* Fix nextPage/previousPage to disallow overflows */
+    public function previousPage()
+    {
+        if ($this->page > 1) {
+            $this->page = $this->page - 1;
+        }
+    }
+
+    public function nextPage()
+    {
+        if ($this->page < $this->totalPages) {
+            $this->page = $this->page + 1;
+        }
     }
 }

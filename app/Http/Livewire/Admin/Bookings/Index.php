@@ -23,33 +23,88 @@ class Index extends Component
     public function render()
     {
 
-        $query       = Booking::latest();
-
-        if($this->name || $this->payment_type || $this->created_at){
-            $this->goToPage(1);
-        }
-
         if($this->name) {
-            $query = $query
+
+            $paginate = Booking::latest()
                         ->where('first_name' ,   'LIKE', '%'. $this->name .'%')
-                        ->orWhere('last_name' ,   'LIKE', '%'. $this->name .'%');
-        }
+                        ->orWhere('last_name' ,   'LIKE', '%'. $this->name .'%')
+                        ->with(['user', 'event'])
+                        ->paginate(10);
 
+        } 
+        elseif($this->payment_type){
 
-        $paginate       = $query
+            $paginate   = Booking::latest()
                             ->where('payment_type' ,   'LIKE', '%'. $this->payment_type .'%')
+                            ->with(['user', 'event'])
+                            ->paginate(10);
+
+        } elseif($this->created_at){
+
+            $paginate   = Booking::latest()
                             ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+                            ->with(['user', 'event'])
+                            ->paginate(10);
+        } 
+        else {
+
+            $paginate   = Booking::latest()
                             ->with(['user', 'event'])
                             ->paginate(10)
                             ->appends(request()->query());
 
+       }
+
         return view('livewire.admin.bookings.index', [
-            'bookings'     => $paginate,
-            'first'        => $paginate->firstItem(),
-            'last'         => $paginate->lastItem(),
-            'total'        => $paginate->total()
+            'bookings'     => $paginate
         ]);
 
+    }
+
+
+    public function updatedName()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->name) {
+            $this->name = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedPayment_type()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->payment_type) {
+            $this->payment_type = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedCreated_at()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->created_at) {
+            $this->created_at = null;
+        }
+
+        $this->gotoPage(1);
+    }
+    
+    /* Fix nextPage/previousPage to disallow overflows */
+    public function previousPage()
+    {
+        if ($this->page > 1) {
+            $this->page = $this->page - 1;
+        }
+    }
+
+    public function nextPage()
+    {
+        if ($this->page < $this->totalPages) {
+            $this->page = $this->page + 1;
+        }
     }
 
     /**Close*/

@@ -28,18 +28,31 @@ class Index extends Component
 
     public function render()
     {
-    	if($this->user_id || $this->name || $this->created_at){
-            $this->goToPage(1);
-        }
-
-    	$paginate   = Category::latest()
-                        ->where('user_id' ,   'LIKE', '%'. $this->user_id .'%')
+    	if($this->name){
+            $paginate   = Category::latest()
                         ->where('name' ,   'LIKE', '%'. $this->name .'%')
+                        ->with(['user'])
+                        ->withCount('events')
+                        ->paginate(3)
+                        ->appends(request()->query());
+
+        } elseif ($this->created_at) {
+
+            $paginate   = Category::latest()
                         ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
                         ->with(['user'])
                         ->withCount('events')
                         ->paginate(3)
                         ->appends(request()->query());
+        } else {
+
+        	$paginate   = Category::latest()
+                            ->with(['user'])
+                            ->withCount('events')
+                            ->paginate(3)
+                            ->appends(request()->query());
+        }
+
         return view('livewire.admin.categories.index', [
         		'categories'   => $paginate,
 	            'first'        => $paginate->firstItem(),
@@ -47,6 +60,27 @@ class Index extends Component
 	            'total'        => $paginate->total()
         	]);
     }
+
+    public function updatedName()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->name) {
+            $this->name = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedCreated_at()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->created_at) {
+            $this->created_at = null;
+        }
+
+        $this->gotoPage(1);
+    }
+    
 
     /**Close*/
     public function close(){

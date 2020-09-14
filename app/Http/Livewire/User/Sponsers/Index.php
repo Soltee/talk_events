@@ -17,16 +17,19 @@ class Index extends Component
 
     public function render()
     {
-    	$query = Sponser::latest();
-
         if($this->keyword){
-    		$query = $query
-                    ->where('full_name', 'LIKE', '%'. $this->keyword . '%');
-            $this->goToPage(1);
+            $sponsers = Sponser::latest()
+                        ->where('full_name', 'LIKE', '%'. $this->keyword . '%')
+                        ->with([
+                                'events' => function($query)
+                                    {
+                                        $query->select('title', 'price');
+                                     }
+                                ])
+                            ->paginate(8);
+        } else {
 
-        }
-
-    	$sponsers		= $query
+        	$sponsers   = Sponser::latest()
                             ->with([
                                 'events' => function($query)
                                     {
@@ -35,15 +38,35 @@ class Index extends Component
                               	])
     						->paginate(8);
 
-        $first    = $sponsers->firstItem();
-        $last     = $sponsers->lastItem();
-        $total    = $sponsers->total();
+        }
 
         return view('livewire.user.sponsers.index', [
-        		'sponsers'     => $sponsers,
-        		'first'        => $first,
-        		'last'         => $last,
-        		'total'        => $total
+        		'sponsers'     => $sponsers
         	]);
+    }
+
+    public function updatedKeyword()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->keyword) {
+            $this->keyword = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    /* Fix nextPage/previousPage to disallow overflows */
+    public function previousPage()
+    {
+        if ($this->page > 1) {
+            $this->page = $this->page - 1;
+        }
+    }
+
+    public function nextPage()
+    {
+        if ($this->page < $this->totalPages) {
+            $this->page = $this->page + 1;
+        }
     }
 }

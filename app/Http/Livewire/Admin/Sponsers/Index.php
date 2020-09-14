@@ -21,33 +21,65 @@ class Index extends Component
 
     public function render()
     {
-
-        if($this->name || $this->email || $this->created_at){
-            $this->goToPage(1);
-        }
-
-        $query     =  Sponser::latest();
         if($this->name) {
-        	$query = $query
-        				->where('full_name' ,   'LIKE', '%'. $this->name .'%');
-        }
-        
-        $paginate  =  $query
-                        ->where('email' ,   'LIKE', '%'. $this->email .'%')
-                        
-                        ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+            $paginate = Sponser::latest()
+                        ->where('full_name' ,   'LIKE', '%'. $this->name .'%')
                         ->paginate(10)
                         ->appends(request()->query());
+        } elseif ($this->email) {
+            
+            $paginate  =  Sponser::latest()
+                            ->where('email' ,   'LIKE', '%'. $this->email .'%')
+                            ->paginate(10)
+                            ->appends(request()->query());
+        } elseif ($this->created_at) {
+            
+            $paginate  =  Sponser::latest()
+                            ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+                            ->paginate(10)
+                            ->appends(request()->query());
+        } else {
+        
+            $paginate  =  Sponser::latest()                            
+                            ->paginate(10)
+                            ->appends(request()->query());
+        }
 
         return view('livewire.admin.sponsers.index', [
-            'sponsers'     => $paginate,
-            'first'        => $paginate->firstItem(),
-            'last'         => $paginate->lastItem(),
-            'total'        => $paginate->total()
+            'sponsers'     => $paginate
         ]);
 
     }
 
+    public function updatedName()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->name) {
+            $this->name = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedEmail()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->email) {
+            $this->email = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedCreated_at()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->created_at) {
+            $this->created_at = null;
+        }
+
+        $this->gotoPage(1);
+    }
 
     /**Close*/
     public function close(){

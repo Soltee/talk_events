@@ -24,9 +24,18 @@ class Index extends Component
 
     public function render()
     {
-        $role      = $this->role;
-        $query     = User::latest()
-        		   		->where('email', '!=' , 'admin@example.com');
+        if($this->first_name){
+
+            $query  = User::latest()
+        		   	  ->where('email', '!=' , 'admin@example.com')
+                      ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
+                    ->where('last_name' ,   'LIKE', '%'. $this->last_name .'%')
+                    ->where('email' ,   'LIKE', '%'. $this->email .'%')
+                    
+                    ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
+                    ->paginate(10)
+                    ->appends(request()->query());
+        }
         if($role){
         	$query = $query
         				->whereHas('roles', function ($query) use($role) {
@@ -44,12 +53,59 @@ class Index extends Component
                         ->appends(request()->query());
 
         return view('livewire.admin.users.index', [
-            'users'        => $paginate,
-            'first'        => $paginate->firstItem(),
-            'last'         => $paginate->lastItem(),
-            'total'        => $paginate->total()
+            'users'        => $paginate
         ]);
 
+    }
+
+    public function updatedFirst_name()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->first_name) {
+            $this->first_name = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedLast_name()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->last_name) {
+            $this->last_name = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedRole()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->role) {
+            $this->role = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedEmail()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->email) {
+            $this->email = null;
+        }
+
+        $this->gotoPage(1);
+    }
+
+    public function updatedCreated_at()
+    {
+        // Prefer null over empty string to remove from query string
+        if (! $this->created_at) {
+            $this->created_at = null;
+        }
+
+        $this->gotoPage(1);
     }
 
     /**Close*/
