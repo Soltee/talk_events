@@ -89,7 +89,7 @@
                             x-data="{ open : false}">
                             <div class="flex items-center">
                               @if(auth()->user()->avatar)
-                                <img  src="/storage/{{ auth()->user()->avatar }}" class="w-8 h-8 rounded-full object-cover object-center" onerror="this.src='/images/placeholder.png'">
+                                <img  src="{{ auth()->user()->avatar }}" class="w-8 h-8 rounded-full object-cover object-center" onerror="this.src='/images/placeholder.png'">
                                 <svg
                                   x-on:click="open = !open;"
                                   class="ml-2 h-8 w-8 text-blue-600 cursor-pointer hover:text-blue-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

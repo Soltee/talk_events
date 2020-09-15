@@ -66,15 +66,6 @@ class Profile extends Component
         }
 
         $avatar = $this->avatar->store('admin', 'public');
-        // open file a image resource
-        // $img = Image::make($avatar);
-
-        // $img->fit(200, 200, function ($constraint) {
-        //     $constraint->upsize();
-        // });
-
-        // $img->save();
-
         $this->guard()->user()->update([
         	'avatar'      => '/storage/' .$avatar
         ]);
