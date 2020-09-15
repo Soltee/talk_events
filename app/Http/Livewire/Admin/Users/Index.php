@@ -13,9 +13,8 @@ class Index extends Component
 {	
 	use WithPagination;
 
-    protected $updatesQueryString = ['first_name', 'last_name', 'email', 'role', 'created_at'];
-    public $first_name     = '';
-    public $last_name      = '';
+    protected $updatesQueryString = ['name', 'email', 'role', 'created_at'];
+    public $name           = '';
     public $email          = '';
     public $role           = '';
     public $created_at     = '';
@@ -24,33 +23,49 @@ class Index extends Component
 
     public function render()
     {
-        if($this->first_name){
+        if($this->name){
 
-            $query  = User::latest()
-        		   	  ->where('email', '!=' , 'admin@example.com')
-                      ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
-                    ->where('last_name' ,   'LIKE', '%'. $this->last_name .'%')
-                    ->where('email' ,   'LIKE', '%'. $this->email .'%')
-                    
-                    ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
-                    ->paginate(10)
-                    ->appends(request()->query());
-        }
-        if($role){
-        	$query = $query
+            $paginate  = User::latest()
+        		   	    ->where('email', '!=' , 'admin@example.com')
+                        ->where('first_name' ,   'LIKE', '%'. $this->name .'%')
+                        ->orWhere('last_name' ,   'LIKE', '%'. $this->name .'%')
+                        ->paginate(10)
+                        ->appends(request()->query());
+        
+        } elseif ($this->email) {
+            
+            $paginate  = User::latest()
+                        ->where('email', '!=' , 'admin@example.com')
+                        ->where('email' ,   'LIKE', '%'. $this->email .'%')                        
+                        ->paginate(10)
+                        ->appends(request()->query());
+
+        } elseif ($this->role) {
+
+            $role     = $this->role;
+        	$paginate = User::latest()
+                        ->where('email', '!=' , 'admin@example.com')
         				->whereHas('roles', function ($query) use($role) {
 						    return $query->where('name', $role);
-						});
-        }
+						})
+                        ->paginate(10)
+                        ->appends(request()->query());
 
-        $paginate  =  $query
-                        ->where('first_name' ,   'LIKE', '%'. $this->first_name .'%')
-                        ->where('last_name' ,   'LIKE', '%'. $this->last_name .'%')
-                        ->where('email' ,   'LIKE', '%'. $this->email .'%')
-                        
+        } elseif ($this->created_at) {
+            
+            $paginate  =  User::latest()
+                        ->where('email', '!=' , 'admin@example.com')  
                         ->where('created_at' ,   'LIKE', '%'. $this->created_at .'%')
                         ->paginate(10)
                         ->appends(request()->query());
+        } else {
+
+            $paginate  =  User::latest()
+                            ->where('email', '!=' , 'admin@example.com')  
+                            ->paginate(10)
+                            ->appends(request()->query());
+
+        }
 
         return view('livewire.admin.users.index', [
             'users'        => $paginate
@@ -58,25 +73,16 @@ class Index extends Component
 
     }
 
-    public function updatedFirst_name()
+    public function updatedName()
     {
         // Prefer null over empty string to remove from query string
-        if (! $this->first_name) {
-            $this->first_name = null;
+        if (! $this->name) {
+            $this->name = null;
         }
 
         $this->gotoPage(1);
     }
 
-    public function updatedLast_name()
-    {
-        // Prefer null over empty string to remove from query string
-        if (! $this->last_name) {
-            $this->last_name = null;
-        }
-
-        $this->gotoPage(1);
-    }
 
     public function updatedRole()
     {

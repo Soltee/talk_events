@@ -4,7 +4,7 @@
 
 	<!-- Add User Icon -->
 	@can('add users')
-		<a href="{{ route('user.create') }}" class="fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75 z-10">+</a>
+		<a href="{{ route('user.create') }}" class="fixed right-0 bottom-0 mr-32 mb-32 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75 z-10">+</a>
 	@endcan
     	
 	<div class="flex flex-col justify-between   mb-6">
@@ -14,10 +14,9 @@
         </div>
 		<form method="get" accept-charset="utf-8">
 			@csrf
-			<div class="flex flex-wrap items-center justify-between">
+			<div class="flex flex-wrap items-center justify-end">
 
-				<input type="text" wire:model="first_name" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0"  placeholder="Firstname">
-                <input type="text" wire:model="last_name" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Lastname">
+				<input type="text" wire:model="name" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0"  placeholder="Name">
                 <input type="text" wire:model="role" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Role">
                 <input type="text" wire:model="email" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Email">
 				<input type="date" wire:model="created_at" class="mr-4 px-3 py-3  rounded-lg border mb-3 md:mb-0" placeholder="Date">

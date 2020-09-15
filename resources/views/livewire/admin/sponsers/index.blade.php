@@ -4,7 +4,7 @@
 
 	<!-- Add User Icon -->
 	@can('add sponsers')
-		<a href="{{ route('sponser.new') }}" class="z-10 fixed right-0 bottom-0 mr-3 md:mr-8 mb-3 md:mb-8 text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
+		<a href="{{ route('sponser.new') }}" class="z-10 fixed right-0 bottom-0 mr-32 mb-32  text-xl font-3xl text-white bg-blue-600 rounded-full px-6 py-5  hover:opacity-75">+</a>
 	@endcan
     	
 	<div class="flex flex-col justify-between   mb-6">
