@@ -19,9 +19,11 @@ Users can login , register , update their profile. They can also book any events
 
 ![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/register.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/user bookings.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/user-bookings.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/user single booking page.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/speakers-with-pagination.png)
+
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/user-single-booking-page.png)
 
 
 #Admin Pages
@@ -30,23 +32,23 @@ Users can login , register , update their profile. They can also book any events
 
 ![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-register.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin dashboard.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-dashboard.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin bookings page.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-bookings-page.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin events page.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-events-page.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin add events page.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-add-events-page.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin users page.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-users-page.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin user edit.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-user-edit.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin sponsers.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-sponsers.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin add sponser.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-add-sponser.png)
 
-![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin speakers.png)
+![](https://raw.githubusercontent.com/soltee/talk_events/master/public/images/admin-speakers.png)
 
 
 
