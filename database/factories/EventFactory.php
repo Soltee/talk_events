@@ -22,7 +22,7 @@ $factory->define(Event::class, function (Faker $faker) {
             $users = User::role('event-manager')->inRandomOrder()->pluck('id')->toArray();
             return Arr::random($users);
         },
-        'cover' => $faker->imageUrl($width = 400, $height = 300),
+        'cover' => '/images/placeholder.png',
         'title' => $name,
         'slug'  => $slug,
         'price' => $randomPrice,
