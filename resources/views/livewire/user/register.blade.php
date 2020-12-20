@@ -28,7 +28,7 @@
                     {{ __('First name') }}:
                 </label>
 
-                <input id="first_name" type="text" class="form-input w-full " wire:model="first_name" value="{{ $first_name }}"  autocomplete="first_name" >
+                <input id="first_name" type="text" class="form-input w-full " wire:model.defer="first_name" value="{{ $first_name }}"  autocomplete="first_name" >
 
                 @error('first_name')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -41,7 +41,7 @@
                     {{ __('Last name') }}:
                 </label>
 
-                <input id="last_name" type="text" class="form-input w-full " wire:model="last_name" value="{{ $last_name }}"  autocomplete="last_name" >
+                <input id="last_name" type="text" class="form-input w-full " wire:model.defer="last_name" value="{{ $last_name }}"  autocomplete="last_name" >
 
                 @error('last_name')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -55,7 +55,7 @@
                     {{ __('E-Mail Address') }}:
                 </label>
 
-                <input id="email" type="email" class="form-input w-full"  wire:model="email" value="{{ $email }}"  autocomplete="email">
+                <input id="email" type="email" class="form-input w-full"  wi.deferre:model="email" value="{{ $email }}"  autocomplete="email">
 
                 @error('email')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -69,7 +69,7 @@
                     {{ __('Password') }}:
                 </label>
 
-                <input id="password" type="password" class="form-input w-full"  wire:model="password"  autocomplete="new-password">
+                <input id="password" type="password" class="form-input w-full".defer  wire:model="password"  autocomplete="new-password">
 
                 @error('password')
                     <p class="text-red-500 text-xs italic mt-4">
@@ -83,7 +83,7 @@
                     {{ __('Confirm Password') }}:
                 </label>
 
-                <input id="password-confirm" type="password" class="form-input w-full" wire:model="password_confirmation"  autocomplete="new-password">
+                <input id="password-confirm" type="password" class="form-input w-full" wire:model.defer="password_confirmation"  autocomplete="new-password">
             </div>
 
             <div class="flex flex-wrap">

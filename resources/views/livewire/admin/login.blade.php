@@ -29,7 +29,7 @@
                         {{ __('Email') }}:
                     </label>
 
-                    <input id="email" type="email" class="form-input w-full" wire:model="email" value="{{ old('email') }}"  autocomplete="email" >
+                    <input id="email" type="email" class="form-input w-full" wire:model.defer="email" value="{{ old('email') }}"  autocomplete="email" >
 
 	                @error('email')
 	                    <p class="text-red-500 text-xs italic mt-4">
@@ -43,7 +43,7 @@
                         {{ __('Password') }}:
                     </label>
 
-                    <input id="password" type="password" class="form-input w-full " wire:model="password" >
+                    <input id="password" type="password" class="form-input w-full " wire:model.defer="password" >
 
 	                @error('password')
 	                    <p class="text-red-500 text-xs italic mt-4">

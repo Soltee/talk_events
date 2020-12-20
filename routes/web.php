@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+// ['middleware' => 'role:developer']
+// if ($request->user()->can('delete-tasks')) {
+//       //Code goes here
+//     }
 Route::get('/', 'WelcomeController@index')
 				                        ->name('welcome');
 Route::get('/events/{event}-{slug}', 'WelcomeController@event')
