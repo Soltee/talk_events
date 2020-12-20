@@ -82,7 +82,49 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 							->middleware('auth')
 							->name('admin.dashboard');
 
+	//Super Admin
+	Route::group(['middleware' => ['role:super-admin']], function () {
+		Route::livewire('/profile', 'admin.auth.profile')
+							->name('admin.profile');
+		//Cache
+		Route::get('/clear', function() {
+						    Artisan::call('cache:clear');
+						    return "Cache is cleared";
+						});
 
+		//Booking
+		Route::livewire('/bookings', 'admin.bookings.index')
+									->name('bookings');
+		Route::livewire('/bookings/{booking}', 'admin.bookings.show')
+									->name('booking.show');
+		
+																
+		//Role
+		Route::post('roles', 'Admin\RoleController@store');
+		Route::delete('roles/{role}', 'Admin\RoleController@destroy');
+
+		//Permissions
+		Route::post('permissions', 'Admin\PermissionController@store');
+		Route::delete('permissions/{permission}', 'Admin\PermissionController@destroy');
+
+
+
+		//User
+		Route::livewire('users', 'admin.users.index')
+							            ->name('users');
+		Route::get('users/create', 'Admin\UserController@create')
+							            ->name('user.create');
+		Route::post('users', 'Admin\UserController@store')
+							            ->name('user.store');
+		Route::livewire('users/{user}', 'admin.users.show')
+							            ->name('user.show');
+		Route::get('users/{user}/edit', 'Admin\UserController@edit')
+										->name('user.edit');
+		Route::patch('users/{user}', 'Admin\UserController@update')
+										->name('user.update');
+
+	});
+	
 	//Category
 	Route::group(['middleware' => ['permission:add categories']], function () {
 		Route::livewire('categories', 'admin.categories.index')
@@ -145,51 +187,6 @@ Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
 
 		//Api
 		Route::get('api/events', 'Admin\Api\EventController@index');
-	});
-
-
-
-	//Super Admin
-	Route::group(['middleware' => ['role:super-admin']], function () {
-		Route::livewire('/profile', 'admin.auth.profile')
-							->name('admin.profile');
-		//Cache
-		Route::get('/clear', function() {
-						    Artisan::call('cache:clear');
-						    return "Cache is cleared";
-						});
-
-		//Booking
-		Route::livewire('/bookings', 'admin.bookings.index')
-									->name('bookings');
-		Route::livewire('/bookings/{booking}', 'admin.bookings.show')
-									->name('booking.show');
-		
-																
-		//Role
-		Route::post('roles', 'Admin\RoleController@store');
-		Route::delete('roles/{role}', 'Admin\RoleController@destroy');
-
-		//Permissions
-		Route::post('permissions', 'Admin\PermissionController@store');
-		Route::delete('permissions/{permission}', 'Admin\PermissionController@destroy');
-
-
-
-		//User
-		Route::livewire('users', 'admin.users.index')
-							            ->name('users');
-		Route::get('users/create', 'Admin\UserController@create')
-							            ->name('user.create');
-		Route::post('users', 'Admin\UserController@store')
-							            ->name('user.store');
-		Route::livewire('users/{user}', 'admin.users.show')
-							            ->name('user.show');
-		Route::get('users/{user}/edit', 'Admin\UserController@edit')
-										->name('user.edit');
-		Route::patch('users/{user}', 'Admin\UserController@update')
-										->name('user.update');
-
 	});
 
 });
