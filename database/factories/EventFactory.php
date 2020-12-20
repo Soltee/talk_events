@@ -19,7 +19,7 @@ $factory->define(Event::class, function (Faker $faker) {
     		return Arr::random($cat);
     	},
         'user_id' => function(){
-            $users = User::role('event-manager')->inRandomOrder()->pluck('id')->toArray();
+            $users = User::role('event manager')->inRandomOrder()->pluck('id')->toArray();
             return Arr::random($users);
         },
         'cover' => '/images/placeholder.png',

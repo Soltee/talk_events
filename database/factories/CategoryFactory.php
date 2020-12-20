@@ -11,7 +11,7 @@ $factory->define(Category::class, function (Faker $faker) {
 	$slug = Illuminate\Support\Str::slug($name);
     return [
         'user_id'      => function(){
-        	$users = User::role('event-manager')->inRandomOrder()->pluck('id')->toArray();
+        	$users = User::role('event manager')->inRandomOrder()->pluck('id')->toArray();
             return Arr::random($users);
         },
         'name'      => $name,

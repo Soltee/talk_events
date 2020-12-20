@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
+// use Spatie\Permission\Traits\HasRoles;
+use App\Permissions\HasPermissionsTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -60,5 +61,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Speaker::class);
     }
-  
+
+    //Roles & permissions
+    public function scopeRole($query, $name)
+    {
+       return $query->whereHas('roles', function ($query) use ($name) 
+            {
+                $query->where('name', $name);
+            });
+    }
+      
 }
+
+///
+// $user = $request->user();
+// dd($user->hasRole('developer')); //will return true, if user has role
+// dd($user->givePermissionsTo('create-tasks'));// will return permission, if not null
+// dd($user->can('create-tasks')); 
