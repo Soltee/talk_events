@@ -36,7 +36,9 @@ class Booking extends Component
         		'booking' => $this->booking,
         		'event'   => $this->event,
         		'status'  => $this->status
-        	]);
+        	])
+            ->extends('layouts.user')
+            ->section('content');
     }
     
 }

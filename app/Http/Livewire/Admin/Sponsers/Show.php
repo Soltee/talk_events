@@ -25,7 +25,7 @@ class Show extends Component
         		'sponser'       => $this->sponser,
         		'events'        => $events,
         		'events_count'  => $events->total(),
-        	]);
+        ])->extends('layouts.admin');
     }
 
     /* Set Model Visiibility*/

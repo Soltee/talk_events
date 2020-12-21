@@ -41,7 +41,8 @@ class Activity extends Component
         return view('livewire.user.events.activity', [
         	'event'       => $this->event,
         	'activities'  => $activities
-        ]);
+        ])->extends('layouts.user')
+            ->section('content');
     }
 
     /* Toggle The Replies */

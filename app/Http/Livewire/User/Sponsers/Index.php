@@ -12,7 +12,7 @@ class Index extends Component
 {
     use WithPagination;
     
-	protected $updatesQueryString = ['keyword'];
+	protected $queryString = ['keyword'];
     public $keyword = '';
 
     public function render()
@@ -42,7 +42,9 @@ class Index extends Component
 
         return view('livewire.user.sponsers.index', [
         		'sponsers'     => $sponsers
-        	]);
+        	])
+            ->extends('layouts.user')
+            ->section('content');
     }
 
     public function updatedKeyword()

@@ -29,6 +29,8 @@ class Show extends Component
                 'events'        => $events,
                 'recent_event'  => $recent_event,
         		'events_count'  => $events->total(),
-        	]);
+        	])
+            ->extends('layouts.user')
+            ->section('content');
     }
 }

@@ -15,7 +15,7 @@ use Livewire\WithFileUploads;
 class Index extends Component
 {
 	use WithPagination, WithFileUploads;
-	protected $updatesQueryString = ['user_id', 'name', 'created_at'];
+	protected $queryString = ['user_id', 'name', 'created_at'];
     public $cover             = '';
     public $category_name     = '';
     public $user_id           = '';
@@ -58,7 +58,7 @@ class Index extends Component
 	            'first'        => $paginate->firstItem(),
 	            'last'         => $paginate->lastItem(),
 	            'total'        => $paginate->total()
-        	]);
+        ])->extends('layouts.admin');
     }
 
     public function updatedName()

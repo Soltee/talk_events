@@ -12,7 +12,7 @@ class Index extends Component
 {
     use WithPagination;
 
-    protected $updatesQueryString = ['name',  'payment_type', 'created_at'];
+    protected $queryString = ['name',  'payment_type', 'created_at'];
     public $name           = '';
     public $last_name      = '';
     public $payment_type   = '';
@@ -57,7 +57,8 @@ class Index extends Component
 
         return view('livewire.admin.bookings.index', [
             'bookings'     => $paginate
-        ]);
+        ])->extends('layouts.admin')
+        ->section('content');
 
     }
 

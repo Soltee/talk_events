@@ -40,6 +40,8 @@ class Dashboard extends Component
         		'total'        => $total,
         		'has_previous' => $has_previous,
         		'has_next'     => $has_next
-        	]);
+        	])
+            ->extends('layouts.user')
+            ->section('content');
     }
 }

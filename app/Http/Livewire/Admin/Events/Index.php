@@ -12,7 +12,7 @@ class Index extends Component
 {
     use WithPagination;
     
-	protected $updatesQueryString = ['title', 'price', 'venue_name', 'created_at', 'start'];
+	protected $queryString = ['title', 'price', 'venue_name', 'created_at', 'start'];
     public $title        = '';
     public $price        = '';
     public $venue_name   = '';
@@ -61,7 +61,7 @@ class Index extends Component
 
         return view('livewire.admin.events.index', [
             'events'       => $paginate
-        ]);
+        ])->extends('layouts.admin');
 
     }
 

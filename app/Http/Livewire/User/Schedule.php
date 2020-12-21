@@ -14,8 +14,11 @@ class Schedule extends Component
 
     public function render()
     {
+    	// dd('jjj');
         return view('livewire.user.schedule', [
         	'events' => Event::select('id', 'title', 'start')->get(),
-        ]);
+        ])
+            ->extends('layouts.user')
+            ->section('content');
     }
 }

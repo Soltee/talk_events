@@ -30,7 +30,7 @@ class Show extends Component
         	'user'        => $this->user,
         	'roles'       => $this->roles,
         	'permissions' => $this->permissions
-        ]);
+        ])->extends('layouts.admin');
     }
 
 

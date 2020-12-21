@@ -17,7 +17,7 @@ class Dashboard extends Component
 {
 
 	use WithPagination;
-    protected $updatesQueryString = ['first_name', 'last_name', 'email', 'role', 'created_at'];
+    // protected $queryString = ['first_name', 'last_name', 'email', 'role', 'created_at'];
     
     public $modal          = false;
     public $status         = false;
@@ -81,7 +81,9 @@ class Dashboard extends Component
             'spe'    => $spe,
             'spe'    => $spe,
             'boo'    => $boo,
-        ]);
+        ])
+            ->extends('layouts.admin');
+
 
     }
 }

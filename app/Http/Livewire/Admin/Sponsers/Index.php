@@ -12,7 +12,7 @@ class Index extends Component
 {
     use WithPagination;
 
-    protected $updatesQueryString = ['name', 'email', 'created_at'];
+    protected $queryString = ['name', 'email', 'created_at'];
     public $name           = '';
     public $email          = '';
     public $created_at     = '';
@@ -47,7 +47,7 @@ class Index extends Component
 
         return view('livewire.admin.sponsers.index', [
             'sponsers'     => $paginate
-        ]);
+        ])->extends('layouts.admin');
 
     }
 

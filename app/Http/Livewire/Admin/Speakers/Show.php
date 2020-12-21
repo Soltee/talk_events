@@ -26,7 +26,7 @@ class Show extends Component
         		'speaker'       => $this->speaker,
         		'events'        => $events,
         		'events_count'  => $events->total(),
-        	]);
+        ])->extends('layouts.admin');
     }
 
     /* Set Model Visiibility*/

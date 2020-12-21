@@ -69,10 +69,9 @@ Route::group(['middleware' => ['role:user']], function () {
 
 
 /** Admin Dashboard */
-Route::group(['prefix' => 'admin', 'layout' => 'layouts.admin'] , function () {
+Route::group(['prefix' => 'admin'] , function () {
 	/* Before Authenctication*/
 	Route::get('login', \App\Http\Livewire\Admin\Login::class)
-						->section('login-content')
 						->name('admin.login');
 
 	

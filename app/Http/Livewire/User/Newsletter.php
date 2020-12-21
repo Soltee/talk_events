@@ -14,7 +14,9 @@ class Newsletter extends Component
 
     public function render()
     {
-        return view('livewire.user.newsletter');
+        return view('livewire.user.newsletter')
+            ->extends('layouts.user')
+            ->section('content');
     }
 
 

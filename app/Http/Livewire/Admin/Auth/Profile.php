@@ -44,7 +44,7 @@ class Profile extends Component
         return view('livewire.admin.auth.profile', [
         		'oldAvatar' => $this->oldAvatar,
         		'auth'      => $this->auth
-        	]);
+        ])->extends('layouts.admin');
     }
 
     /** Modal Visibility */

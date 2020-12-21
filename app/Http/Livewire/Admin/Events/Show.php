@@ -41,7 +41,7 @@ class Show extends Component
         	'bookings_count'    => $bookings->total(),
         	'bookings'    => $bookings,
         	'user'        => $this->user
-        ]);
+        ])->extends('layouts.admin');
     }
 
 

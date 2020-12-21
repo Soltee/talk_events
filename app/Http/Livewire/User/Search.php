@@ -54,7 +54,9 @@ class Search extends Component
         	// 'last'           => $paginate->lastItem(),
         	'categories'     => $this->categories,
         	'category'       => $this->category,
-        ]);
+        ])
+            ->extends('layouts.user')
+            ->section('content');
     }
 
     

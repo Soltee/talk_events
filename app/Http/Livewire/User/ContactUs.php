@@ -14,7 +14,9 @@ class ContactUs extends Component
 
     public function render()
     {
-        return view('livewire.user.contact-us');
+        return view('livewire.user.contact-us')
+            ->extends('layouts.user')
+            ->section('content');
     }
 
     public function store(){

@@ -52,7 +52,7 @@ class Create extends Component
         		'categories'        => $categories,
         		'new_speakers'      => $new_speakers,
         		'new_sponsers'      => $new_sponsers       		
-        	]);
+        ])->extends('layouts.admin');
     }
 
     /** Modal Viibiltyt*/

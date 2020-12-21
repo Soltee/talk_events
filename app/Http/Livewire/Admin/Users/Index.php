@@ -13,7 +13,7 @@ class Index extends Component
 {	
 	use WithPagination;
 
-    protected $updatesQueryString = ['name', 'email', 'role', 'created_at'];
+    protected $queryString = ['name', 'email', 'role', 'created_at'];
     public $name           = '';
     public $email          = '';
     public $role           = '';
@@ -69,7 +69,7 @@ class Index extends Component
 
         return view('livewire.admin.users.index', [
             'users'        => $paginate
-        ]);
+        ])->extends('layouts.admin');
 
     }
 

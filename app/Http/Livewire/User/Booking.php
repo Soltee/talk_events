@@ -47,7 +47,10 @@ class Booking extends Component
 
     public function render()
     {
-        return view('livewire.user.booking');
+        return view('livewire.user.booking')
+                    ->extends('layouts.user')
+                    ->section('content');
+
     }
 
     public function validate_and_next_step(){

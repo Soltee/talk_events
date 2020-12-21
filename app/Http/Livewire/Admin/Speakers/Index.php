@@ -50,7 +50,7 @@ class Index extends Component
 
         return view('livewire.admin.speakers.index', [
             'speakers'     => $paginate
-        ]);
+        ])->extends('layouts.admin');
 
     }
 

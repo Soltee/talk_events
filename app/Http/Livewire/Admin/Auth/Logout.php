@@ -11,7 +11,8 @@ class Logout extends Component
 
     public function render()
     {
-        return view('livewire.admin.auth.logout');
+        return view('livewire.admin.auth.logout')
+                ->extends('layouts.admin');
     }
 
     /* Logout Admin User */

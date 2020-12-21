@@ -19,7 +19,9 @@ class Register extends Component
 
     public function render()
     {
-        return view('livewire.user.register');
+        return view('livewire.user.register')
+            ->extends('layouts.user')
+            ->section('authentication');
     }
 
     public function register()

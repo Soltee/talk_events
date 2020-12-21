@@ -37,7 +37,7 @@ class Show extends Component
         		'booking'       => $this->booking,
         		'event'         => $this->event,
         		'event_status'  => $this->event_status
-        	]);
+        ])->extends('layouts.admin');
     }
 
     /* Set Model Visiibility*/

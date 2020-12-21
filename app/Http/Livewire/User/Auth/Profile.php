@@ -45,7 +45,9 @@ class Profile extends Component
         return view('livewire.user.auth.profile', [
         		'oldAvatar' => $this->oldAvatar,
         		'auth'      => $this->auth
-        	]);
+        	])
+            ->extends('layouts.user')
+            ->section('content');
     }
 
 
