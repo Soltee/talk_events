@@ -9,7 +9,8 @@
 
     <title>@yield('title') </title>
     <link rel="icon" href="{{ asset('/images/logo.svg') }}">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.x/dist/alpine.min.js" defer></script>
+
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
