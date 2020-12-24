@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\SpeakerController;
+use App\Http\Controllers\Admin\SponserController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])
@@ -81,15 +85,9 @@ Route::group(['prefix' => 'admin'] , function () {
 							->name('admin.dashboard');
 
 	//Super Admin
-	Route::group(['middleware' => ['role:super-admin']], function () {
+	Route::group(['middleware' => ['role:super admin']], function () {
 		Route::get('/profile', \App\Http\Livewire\Admin\Auth\Profile::class)
 							->name('admin.profile');
-		//Cache
-		Route::get('/clear', function() {
-						    Artisan::call('cache:clear');
-						    return "Cache is cleared";
-						});
-
 		//Booking
 		Route::get('/bookings', \App\Http\Livewire\Admin\Bookings\Index::class)
 									->name('bookings');
@@ -110,15 +108,15 @@ Route::group(['prefix' => 'admin'] , function () {
 		//User
 		Route::get('users', \App\Http\Livewire\Admin\Users\Index::class)
 							            ->name('users');
-		Route::get('users/create', [Admin\UserController::class, 'create'])
+		Route::get('users/create', [UserController::class, 'create'])
 							            ->name('user.create');
-		Route::post('users', [Admin\UserController::class, 'store'])
+		Route::post('users', [UserController::class, 'store'])
 							            ->name('user.store');
 		Route::get('users/{user}', \App\Http\Livewire\Admin\Users\Show::class)
 							            ->name('user.show');
-		Route::get('users/{user}/edit', [Admin\UserController::class, 'edit'])
+		Route::get('users/{user}/edit', [UserController::class, 'edit'])
 										->name('user.edit');
-		Route::patch('users/{user}', [Admin\UserController::class, 'update'])
+		Route::patch('users/{user}', [UserController::class, 'update'])
 										->name('user.update');
 
 	});
@@ -139,13 +137,13 @@ Route::group(['prefix' => 'admin'] , function () {
 		Route::get('speakers/{speaker}', \App\Http\Livewire\Admin\Speakers\Show::class)
 											->name('speaker.show');
 
-		Route::get('speaker/create', [Admin\SpeakerController::class, 'create'])
+		Route::get('speaker/create', [SpeakerController::class, 'create'])
 											->name('speaker.create');
-		Route::get('speakers/{speaker}/edit', [Admin\SpeakerController::class, 'edit'])
+		Route::get('speakers/{speaker}/edit', [SpeakerController::class, 'edit'])
 											->name('speaker.edit');
-		Route::post('speaker', [Admin\SpeakerController::class, 'store'])
+		Route::post('speaker', [SpeakerController::class, 'store'])
 											->name('speaker.store');
-		Route::patch('speakers/{speaker}', [Admin\SpeakerController::class, 'update'])
+		Route::patch('speakers/{speaker}', [SpeakerController::class, 'update'])
 											->name('speaker.update');
 	});
 
@@ -156,16 +154,16 @@ Route::group(['prefix' => 'admin'] , function () {
 								->name('sponsers');
 		Route::get('sponsers/{sponser}', \App\Http\Livewire\Admin\Sponsers\Show::class)
 								->name('sponser.show');
-		Route::get('sponser/create',  [Admin\SponserController::class, 
+		Route::get('sponser/create',  [SponserController::class, 
 			'create'])
 										->name('sponser.new');
-		Route::post('sponsers', [Admin\SponserController::class, 
+		Route::post('sponsers', [SponserController::class, 
 		'store'])
 								->name('sponser.store');
-		Route::get('sponsers/{sponser}/edit',  [Admin\SponserController::class, 
+		Route::get('sponsers/{sponser}/edit',  [SponserController::class, 
 			'edit'])
 								->name('sponser.edit');
-		Route::patch('sponsers/{sponser}', [Admin\SponserController::class, 
+		Route::patch('sponsers/{sponser}', [SponserController::class, 
 		'update'])
 								->name('sponser.update');
 		
@@ -179,17 +177,17 @@ Route::group(['prefix' => 'admin'] , function () {
 									->name('events');
 		Route::get('events/{event}', \App\Http\Livewire\Admin\Events\Show::class)
 									->name('event.show');
-		Route::get('event/create', [Admin\EventController::class, 'create'])
+		Route::get('event/create', [EventController::class, 'create'])
 										->name('event.create');
-		Route::post('events', [Admin\EventController::class, 'store'])
+		Route::post('events', [EventController::class, 'store'])
 										->name('event.store');
-		Route::get('events/{event}/edit', [Admin\EventController::class, 'edit'])
+		Route::get('events/{event}/edit', [EventController::class, 'edit'])
 										->name('event.edit');
-		Route::patch('events/{event}', [Admin\EventController::class, 'update'])
+		Route::patch('events/{event}', [EventController::class, 'update'])
 										->name('event.update');
 
 		//Api
-		Route::get('api/events', [Admin\Api\EventController::class, 'index']);
+		Route::get('api/events', [\App\Http\Controllers\Admin\Api\EventController::class, 'index']);
 	});
 
 });

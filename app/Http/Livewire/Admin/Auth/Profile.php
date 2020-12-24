@@ -105,6 +105,7 @@ class Profile extends Component
         $this->modal  = true;
         $this->status    = 'Your info is saved.';
 
+        // return redirect()->back()->with('');
     }
 
 

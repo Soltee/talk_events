@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserAdded;
 use App\Notifications\UserDeleted;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Permission;
+use App\Role;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -33,6 +33,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
         abort_if(!auth()->user()->can('add users'), 403);
+        // dd('ee');
         $roles = Role::latest()->get();
         $perms = Permission::latest()->get();
         return view('admin.users.create', compact('roles', 'perms'));
@@ -50,7 +51,7 @@ class UserController extends Controller
             'email'               => 'required|string|email|unique:users', 
             'password'            => 'required|string|min:8|confirmed', 
             'role'                => 'nullable|string', 
-            'permission_name'     => 'nullable|string', 
+            'permission_name'     => 'nullable|array', 
         ]);
 
 
@@ -67,20 +68,21 @@ class UserController extends Controller
 
         //Give Role and permissons
         if($data['role']){
-        	$user->assignRole($data['role']);
+        	$user->roles()->attach([$data['role']]);
         }
 
-        //Give Permiision If given
+        //Give Permision If given
         if($data['permission_name']){
-	        $permissons_arr = explode(',',  $data['permission_name']);
+	        // $permissons_arr = explode(',',  $data['permission_name']);
 
-	        foreach($permissons_arr as $permission){
-	        	$user->givePermissionTo($permission);
-	        }
+	        // foreach($permissons_arr as $permission){
+                $user->permissions()->attach($data['permission_name']);
+	        	// $user->givePermissionTo($permission);
+	        // }
     	}
         //Send Login Credentials
 		// Notification::route('mail', $user->email)->notify(new UserAdded($user->email, $data['password']));
-		Notification::send($user, new UserAdded($user->email, $data['password'], $data['role'], $permissons_arr));
+		// Notification::send($user, new UserAdded($user->email, $data['password'], $data['role'], $permissons_arr));
 
 
         return redirect()->back()->with('success', 'User created.');
@@ -143,14 +145,14 @@ class UserController extends Controller
         ));
 
         //Give Role and permissons
-        // dd($user);
+        // dd($data['role']);
         if($data['role']){
-            $user->syncRoles([$data['role']]);
+            $user->roles()->sync([$data['role']]);
         }
 
         //Give Permiision If given
         if($data['permission_name']){
-            $user->syncPermissions($data['permission_name']);
+            $user->permissions()->sync($data['permission_name']);
         }
 
         //Send Login Credentials

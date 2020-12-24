@@ -127,7 +127,6 @@
 
         </div>
     </div>
-    {{-- {{ $slot }} --}}
     @yield('login-content')
 
 

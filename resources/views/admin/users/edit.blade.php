@@ -130,7 +130,7 @@
 			    						<div class="flex items-center">
 			    							<label  class="custom_checkbox relative flex flex items-center">
 												<input class="" class="roleCheckbox" type="radio"  
-												name="role" value="{{$role->name}}"
+												name="role" value="{{$role->id}}"
 												{{ ($role->name === $user->roles->pluck('name')[0]) ? 'checked' : ''}}>
 												<span  class="checkbox_btn roleCheckboxCheckedOrNot mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold"
 												>

@@ -1,7 +1,10 @@
 @extends('layouts.admin')
 
 @section('head')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css" rel="stylesheet"></link>
 <style>
+
     .custom_checkbox input:checked + .checkbox_btn{
 		font-size: bold;
 	}
@@ -121,7 +124,7 @@
 			    						<div class="flex items-center">
 			    							<label  class="custom_checkbox relative flex flex items-center">
 												<input class="" class="roleCheckbox" type="radio"  
-												name="role" value="{{$role->name}}">
+												name="role" value="{{$role->id}}">
 												<span  class="checkbox_btn roleCheckboxCheckedOrNot mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold"
 												>
 													{{ strtoupper($role->name) }}
@@ -152,7 +155,36 @@
 					    			Create
 					    		</span>
 					    	</div>
-		    				<div id="userPermissions" class="flex flex-col mb-3">
+
+					    	<div class="flex flex-col mb-8">
+					    		@error('permission_name')
+		                            <p class="text-red-500 text-xs italic my-4">
+		                                {{ $message }}
+		                            </p>
+		                        @enderror
+		    				<div class="inline-block relative w-full">
+	                            <select 
+	                                id="slim-permissions" 
+	                                multiple 
+	                                name="permission_name[]" class="block appearance-none w-full bg-white border-r-lg border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+	                                >
+	                                    <option data-placeholder="true"></option>
+	                                    @forelse($perms as $perm)
+	                                        <option value="{{ $perm->id }}">{{ $perm->name }} </option>
+	                                    @empty
+	                                    @endforelse
+
+	                            </select>
+	                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+	                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+	                            </div>
+	                        </div>
+		    				<div  class="flex flex-col mb-3">
+								
+		    				</div>
+
+		    			</div>
+		    				{{-- <div id="userPermissions" class="flex flex-col mb-3">
 		    					<div class="permission_names"></div>
 		    					@error('permission_name')
 		                            <p class="text-red-500 text-xs italic my-4">
@@ -161,7 +193,7 @@
 		                        @enderror
 								@forelse($perms as $permission)
 		    						<div class="flex justify-between items-center mb-2">
-										<span data-name="{{ $permission->name }}" class="permissionName  mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold"
+										<span data-name="{{ $permission->id }}" class="permissionName  mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold"
 											>
 											{{ strtoupper($permission->name) }}
 										</span>
@@ -178,7 +210,7 @@
 		    						<p> No permission yet.</p>
 		    					@endforelse
 		    				</div>
-
+ --}}
 		    			</div>
 
 	    			</div>

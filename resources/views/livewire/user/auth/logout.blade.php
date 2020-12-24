@@ -10,7 +10,7 @@
 
 	<div 
 		x-show.transition.60ms="open"
-		class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+		class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-10">
 	        <div class="h-full w-full bg-gray-300" 
 	        		x-on:click="open = false;"
 				>

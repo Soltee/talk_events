@@ -76,7 +76,7 @@
                     	<div >
 							<tr>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
-							        <p class="text-gray-900 whitespace-no-wrap">{{ ucfirst($user->roles->pluck('name')[0]) }}</p>
+							        <p class="text-gray-900 whitespace-no-wrap">{{ ucfirst($user->roles()->pluck('name')) ?? '' }}</p>
 							    </td>
 							    <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
 							        @if($user->avatar)
