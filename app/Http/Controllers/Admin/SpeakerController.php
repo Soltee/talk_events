@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\Event;
-use App\Speaker;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Speaker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +40,6 @@ class SpeakerController extends Controller
     public function store(Request $request)
     {
         abort_if(!auth()->user()->can('add speakers'), 403);
-        // dd(request()->all());
 
         $data = $request->validate([
             'events'              => 'required|array',
@@ -54,7 +53,6 @@ class SpeakerController extends Controller
         ]);
 
 
-        // dd(request()->all());
         if($request->hasFile('avatar')){
 
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
@@ -149,11 +147,9 @@ class SpeakerController extends Controller
         ]);
 
 
-        // dd(request()->all());
         if($request->hasFile('avatar')){
 
-            // dd($file);
-            //Real Image;
+            
             if($speaker->avatar){
                 File::delete([
                     public_path($speaker->avatar)
@@ -173,8 +169,7 @@ class SpeakerController extends Controller
                 mkdir(public_path('/speakers'), 0777);
             }
 
-            // dd($file);
-            //Real Image;
+            
             $basename  = Str::random();
             $original  = 'speaker-' . $basename . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('/speakers'), $original);

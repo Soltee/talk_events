@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\User;
 
-use App\Event;
+use App\Models\Event;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Omnipay\Omnipay;
 use Illuminate\Support\Str;
-use App\User;
-use App\Booking as EventBook;
+use App\Models\User;
+use App\Models\Booking as EventBook;
 
 class Booking extends Component
 {

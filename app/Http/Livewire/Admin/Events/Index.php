@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Events;
 
 use Livewire\Component;
-use App\Event;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Bookings;
 
 use Livewire\Component;
-use App\Booking;
+use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;

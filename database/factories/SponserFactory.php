@@ -1,22 +1,39 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Sponser;
-use App\Event;
-use App\User;
-use Faker\Generator as Faker;
+use Illuminate\Support\Str;
+use App\Models\Sponser;
+use App\Models\Event;
+use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Sponser::class, function (Faker $faker) {
-    return [
-    	'user_id' => function(){
-    		$us = User::role('manager')->inRandomOrder()->pluck('id')->toArray();
-    		return Arr::random($us);
-    	},
-        'avatar' => $faker->imageUrl($width = 200, $height = 200),
-        'full_name' => $faker->firstName,
-        'email' => $faker->unique()->safeEmail,
-        'company_name' => $faker->company
-    ];
-});
+class SponserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Sponser::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => function(){
+                $us = User::role('manager')->inRandomOrder()->pluck('id')->toArray();
+                return Arr::random($us);
+            },
+            'avatar' => $this->faker->imageUrl($width = 200, $height = 200),
+            'full_name' => $this->faker->firstName,
+            'email' => $this->faker->unique()->safeEmail,
+            'company_name' => $this->faker->company
+        ];
+    }
+}

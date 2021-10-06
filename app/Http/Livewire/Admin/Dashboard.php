@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
-use App\Booking;
-use App\User;
-use App\Event;
-use App\Sponser;
-use App\Speaker;
+use App\Models\Booking;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Sponser;
+use App\Models\Speaker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Cache;

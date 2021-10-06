@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\User\Events;
 
 use Livewire\Component;
-use App\Event;
-use App\Activity as EventActivity;
+use App\Models\Event;
+use App\Models\Activity as EventActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;

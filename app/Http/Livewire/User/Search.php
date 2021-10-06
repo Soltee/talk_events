@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\User;
 
 use Livewire\Component;
-use App\Category;
-use App\Event;
+use App\Models\Category;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;
@@ -48,7 +48,7 @@ class Search extends Component
 
         return view('livewire.user.search', [
         	'events'         => $paginate,
-        	'total'       => $paginate->count(),
+        	'total'          => $paginate->count(),
         	// 'total'          => $paginate->total(),
         	// 'first'          => $paginate->firstItem(),
         	// 'last'           => $paginate->lastItem(),

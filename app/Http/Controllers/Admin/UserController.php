@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Image;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +42,6 @@ class UserController extends Controller
     /** Store */
     public function store(Request $request)
     {
-        // dd($request->all());
         abort_if(!auth()->user()->can('add users'), 403);
 
         $data = $request->validate([
@@ -56,7 +55,6 @@ class UserController extends Controller
 
 
 
-        // dd($request->all());
         $user = User::create(array_merge([
             'first_name'          => $data['first_name'],
             'last_name'           => $data['last_name'],
@@ -123,7 +121,6 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         abort_if(!auth()->user()->can('update users'), 403);
-        // dd($request->all());
 
          $data = $request->validate([
             'first_name'          => 'required|string|min:2',

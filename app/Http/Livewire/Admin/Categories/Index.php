@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Categories;
 
 use Livewire\Component;
-use App\Category;
+use App\Models\Category;
 use Auth;
 use Cache;
 use Livewire\WithPagination;

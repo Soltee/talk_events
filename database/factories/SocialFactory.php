@@ -1,17 +1,36 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\User;
-use App\Social;
-use Faker\Generator as Faker;
+use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\Social;
+use App\Models\Speaker;
+use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Social::class, function (Faker $faker) {
-    return [
-        'user_id' => function(){
-    		$us = User::inRandomOrder()->pluck('id')->toArray();
-    		return Arr::random($us);
-    	},
-    	'twitter_link' => 'http://twitter.com/',
-    ];
-});
+class SocialFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Social::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => function(){
+                $us = User::inRandomOrder()->pluck('id')->toArray();
+                return Arr::random($us);
+            },
+            'twitter_link' => 'http://twitter.com/',
+        ];
+    }
+}

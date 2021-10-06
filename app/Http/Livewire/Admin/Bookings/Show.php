@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Admin\Bookings;
 
 use Livewire\Component;
-use App\Booking;
-use App\Event;
-use App\User;
+use App\Models\Booking;
+use App\Models\Event;
+use App\Models\User;
 
 class Show extends Component
 {

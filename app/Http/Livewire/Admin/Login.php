@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class Login extends Component

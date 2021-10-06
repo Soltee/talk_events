@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Event;
-use App\Category;
-use App\Speaker;
-use App\Sponser;
+use App\Models\Event;
+use App\Models\Category;
+use App\Models\Speaker;
+use App\Models\Sponser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;

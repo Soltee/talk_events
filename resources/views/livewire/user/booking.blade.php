@@ -68,7 +68,7 @@
 	    		
 	    		@if($event->price > 0)
 	    			
-		    			<div class="flex flex-col border border-lighter-black rounded-lg p-3 mb-4">
+		    		<div class="flex flex-col border border-lighter-black rounded-lg p-3 mb-4">
 		    			<div wire:ignore class="flex flex-col">
 		    				<label for="last_name" class="mb-2 text-c-lighter-black text-sm">Card</label>
 		    				<div 
@@ -131,62 +131,76 @@
 
 	@endif
 
-</div>
+	<!--- JS for Stripe Payments -->
+	<script>
+	    document.addEventListener('livewire:load', function () {	
+	    	//Get the Tabs
+	        // const stripeTab    = document.getElementById('stripeTab');
+	        // const khaltiTab = document.getElementById('khaltiTab');
+	        const bookForm         = document.getElementById('bookForm');
 
-<script>
-    window.addEventListener('DOMContentLoaded', function(){
-	//Get the Tabs
-        // const stripeTab    = document.getElementById('stripeTab');
-        // const khaltiTab = document.getElementById('khaltiTab');
-        const bookForm         = document.getElementById('bookForm');
 
+		    //Stripe Confrimation 
+		       	// stripeTab.addEventListener('click', () => {
+		       		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
+		            var stripe = Stripe(`${key}`);
+		            // console.log(key, stripe);
+		            // Create an instance of Elements.
+		            var elements = stripe.elements();
 
-	    //Stripe Confrimation 
-	       	// stripeTab.addEventListener('click', () => {
-	       		const key = '{{ env('STRIPE_PUBLIC_KEY') }}';
-	            var stripe = Stripe(`${key}`);
-	            // console.log(key, stripe);
-	            // Create an instance of Elements.
-	            var elements = stripe.elements();
+		            // Custom styling can be passed to options when creating an Element.
+		            // (Note that this demo uses a wider set of styles than the guide below.)
+		            var style = {
+		              base: {
+		                color: '#32325d',
+		                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+		                fontSmoothing: 'antialiased',
+		                fontSize: '16px',
+		                '::placeholder': {
+		                  color: '#aab7c4'
+		                },
+		                padding:'6px'
+		              },
+		              invalid: {
+		                color: '#fa755a',
+		                iconColor: '#fa755a'
+		              }
+		            };
 
-	            // Custom styling can be passed to options when creating an Element.
-	            // (Note that this demo uses a wider set of styles than the guide below.)
-	            var style = {
-	              base: {
-	                color: '#32325d',
-	                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-	                fontSmoothing: 'antialiased',
-	                fontSize: '16px',
-	                '::placeholder': {
-	                  color: '#aab7c4'
-	                },
-	                padding:'6px'
-	              },
-	              invalid: {
-	                color: '#fa755a',
-	                iconColor: '#fa755a'
-	              }
-	            };
+		            // Create an instance of the card Element.
+		            var card = elements.create('card', {style: style});
 
-	            // Create an instance of the card Element.
-	            var card = elements.create('card', {style: style});
+		            // Add an instance of the card Element into the `card-element` <div>.
+		            card.mount('#card-element');
 
-	            // Add an instance of the card Element into the `card-element` <div>.
-	            card.mount('#card-element');
+		            // Handle real-time validation errors from the card Element.
+		            card.addEventListener('change', function(event) {
+		              var displayError = document.getElementById('card-errors');
+		              if (event.error) {
+		                displayError.textContent = event.error.message;
+		              } else {
+		                displayError.textContent = '';
+		              }
+		            });
 
-	            // Handle real-time validation errors from the card Element.
-	            card.addEventListener('change', function(event) {
-	              var displayError = document.getElementById('card-errors');
-	              if (event.error) {
-	                displayError.textContent = event.error.message;
-	              } else {
-	                displayError.textContent = '';
-	              }
-	            });
+		            // Handle form submission.
+		            document.getElementById('payBtn').addEventListener('click', function(){
+		            	stripe.createToken(card).then(function(result) {
+			                if (result.error) {
+			                  // Inform the user if there was an error.
+			                  var errorElement = document.getElementById('card-errors');
+			                  errorElement.textContent = result.error.message;
+			                } else {
+			                  // Send the token to your server.
+			                  stripeTokenHandler(result.token);
+			                }
+		              	});
 
-	            // Handle form submission.
-	            document.getElementById('payBtn').addEventListener('click', function(){
-	            	stripe.createToken(card).then(function(result) {
+		            });
+		            bookForm.addEventListener('submit', function(event) {
+		              event.preventDefault();
+
+		              stripe.createToken(card).then(function(result) {
 		                if (result.error) {
 		                  // Inform the user if there was an error.
 		                  var errorElement = document.getElementById('card-errors');
@@ -195,47 +209,36 @@
 		                  // Send the token to your server.
 		                  stripeTokenHandler(result.token);
 		                }
-	              	});
+		              });
+		            });
 
-	            });
-	            // bookForm.addEventListener('submit', function(event) {
-	            //   event.preventDefault();
+		           // Submit the form with the token ID.
+		            function stripeTokenHandler(token) {
+		            	@this.set('stripeToken', token.id);
+		            	// @this.set('step', true);
+		            	window.livewire.emit('setNextStep');
 
-	            //   stripe.createToken(card).then(function(result) {
-	            //     if (result.error) {
-	            //       // Inform the user if there was an error.
-	            //       var errorElement = document.getElementById('card-errors');
-	            //       errorElement.textContent = result.error.message;
-	            //     } else {
-	            //       // Send the token to your server.
-	            //       stripeTokenHandler(result.token);
-	            //     }
-	            //   });
-	            // });
+		            	// document.getElementById('payBtn').style.display="none";
+		            	// document.querySelector('.conBtn').classList.remove('hidden');
 
-	           // Submit the form with the token ID.
-	            function stripeTokenHandler(token) {
-	            	@this.set('stripeToken', token.id);
-	            	// @this.set('step', true);
-	            	window.livewire.emit('setNextStep');
+		            	// component.set('stripeToken', token.id)
+		              // Insert the token ID into the form so it gets submitted to the server
+		              // var hiddenInput = document.createElement('input');
+		              // hiddenInput.setAttribute('type', 'hidden');
+		              // hiddenInput.setAttribute('wire:model.lazy', 'stripeToken');
+		              // hiddenInput.setAttribute('value', token.id);
+		              // bookForm.appendChild(hiddenInput);
+		              // document.getElementById('payBtn').style.display="none";
+		            	// document.querySelector('.conBtn').classList.remove('hidden');	    
+		              // bookForm.submit();
+		            }
 
-	            	// document.getElementById('payBtn').style.display="none";
-	            	// document.querySelector('.conBtn').classList.remove('hidden');
+		       	// });
 
-	            	// component.set('stripeToken', token.id)
-	              // Insert the token ID into the form so it gets submitted to the server
-	              // var hiddenInput = document.createElement('input');
-	              // hiddenInput.setAttribute('type', 'hidden');
-	              // hiddenInput.setAttribute('wire:model.lazy', 'stripeToken');
-	              // hiddenInput.setAttribute('value', token.id);
-	              // bookForm.appendChild(hiddenInput);
-	              // document.getElementById('payBtn').style.display="none";
-	            	// document.querySelector('.conBtn').classList.remove('hidden');	    
-	              // bookForm.submit();
-	            }
+	    });
+	</script>
 
-	       	// });
+</div>
 
-    });
-</script>
+
 

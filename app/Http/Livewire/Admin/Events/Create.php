@@ -3,16 +3,16 @@
 namespace App\Http\Livewire\Admin\Events;
 
 use Livewire\Component;
-use App\Event;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Image;
-use App\Category;
-use App\Speaker;
-use App\Sponser;
+use App\Models\Category;
+use App\Models\Speaker;
+use App\Models\Sponser;
 use Livewire\WithFileUploads;
 
 class Create extends Component

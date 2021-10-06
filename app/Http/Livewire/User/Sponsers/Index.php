@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\User\Sponsers;
 
 use Livewire\Component;
-use App\Sponser;
+use App\Models\Sponser;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;

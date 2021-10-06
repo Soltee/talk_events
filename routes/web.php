@@ -123,8 +123,7 @@ Route::group(['prefix' => 'admin'] , function () {
 	
 	//Category
 	Route::group(['middleware' => ['permission:add categories']], function () {
-		Route::get('categories', \App\Http\Livewire
-			\Admin\Categories\Index::class)
+		Route::get('categories', \App\Http\Livewire\Admin\Categories\Index::class)
 												->name('categories');
 	});
 

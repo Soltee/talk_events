@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\Sponser;
-use App\Event;
+use App\Models\User;
+use App\Models\Sponser;
+use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -52,7 +52,6 @@ class SponserController extends Controller
         ]);
 
 
-        // dd($request->file('avatar'));
         if($request->hasFile('avatar')){
 
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
@@ -69,8 +68,7 @@ class SponserController extends Controller
                 mkdir(public_path('/sponsers'), 0777);
             }
 
-            // dd($file);
-            //Real Image;
+           
             $basename  = Str::random();
             $original  = 'sponser-' . $basename . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('/sponsers'), $original);
@@ -118,7 +116,6 @@ class SponserController extends Controller
      */
     public function update(Request $request, Sponser $sponser)
     {
-        // dd($request->all());
         abort_if(!auth()->user()->can('update sponsers'), 403);
 
         $data = $request->validate([
@@ -131,7 +128,6 @@ class SponserController extends Controller
             'company_link'        => 'nullable|string', 
         ]);
 
-        // dd($request->file('avatar'));
         if($request->hasFile('avatar')){
 
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
@@ -155,8 +151,7 @@ class SponserController extends Controller
                 ]);
             }
 
-            // dd($file);
-            //Real Image;
+            
             $basename  = Str::random();
             $original  = 'sponser-' . $basename . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('/sponsers'), $original);
@@ -167,7 +162,6 @@ class SponserController extends Controller
 
 
 
-        // dd($avatarArr);
         $sponser->update(array_merge([
             'user_id'           => auth()->user()->id,
             'full_name'         => $data['full_name'],

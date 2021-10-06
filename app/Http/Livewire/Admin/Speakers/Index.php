@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Speakers;
 
 use Livewire\Component;
-use App\Speaker;
+use App\Models\Speaker;
 use Illuminate\Support\Facades\Auth;
 use Cache;
 use Livewire\WithPagination;

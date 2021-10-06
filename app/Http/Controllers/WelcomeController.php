@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-use App\Event;
-use App\Category;
-use App\Speaker;
+use App\Models\Event;
+use App\Models\Category;
+use App\Models\Speaker;
 use Cache;
 
 class WelcomeController extends Controller
@@ -123,18 +123,6 @@ class WelcomeController extends Controller
                 $query    = $query->where('price', '>', $type); 
             }
         }
-
-        // $categories = Cache::remember('categories', now()->addMinutes(3), function() {
-        //     return Category::latest()->get();
-        // });
-
-        // $events     = Cache::remember('events', now()->addMinutes(3), function() use ($query) {
-        //     return $query->paginate(10);
-        // });
-
-        // $count      = Cache::remember('count', now()->addMinutes(3), function() use ($events) {
-        //     return $events->total();
-        // });
 
         $categories   =   Category::latest()->get();
         $events       =   $query->paginate(10)->appends(request()->query());

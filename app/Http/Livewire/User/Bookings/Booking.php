@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\User\Bookings;
 
 use Livewire\Component;
-use App\Booking as Book;
+use App\Models\Booking as Book;
 use Illuminate\Support\Facades\Auth;
 
 class Booking extends Component

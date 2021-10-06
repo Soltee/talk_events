@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Event;
+use App\Models\Event;
 
 class EventController extends Controller
 {

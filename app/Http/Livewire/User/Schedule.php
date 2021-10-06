@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\User;
 
-use App\Event;
+use App\Models\Event;
 use Livewire\Component;
 
 class Schedule extends Component
