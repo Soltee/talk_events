@@ -141,7 +141,8 @@
 		<div class="flex flex-col mt-8">
 			<div class="flex flex-col md:flex-row mb-6">
 		    	<div class="flex-1 mb-4 md:mb-0 md:mr-6">
-				    <img src="{{ $event->cover }}" class="w-full h-40 md:h-full rounded-lg object-cover object-center" alt="" onerror="this.src='/images/placeholder.png'">
+				    <img src="{{ asset($event->cover) }}" class="w-full h-40 md:h-full rounded-lg object-cover object-center">
+
 		    	</div>
 		    	<div class="w-full md:w-64">
 	      			<span class="text-xl text-blue-500 font-bold">

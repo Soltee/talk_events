@@ -6,7 +6,7 @@
 <div class="mb-10">
     @include('partials.user-breadcrumb', ['event' => ''])
 
-    @if($modal)
+    {{-- @if($modal)
 	    <div 
 			class="fixed  inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
 			<div wire:click="setVisibility" class="h-full w-full bg-gray-300"></div>
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 		</div>
- 	@endif
+ 	@endif --}}
 
 	<div class="mt-5">
     	<div class="flex flex-col md:flex-row">
@@ -38,11 +38,7 @@
 
 						    @error('avatar') <span class="text-red-600 px-3 py-3">{{ $message }}</span> @enderror
 						</div>
-						{{-- @if ($avatar)
-					        <img src="{{ $avatar->temporaryUrl() }}" class="w-40 h-40 mt-3 rounded object-cover">
-					    @else
-							<img src="{{ $oldAvatar }}"  class="w-40 h-40 mt-3 rounded object-cover" />
-					    @endif --}}
+					
 
 						<div class="flex justify-end items-center mt-5">
 				    		<button type="submit" class="px-3 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded w-32 font-semibold">Save Photo</button>
@@ -61,13 +57,11 @@
 				<div class="mt-3 md:mt-0">
 					<form wire:submit.prevent="update">
 	    			<div class="flex flex-col">
-	    				@if(session('done'))
-	    					<p class="fixed top-0 right-0 bg-green-200 rounded  px-6 py-3 text-green-600">{{session('done')}}</p>
-	    				@endif
+	    				
 		    			<div class="flex flex-col mb-3">
 		    				<div class="flex flex-col md:flex-row md:items-baseline">
 		    					<label class="mb-2 md:border-l md:mb-0 text-gray-800 font-semibold px-3 py-3 md:w-64">Firstname</label>
-							    <input type="text" class="md:ml-3 md:border-r border px-3 py-3 rounded w-full text-blue-600" wire:model="firstname" value="{{ $auth->first_name }}">
+							    <input type="text" class="md:ml-3 md:border-r border px-3 py-3 rounded w-full text-blue-600" wire:model="firstname" value="{{ $firstname }}">
 							</div>
 
 						    @error('firstname') <span class="text-red-600 px-3 py-3">{{ $message }}</span> @enderror
@@ -76,7 +70,7 @@
 						<div class="flex flex-col mb-3">
 		    				<div class="flex flex-col md:flex-row md:items-baseline">
 		    					<label class="mb-2 md:border-l md:mb-0 text-gray-800 font-semibold px-3 py-3 md:w-64">Lastname</label>
-							    <input type="text" class="md:ml-3 md:border-r border px-3 py-3 rounded w-full text-blue-600" wire:model="lastname" value="{{ $auth->last_name }}">
+							    <input type="text" class="md:ml-3 md:border-r border px-3 py-3 rounded w-full text-blue-600" wire:model="lastname" value="{{ $lastname }}">
 							</div>
 
 						    @error('lastname') <span class="text-red-600 px-3 py-3">{{ $message }}</span> @enderror
@@ -85,7 +79,7 @@
 						<div class="flex flex-col mb-3">
 		    				<div class="flex flex-col md:flex-row md:items-baseline">
 		    					<label class="mb-2 md:border-l md:mb-0 text-gray-800 font-semibold px-3 py-3 md:w-64">Email</label>
-							    <input type="text" class="md:ml-3 md:border-r border px-3 py-3 rounded w-full text-blue-600" wire:model="email" value="{{ $auth->email }}">
+							    <input type="text" class="md:ml-3 md:border-r border px-3 py-3 rounded w-full text-blue-600" wire:model="email" value="{{ $email }}">
 							</div>
 
 						    @error('email') <span class="text-red-600 px-3 py-3">{{ $message }}</span> @enderror
@@ -138,3 +132,43 @@
 	</div>
 
 </div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+	//Avatar Saved
+	window.addEventListener('user-avatar-updated', event => {
+
+        swal({
+          title: event.detail.message,
+          text: event.detail.text,
+          icon: event.detail.type,
+          button: "Close!",
+        });
+
+    });
+
+    //Profile
+    window.addEventListener('user-updated', event => {
+
+        swal({
+          title: event.detail.message,
+          text: event.detail.text,
+          icon: event.detail.type,
+          button: "Close!",
+        });
+
+    });
+
+    //Password Saved
+    window.addEventListener('user-password-updated', event => {
+
+        swal({
+          title: event.detail.message,
+          text: event.detail.text,
+          icon: event.detail.type,
+          button: "Close!",
+        });
+
+    });
+</script>

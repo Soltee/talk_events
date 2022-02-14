@@ -165,46 +165,6 @@
 		    </div>
 	    </div>
 
-	
-	    <!-- Speakers -->
-	    <div class="mt-24 speakers w-full">
-		    <div class="flex justify-between items-center mb-8">
-			    <h2 class="text-blue-900 text-lg font-bold"> Speakers</h2>
-			    <a href="/speaker" class="{{ ($speakers_total) ? '' : 'hidden' }} text-blue-500 hover:opacity-75 hover:underline">	
-			    	View all 
-			    </a>
-			</div>
-		    <div class="{{ ($speakers_total) ? 'swiper-container' : '' }} w-full">
-		        <div class="swiper-wrapper ">
-			        @forelse($speakers as $speaker)
-						    <!-- Lazy image -->
-					    <div class="relative swiper-slide rounded-lg w-full flex flex-col">
-					      <a href="{{ url('speakers', $speaker->id . '-' . $speaker->first_name . '-' . $speaker->last_name )}}">
-					      	<img data-src="{{ asset($speaker->avatar) }}" class="swiper-lazy w-32 h-32 rounded-full bg-center
-					      	bg-cover  rounded-lg" onerror="this.src='/images/placeholder.png'">
-					      </a>
-
-					      <a class="mt-3" href="">
-	        						<h5 class="text-lg font-bold text-gray-900 hover:opacity-75">{{ $speaker->first_name . ' '. $speaker->last_name }}</h5>
-	        				</a>
-					      <div class="flex justify-center items-center swiper-lazy-preloader"></div>
-					    </div>
-
-				    @empty
-				    	<div class=" flex flex-col justify-center w-full items-center my-4">
-				      		<svg class="h-10 w-10 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"/></svg>
-				      		<p class="mt-3">Empty free events.</p>
-			     		</div>
-				    @endforelse
-		        </div>
-		     
-		      @if($free_total)
-		      <div class="swiper-button-next"></div>
-		      <div class="swiper-button-prev"></div>
-		      @endif
-		    </div>
-	    </div>
-
 
 	    <!-- Free -->
 	    <div class="mt-24 free_events w-full">

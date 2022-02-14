@@ -14,15 +14,6 @@
 
             @endif
 
-            @if (session()->has('success'))
-
-                <div class="px-2 py-3 mb-6 rounded text-green-500 bg-green-100">
-
-                    {{ session('success') }}
-
-                </div>
-
-            @endif
 
             <div class="flex flex-wrap mb-6">
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">
@@ -98,3 +89,18 @@
         </form>
 
 </div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    window.addEventListener('contact-saved', event => {
+
+        swal({
+          title: event.detail.message,
+          text: event.detail.text,
+          icon: event.detail.type,
+          button: "Close!",
+        });
+
+    });
+</script>

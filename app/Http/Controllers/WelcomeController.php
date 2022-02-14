@@ -60,17 +60,6 @@ class WelcomeController extends Controller
             return $this_weekend->count();
         });
 
-        // $featured  = Cache::remember('this_weekend', now()->addMinutes(3), function() {
-        //     return Event::inRandomOrder()->where('is_featured', true)->first();
-        // });
-
-        $speakers      = Cache::remember('speakers', now()->addMinutes(3), function() {
-            return Speaker::latest()->take(20)->get();
-        });
-
-        $speakers_total   = Cache::remember('speakers_total', now()->addMinutes(3), function() use ($speakers) {
-            return $speakers->count();
-        });
 
         //popular, online, free, paid, today, tomorrow, this_weekend, online_classes, more categoies, trending
         return view('welcome', compact(
@@ -81,9 +70,7 @@ class WelcomeController extends Controller
                                 'this_weekend_total', 
                                 'free', 
                                 'free_total', 
-                                'query_category',
-                                'speakers',
-                                'speakers_total'
+                                'query_category'
                             ));
     }
 

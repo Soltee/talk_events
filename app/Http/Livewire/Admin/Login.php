@@ -38,7 +38,6 @@ class Login extends Component
         ]);
 
     	if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']], $this->remember)){
-    	   // dd($user);
     		$auth = $this->guard()->user();
 
     		if(!$auth->hasRole('user')){

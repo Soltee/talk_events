@@ -30,7 +30,7 @@ class Newsletter extends Component
     public function subscribe()
     {
     	$data = $this->validate([
-            'email'       => 'required|email',
+            'email'       => 'required|email:rfc,dns',
             'agree'       => 'required|bool'
     	]);
 

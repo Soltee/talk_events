@@ -34,8 +34,14 @@ class ContactUs extends Component
     		'message'    => $this->message
     	]);
 
-    	session()->flash('success', 'Your enquiry has been saved. We will get to you shortly.');
+    	//Dispatch That Contact Was Saved or Success
+    	$this->dispatchBrowserEvent('contact-saved', [
+    		'type'       => "success",
+    		'text'       => "",
+    		'message'    =>  "Your enquiry has been saved. We will get to you shortly"
+    	]);
 
+    	//Reset All Properties
     	$this->name     = '';
 		$this->email    = '';
 		$this->topic    = '';

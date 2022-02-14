@@ -203,7 +203,7 @@
                       
                   </div>
                   <div class="flex flex-row justify-between items-center mt-12">
-                      <span class="font-sm text-sm text-white">&copy; Talk Events 2020</span>
+                      <span class="font-sm text-sm text-white">&copy; Talk Events 2022</span>
                       <div class="flex items-center">
                         <a href="/#" class="text-white hover:opacity-75">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather w-6 h-6 md:ml-4 feather-twitter">

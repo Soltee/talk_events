@@ -163,10 +163,10 @@
 		</div>
 
 	</div>
-	{{-- {{$events}} --}}
+
 	@role('super-admin')
 	<div class="my-4">
-		<canvas id="myChart" class="w-full h-64"></canvas>
+		<canvas id="myChart" class="w-full h-74"></canvas>
 	</div>
 	@endrole
 

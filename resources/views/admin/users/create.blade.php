@@ -184,33 +184,7 @@
 		    				</div>
 
 		    			</div>
-		    				{{-- <div id="userPermissions" class="flex flex-col mb-3">
-		    					<div class="permission_names"></div>
-		    					@error('permission_name')
-		                            <p class="text-red-500 text-xs italic my-4">
-		                                {{ $message }}
-		                            </p>
-		                        @enderror
-								@forelse($perms as $permission)
-		    						<div class="flex justify-between items-center mb-2">
-										<span data-name="{{ $permission->id }}" class="permissionName  mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold"
-											>
-											{{ strtoupper($permission->name) }}
-										</span>
-												
-
-			    						<svg 
-			    							data-id="{{ $permission->id }}"
-			    							xmlns="http://www.w3.org/2000/svg" 
-			    							class="permissionDelBtn h-10 w-10 text-red-600 hover:opacity-50 cursor-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>
-			    						</svg>
-			    						</form>
-			    					</div>
-		    					@empty
-		    						<p> No permission yet.</p>
-		    					@endforelse
-		    				</div>
- --}}
+		    				
 		    			</div>
 
 	    			</div>
@@ -241,17 +215,6 @@
 			    passwordConfirm.value = retVal;
 			    // console.log(document.getElementById('password'));
         	});
-
-        	//Roles
-        	// let roleCheckbox         = document.querySelectorAll('.custom_checkbox');
-        	
-        	// roleCheckbox.forEach((box) => {
-
-        	// 	box.firstElementChild.addEventListener('click', function(){
-        	// 		box.lastElementChild.classList.toggle('border-green-600');
-        	// 	});
-
-        	// });
 
         	//Permissions
         	let permissionName = document.querySelectorAll('.permissionName');

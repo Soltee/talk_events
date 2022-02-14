@@ -33,7 +33,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
         abort_if(!auth()->user()->can('add users'), 403);
-        // dd('ee');
+
         $roles = Role::latest()->get();
         $perms = Permission::latest()->get();
         return view('admin.users.create', compact('roles', 'perms'));
@@ -71,12 +71,9 @@ class UserController extends Controller
 
         //Give Permision If given
         if($data['permission_name']){
-	        // $permissons_arr = explode(',',  $data['permission_name']);
 
-	        // foreach($permissons_arr as $permission){
-                $user->permissions()->attach($data['permission_name']);
-	        	// $user->givePermissionTo($permission);
-	        // }
+            $user->permissions()->attach($data['permission_name']);
+
     	}
         //Send Login Credentials
 		// Notification::route('mail', $user->email)->notify(new UserAdded($user->email, $data['password']));

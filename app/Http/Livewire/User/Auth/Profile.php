@@ -23,8 +23,7 @@ class Profile extends Component
     public $email;
     public $password;
     public $password_confirmation;
-    public $modal;
-    public $status = '';
+
 
 	public function mount()
     {
@@ -82,11 +81,13 @@ class Profile extends Component
         	'avatar'      => '/storage/' .$avatar
         ]);
 
-        $this->password  = '';
-        $this->password_confirmation   = '';
-
-        $this->modal     = true;
-        $this->status    = 'Your avatar is saved.';
+        //Dispatch That avatar was saved
+        $this->dispatchBrowserEvent('user-avatar-updated', [
+            'type'       => "success",
+            'text'       => "",
+            'message'    =>  "Avatar was saved."
+        ]);
+        
     }
 
 
@@ -105,12 +106,12 @@ class Profile extends Component
         	'email'      => $this->email
         ]);
 
-        $this->firstname = '';
-        $this->lastname  = '';
-        $this->email     = '';
-
-        $this->modal     = true;
-        $this->status    = 'Your info is saved.';
+        //Dispatch That profiel Was saved
+        $this->dispatchBrowserEvent('user-updated', [
+            'type'       => "success",
+            'text'       => "",
+            'message'    =>  "Profile saved."
+        ]);        
 
     }
 
@@ -126,11 +127,16 @@ class Profile extends Component
         	'password'      => bcrypt($this->password)
         ]);
 
+        //Dispatch That password was save
+        $this->dispatchBrowserEvent('user-password-updated', [
+            'type'       => "success",
+            'text'       => "",
+            'message'    =>  "Password was saved."
+        ]);
+
+        //Rest 
         $this->password  = '';
         $this->password_confirmation   = '';
-
-        $this->modal    = true;
-        $this->status   = 'Your password is saved.';
 
     }
 

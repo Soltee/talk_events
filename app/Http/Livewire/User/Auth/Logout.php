@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Logout extends Component
 {
+    protected $listeners = ['logout'];
+
     public function render()
     {
         return view('livewire.user.auth.logout')
@@ -15,8 +17,18 @@ class Logout extends Component
             ->section('content');
     }
 
+    /*  Confirm Logout */
+    public function confirm()
+    {
+        $this->dispatchBrowserEvent('swal-user-confirm', [
+            'type'        => "warning",
+            'message'     => "Are you sure?",
+            'text'        => ""
+        ]);
+    }
+
     /* Logout  User */
-    public function invalidate(){
+    public function logout(){
     	Auth::guard()->logout();
 
        	session()->invalidate();
@@ -25,6 +37,6 @@ class Logout extends Component
 
     	session()->flash('success', 'Logged out!');
 
-        return redirect()->to('/');
+        return redirect()->to('/login');
     }
 }

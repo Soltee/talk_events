@@ -30,7 +30,6 @@ class Login extends Component
 
 
     	if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']], $this->remember)){
-    	   // dd($user);
 
 	        session()->flash('success', 'Logged in.');
 	        return redirect()->route('home');
